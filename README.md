@@ -1,0 +1,1 @@
+block-aws-fargate-service
