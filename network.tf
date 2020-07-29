@@ -1,3 +1,7 @@
+locals {
+  network_block = data.terraform_remote_state.cluster.outputs.network_block
+}
+
 data "terraform_remote_state" "network" {
   backend = "pg"
 

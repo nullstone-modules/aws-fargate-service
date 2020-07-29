@@ -1,7 +1,7 @@
 data "terraform_remote_state" "cluster" {
   backend = "pg"
 
-  workspace = "${var.stack_name}-${var.parent_block}-${var.env}"
+  workspace = "${var.stack_name}-${var.parent_blocks.cluster}-${var.env}"
 
   config = {
     conn_str    = var.backend_conn_str

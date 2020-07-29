@@ -6,7 +6,7 @@ resource "aws_ecs_service" "this" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets          = data.terraform_remote_state.cluster.outputs.private_subnet_ids
+    subnets          = data.terraform_remote_state.network.outputs.private_subnet_ids
     assign_public_ip = false
   }
 

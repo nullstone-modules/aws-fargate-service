@@ -15,7 +15,7 @@ output "task_family" {
 }
 
 output "cluster_block" {
-  value = var.parent_block
+  value = var.parent_blocks.cluster
 }
 
 output "network_block" {
