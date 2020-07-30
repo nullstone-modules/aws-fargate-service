@@ -14,6 +14,10 @@ output "task_family" {
   value = aws_ecs_task_definition.this.family
 }
 
+output "service_security_group" {
+  value = aws_security_group.this.id
+}
+
 output "cluster_block" {
   value = var.parent_blocks.cluster
 }
