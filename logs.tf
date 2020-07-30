@@ -1,9 +1,9 @@
 resource "aws_cloudwatch_log_group" "this" {
-  name = "/${var.block_name}/${var.env}"
+  name = "/${var.env}/${var.block_name}"
 
   tags = {
     Stack       = var.stack_name
-    Block       = var.block_name
     Environment = var.env
+    Block       = var.block_name
   }
 }

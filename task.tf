@@ -1,5 +1,5 @@
 resource "aws_ecs_task_definition" "this" {
-  family                   = "${var.stack_name}-${var.block_name}-${var.env}"
+  family                   = "${var.stack_name}-${var.env}-${var.block_name}"
   cpu                      = var.service_cpu
   memory                   = var.service_memory
   network_mode             = "awsvpc"
@@ -8,8 +8,8 @@ resource "aws_ecs_task_definition" "this" {
 
   tags = {
     Stack       = var.stack_name
-    Block       = var.block_name
     Environment = var.env
+    Block       = var.block_name
   }
 
   container_definitions = <<EOF

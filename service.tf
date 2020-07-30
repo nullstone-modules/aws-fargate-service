@@ -8,10 +8,17 @@ resource "aws_ecs_service" "this" {
   network_configuration {
     subnets          = data.terraform_remote_state.network.outputs.private_subnet_ids
     assign_public_ip = false
+    security_groups  = [aws_security_group.this.id]
   }
 
   service_registries {
     registry_arn = aws_service_discovery_service.this.arn
+  }
+
+  tags = {
+    Stack       = var.stack_name
+    Environment = var.env
+    Block       = var.block_name
   }
 }
 
