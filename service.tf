@@ -15,6 +15,12 @@ resource "aws_ecs_service" "this" {
     registry_arn = aws_service_discovery_service.this.arn
   }
 
+  load_balancer {
+    target_group_arn = aws_lb_target_group.this.arn
+    container_name   = var.block_name
+    container_port   = 80
+  }
+
   tags = {
     Stack       = var.stack_name
     Environment = var.env
