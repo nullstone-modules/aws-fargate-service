@@ -10,9 +10,9 @@ data "terraform_remote_state" "cluster" {
 }
 
 data "aws_ecs_cluster" "cluster" {
-  cluster_name = data.terraform_remote_state.cluster.outputs.cluster_name
+  cluster_name = data.terraform_remote_state.cluster.outputs["cluster_name"]
 }
 
 data "aws_iam_role" "execution" {
-  name = data.terraform_remote_state.cluster.outputs.cluster_execution_role_name
+  name = data.terraform_remote_state.cluster.outputs["cluster_execution_role_name"]
 }
