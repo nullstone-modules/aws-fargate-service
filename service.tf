@@ -1,3 +1,7 @@
+locals {
+  target_group = var.enable_lb ? [aws_lb_target_group.this.arn] : []
+}
+
 resource "aws_ecs_service" "this" {
   name            = var.block_name
   cluster         = data.aws_ecs_cluster.cluster.arn
@@ -15,11 +19,30 @@ resource "aws_ecs_service" "this" {
     registry_arn = aws_service_discovery_service.this.arn
   }
 
-  load_balancer {
-    target_group_arn = aws_lb_target_group.this.arn
-    container_name   = var.block_name
-    container_port   = 80
+  dynamic "load_balancer" {
+    for_each = local.target_group
+
+    content {
+      target_group_arn = load_balancer.value
+      container_name   = var.block_name
+      container_port   = 80
+    }
   }
+
+  tags = {
+    Stack       = var.stack_name
+    Environment = var.env
+    Block       = var.block_name
+  }
+}
+
+resource "aws_lb_target_group" "this" {
+  name                 = "${var.stack_name}-${var.env}-${var.block_name}"
+  port                 = 80
+  protocol             = "HTTP"
+  target_type          = "ip"
+  vpc_id               = data.terraform_remote_state.network.outputs.vpc_id
+  deregistration_delay = 30
 
   tags = {
     Stack       = var.stack_name

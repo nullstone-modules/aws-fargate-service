@@ -25,6 +25,16 @@ variable "backend_conn_str" {
 }
 
 
+variable "enable_lb" {
+  type    = bool
+  default = true
+}
+
+variable "enable_https" {
+  type    = bool
+  default = false
+}
+
 variable "service_cpu" {
   type    = number
   default = 256
