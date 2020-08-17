@@ -16,7 +16,8 @@ variable "block_name" {
 
 variable "parent_blocks" {
   type = object({
-    cluster = string
+    cluster   = string
+    subdomain = string
   })
 }
 

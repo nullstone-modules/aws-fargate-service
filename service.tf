@@ -28,12 +28,6 @@ resource "aws_ecs_service" "this" {
       container_port   = 80
     }
   }
-
-  tags = {
-    Stack       = var.stack_name
-    Environment = var.env
-    Block       = var.block_name
-  }
 }
 
 resource "aws_lb_target_group" "this" {

@@ -59,6 +59,7 @@ resource "aws_lb_listener" "https" {
   protocol          = "HTTPS"
   port              = 443
   ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01"
+  certificate_arn   = aws_acm_certificate.this[count.index].arn
 
   default_action {
     type             = "forward"
@@ -90,6 +91,17 @@ resource "aws_security_group_rule" "lb-https-from-world" {
   count = var.enable_lb && var.enable_https ? 1 : 0
 }
 
+resource "aws_security_group_rule" "lb-http-from-world" {
+  security_group_id = aws_security_group.lb[count.index].id
+  cidr_blocks       = ["0.0.0.0/0"]
+  type              = "ingress"
+  protocol          = "tcp"
+  from_port         = 80
+  to_port           = 80
+
+  count = var.enable_lb && ! var.enable_https ? 1 : 0
+}
+
 resource "aws_security_group_rule" "lb-http-to-service" {
   security_group_id        = aws_security_group.lb[count.index].id
   source_security_group_id = aws_security_group.this.id
@@ -109,5 +121,5 @@ resource "aws_security_group_rule" "service-http-from-lb" {
   from_port                = 80
   to_port                  = 80
 
-  count = var.enable_lb && ! var.enable_https ? 0 : 1
+  count = var.enable_lb ? 1 : 0
 }
