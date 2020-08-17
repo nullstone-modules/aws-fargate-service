@@ -25,7 +25,7 @@ resource "aws_ecs_service" "this" {
     }
   }
 
-  depends_on = var.enable_lb ? (var.enable_https ? [aws_lb_listener.https] : [aws_lb_listener.http]) : []
+  depends_on = [aws_lb_listener.http, aws_lb_listener.https]
 }
 
 resource "aws_lb_target_group" "this" {
