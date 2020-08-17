@@ -7,10 +7,16 @@ Nullstone Block standing up an AWS Fargate container service using ECR and confi
 - `owner_id: string` - Stack Owner ID
 - `stack_name: string` - Stack Name
 - `block_name: string` - Block Name (this represents the service name)
-- `parent_block: string` - Parent Block Name (fargate cluster)
+- `parent_blocks: object({ cluster: string })` - Parent Blocks (cluster = fargate cluster block name)
 - `env: string` - Environment Name
 - `backend_conn_str: string` - Connection string for postgres backend
 
+- `enable_lb: bool`
+  - Enable/Disable Load Balancer
+  - Default: `true`
+- `enable_https: bool`
+  - Enable/Disable https listener on load balancer
+  - Default: `false`
 - `service_cpu: number`
   - Service CPU Allocation
   - Measure in CPU shares as defined by docker
@@ -34,3 +40,7 @@ Nullstone Block standing up an AWS Fargate container service using ECR and confi
   - Name of Cluster Block
 - `network_block`
   - Name of Network Block
+- `lb_arn`
+  - Load Balancer ARN
+- `lb_security_group_id`
+  - Load Balancer Security Group

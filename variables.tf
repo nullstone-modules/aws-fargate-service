@@ -16,7 +16,8 @@ variable "block_name" {
 
 variable "parent_blocks" {
   type = object({
-    cluster = string
+    cluster   = string
+    subdomain = string
   })
 }
 
@@ -24,6 +25,16 @@ variable "backend_conn_str" {
   type = string
 }
 
+
+variable "enable_lb" {
+  type    = bool
+  default = true
+}
+
+variable "enable_https" {
+  type    = bool
+  default = false
+}
 
 variable "service_cpu" {
   type    = number
