@@ -35,9 +35,9 @@ output "network_block" {
 }
 
 output "lb_arn" {
-  value = var.enable_lb ? aws_lb.this[0].arn : ""
+  value = join(aws_lb.this.*.arn, "")
 }
 
 output "lb_security_group_id" {
-  value = var.enable_lb ? aws_security_group.lb[0].id : ""
+  value = join(aws_security_group.lb.*.id, "")
 }
