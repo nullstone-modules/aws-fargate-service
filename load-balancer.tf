@@ -3,7 +3,7 @@ resource "aws_lb" "this" {
   internal           = false
   load_balancer_type = "application"
   subnets            = data.terraform_remote_state.network.outputs.public_subnet_ids
-  security_groups    = [aws_security_group.this.id]
+  security_groups    = [aws_security_group.lb.id]
   enable_http2       = true
   ip_address_type    = "ipv4"
 

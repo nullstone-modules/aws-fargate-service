@@ -1,7 +1,3 @@
-locals {
-  target_group = var.enable_lb ? [aws_lb_target_group.this.arn] : []
-}
-
 resource "aws_ecs_service" "this" {
   name            = var.block_name
   cluster         = data.aws_ecs_cluster.cluster.arn
@@ -20,7 +16,7 @@ resource "aws_ecs_service" "this" {
   }
 
   dynamic "load_balancer" {
-    for_each = local.target_group
+    for_each = var.enable_lb ? [aws_lb_target_group.this.arn] : []
 
     content {
       target_group_arn = load_balancer.value
@@ -28,6 +24,8 @@ resource "aws_ecs_service" "this" {
       container_port   = 80
     }
   }
+
+  depends_on = var.enable_lb ? (var.enable_https ? [aws_lb_listener.https] : [aws_lb_listener.http]) : []
 }
 
 resource "aws_lb_target_group" "this" {
