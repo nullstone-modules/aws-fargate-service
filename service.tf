@@ -36,6 +36,11 @@ resource "aws_lb_target_group" "this" {
   vpc_id               = data.terraform_remote_state.network.outputs.vpc_id
   deregistration_delay = 30
 
+  health_check {
+    // TODO: Enable later
+    enabled = false
+  }
+
   tags = {
     Stack       = var.stack_name
     Environment = var.env
