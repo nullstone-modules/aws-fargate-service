@@ -7,5 +7,6 @@ resource "aws_ecr_repository" "this" {
     Stack       = var.stack_name
     Environment = var.env
     Block       = var.block_name
+    Trigger     = "x"
   }
 }
