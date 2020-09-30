@@ -37,8 +37,8 @@ resource "aws_lb_target_group" "this" {
   deregistration_delay = 30
 
   health_check {
-    // TODO: Enable later
-    enabled = false
+    // TODO: Allowing any HTTP response to imply healthy, expand later
+    matcher = "200-499"
   }
 
   tags = {
