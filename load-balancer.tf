@@ -91,6 +91,7 @@ resource "aws_security_group_rule" "lb-https-from-world" {
   count = var.enable_lb && var.enable_https ? 1 : 0
 }
 
+// This rule is always enabled; when we are listening on https, we still want to force http to https through redirect
 resource "aws_security_group_rule" "lb-http-from-world" {
   security_group_id = aws_security_group.lb[count.index].id
   cidr_blocks       = ["0.0.0.0/0"]
@@ -99,7 +100,7 @@ resource "aws_security_group_rule" "lb-http-from-world" {
   from_port         = 80
   to_port           = 80
 
-  count = var.enable_lb && ! var.enable_https ? 1 : 0
+  count = var.enable_lb ? 1 : 0
 }
 
 resource "aws_security_group_rule" "lb-http-to-service" {
