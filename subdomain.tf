@@ -1,5 +1,9 @@
+locals {
+  subdomain_enabled = var.parent_blocks.subdomain != "" && var.enable_lb
+}
+
 data "terraform_remote_state" "subdomain" {
-  count = var.enable_lb && var.enable_https ? 1 : 0
+  count = local.subdomain_enabled ? 1 : 0
 
   backend = "pg"
 
@@ -12,7 +16,7 @@ data "terraform_remote_state" "subdomain" {
 }
 
 locals {
-  cert_arn          = var.enable_lb && var.enable_https ? data.terraform_remote_state.subdomain[0].outputs.cert_arn : ""
-  subdomain_name    = var.enable_lb && var.enable_https ? data.terraform_remote_state.subdomain[0].outputs.subdomain.name : ""
-  subdomain_zone_id = var.enable_lb && var.enable_https ? data.terraform_remote_state.subdomain[0].outputs.subdomain.zone_id : ""
+  cert_arn          = local.subdomain_enabled ? data.terraform_remote_state.subdomain[0].outputs.cert_arn : ""
+  subdomain_name    = local.subdomain_enabled ? data.terraform_remote_state.subdomain[0].outputs.subdomain.name : ""
+  subdomain_zone_id = local.subdomain_enabled ? data.terraform_remote_state.subdomain[0].outputs.subdomain.zone_id : ""
 }

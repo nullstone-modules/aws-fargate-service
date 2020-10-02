@@ -1,5 +1,5 @@
 resource "aws_route53_record" "alias" {
-  count = var.parent_blocks.subdomain == "" ? 0 : 1
+  count = local.subdomain_enabled ? 1 : 0
 
   zone_id = local.subdomain_zone_id
   name    = ""
