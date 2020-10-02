@@ -59,7 +59,7 @@ resource "aws_lb_listener" "https" {
   protocol          = "HTTPS"
   port              = 443
   ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01"
-  certificate_arn   = aws_acm_certificate.this[count.index].arn
+  certificate_arn   = data.terraform_remote_state.subdomain.outputs.cert_arn
 
   default_action {
     type             = "forward"
