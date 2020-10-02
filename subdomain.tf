@@ -10,3 +10,9 @@ data "terraform_remote_state" "subdomain" {
     schema_name = var.owner_id
   }
 }
+
+locals {
+  cert_arn          = var.enable_lb && var.enable_https ? data.terraform_remote_state.subdomain[0].outputs.cert_arn : ""
+  subdomain_name    = var.enable_lb && var.enable_https ? data.terraform_remote_state.subdomain[0].outputs.subdomain.name : ""
+  subdomain_zone_id = var.enable_lb && var.enable_https ? data.terraform_remote_state.subdomain[0].outputs.subdomain.zone_id : ""
+}
