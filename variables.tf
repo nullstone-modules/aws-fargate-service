@@ -46,6 +46,11 @@ variable "service_memory" {
   default = 512
 }
 
+variable "service_image_tag" {
+  type    = string
+  default = "latest"
+}
+
 variable "service_env_vars" {
   type    = list(object({
     name : string

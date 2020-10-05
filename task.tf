@@ -16,7 +16,7 @@ resource "aws_ecs_task_definition" "this" {
 [
   {
     "name": "${var.block_name}",
-    "image": "${aws_ecr_repository.this.repository_url}",
+    "image": "${aws_ecr_repository.this.repository_url}:${var.service_image_tag}",
     "command": [],
     "portMappings": [
       {
