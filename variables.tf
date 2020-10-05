@@ -45,3 +45,11 @@ variable "service_memory" {
   type    = number
   default = 512
 }
+
+variable "service_env_vars" {
+  type    = list(object({
+    name : string
+    value : string
+  }))
+  default = []
+}
