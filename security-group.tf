@@ -26,3 +26,12 @@ resource "aws_security_group_rule" "this-http-from-private-subnets" {
   to_port           = 80
   cidr_blocks       = data.terraform_remote_state.network.outputs.private_cidrs
 }
+
+resource "aws_security_group_rule" "this-http-to-private-subnets" {
+  security_group_id = aws_security_group.this.id
+  type              = "egress"
+  protocol          = "tcp"
+  from_port         = 80
+  to_port           = 80
+  cidr_blocks       = data.terraform_remote_state.network.outputs.private_cidrs
+}
