@@ -52,9 +52,10 @@ variable "service_image_tag" {
 }
 
 variable "service_env_vars" {
-  type    = list(object({
-    name : string
-    value : string
-  }))
-  default = []
+  type    = map(string)
+  default = {}
+}
+
+locals {
+  env_vars = [for k, v in var.service_env_vars : map("name", k, "value", v)]
 }

@@ -26,7 +26,7 @@ resource "aws_ecs_task_definition" "this" {
       }
     ],
     "secrets": [],
-    "environment": ${jsonencode(var.service_env_vars)},
+    "environment": ${jsonencode(local.env_vars)},
     "essential": true,
     "cpu": ${var.service_cpu},
     "memoryReservation": ${var.service_memory},
