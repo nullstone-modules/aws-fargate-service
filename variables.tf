@@ -55,7 +55,3 @@ variable "service_env_vars" {
   type    = map(string)
   default = {}
 }
-
-locals {
-  env_vars = [for k, v in var.service_env_vars : map("name", k, "value", v)]
-}
