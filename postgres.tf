@@ -12,7 +12,7 @@ data "terraform_remote_state" "postgres" {
 }
 
 locals {
-  db_user_security_group_id = var.parent_blocks.postgres == "" ? "" : data.terraform_remote_state.postgres.outputs.db_user_security_group_id
+  db_user_security_group_id = var.parent_blocks.postgres == "" ? "" : data.terraform_remote_state.postgres[0].outputs.db_user_security_group_id
 }
 
 resource "aws_security_group_rule" "this-to-postgres" {
@@ -23,5 +23,5 @@ resource "aws_security_group_rule" "this-to-postgres" {
   protocol                 = "tcp"
   from_port                = 5432
   to_port                  = 5432
-  source_security_group_id = data.terraform_remote_state.postgres.outputs.db_security_group_id
+  source_security_group_id = data.terraform_remote_state.postgres[0].outputs.db_security_group_id
 }
