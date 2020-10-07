@@ -14,7 +14,7 @@ locals {
 
     environment = local.env_vars
 
-    cpu               = var.service_memory
+    cpu               = var.service_cpu
     memoryReservation = var.service_memory
 
     logConfiguration = {
