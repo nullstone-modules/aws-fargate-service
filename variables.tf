@@ -18,6 +18,7 @@ variable "parent_blocks" {
   type = object({
     cluster   = string
     subdomain = string
+    postgres  = string
   })
 }
 

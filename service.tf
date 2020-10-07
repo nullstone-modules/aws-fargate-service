@@ -8,7 +8,7 @@ resource "aws_ecs_service" "this" {
   network_configuration {
     subnets          = data.terraform_remote_state.network.outputs.private_subnet_ids
     assign_public_ip = false
-    security_groups  = [aws_security_group.this.id]
+    security_groups  = compact([aws_security_group.this.id, local.db_user_security_group_id])
   }
 
   service_registries {
