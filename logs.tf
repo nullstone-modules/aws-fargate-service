@@ -1,11 +1,7 @@
 resource "aws_cloudwatch_log_group" "this" {
-  name = "/${var.env}/${var.block_name}"
+  name = "/${data.ns_workspace.this.env}/${data.ns_workspace.this.block}"
 
-  tags = {
-    Stack       = var.stack_name
-    Environment = var.env
-    Block       = var.block_name
-  }
+  tags = data.ns_workspace.this.tags
 }
 
 module "lb_logs_bucket" {
@@ -14,14 +10,10 @@ module "lb_logs_bucket" {
 
   enabled = var.enable_lb
 
-  name   = "${var.stack_name}-${var.env}-${var.block_name}"
+  name   = data.ns_workspace.this.hyphenated_name
   region = data.aws_region.this.name
 
   force_destroy = true
 
-  tags = {
-    Stack       = var.stack_name
-    Environment = var.env
-    Block       = var.block_name
-  }
+  tags = data.ns_workspace.this.tags
 }

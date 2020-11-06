@@ -2,7 +2,7 @@ locals {
   env_vars = [for k, v in var.service_env_vars : map("name", k, "value", v)]
 
   container_definition = {
-    name  = var.block_name
+    name  = data.ns_workspace.this.block
     image = "${aws_ecr_repository.this.repository_url}:${var.service_image_tag}"
     portMappings = [
       {
@@ -22,14 +22,14 @@ locals {
       options = {
         "awslogs-region"        = data.aws_region.this.name
         "awslogs-group"         = aws_cloudwatch_log_group.this.name
-        "awslogs-stream-prefix" = var.env
+        "awslogs-stream-prefix" = data.ns_workspace.this.env
       }
     }
   }
 }
 
 resource "aws_ecs_task_definition" "this" {
-  family                   = "${var.stack_name}-${var.env}-${var.block_name}"
+  family                   = data.ns_workspace.this.hyphenated_name
   cpu                      = var.service_cpu
   memory                   = var.service_memory
   network_mode             = "awsvpc"
@@ -37,9 +37,5 @@ resource "aws_ecs_task_definition" "this" {
   execution_role_arn       = data.aws_iam_role.execution.arn
   container_definitions    = jsonencode([local.container_definition])
 
-  tags = {
-    Stack       = var.stack_name
-    Environment = var.env
-    Block       = var.block_name
-  }
+  tags = data.ns_workspace.this.tags
 }

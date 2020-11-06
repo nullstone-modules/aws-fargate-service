@@ -1,47 +1,49 @@
 output "log_group_name" {
-  value = aws_cloudwatch_log_group.this.name
+  value       = aws_cloudwatch_log_group.this.name
+  description = "string ||| "
 }
 
 output "repo_name" {
-  value = aws_ecr_repository.this.name
+  value       = aws_ecr_repository.this.name
+  description = "string ||| "
 }
 
 output "repo_url" {
-  value = aws_ecr_repository.this.repository_url
+  value       = aws_ecr_repository.this.repository_url
+  description = "string ||| "
 }
 
 output "service_name" {
-  value = aws_ecs_service.this.name
+  value       = aws_ecs_service.this.name
+  description = "string ||| "
 }
 
 output "service_id" {
-  value = aws_ecs_service.this.id
+  value       = aws_ecs_service.this.id
+  description = "string ||| "
 }
 
 output "task_family" {
-  value = aws_ecs_task_definition.this.family
+  value       = aws_ecs_task_definition.this.family
+  description = "string ||| "
 }
 
 output "service_security_group_id" {
-  value = aws_security_group.this.id
+  value       = aws_security_group.this.id
+  description = "string ||| "
 }
 
 output "target_group_arn" {
-  value = aws_lb_target_group.this.arn
-}
-
-output "cluster_block" {
-  value = var.parent_blocks.cluster
-}
-
-output "network_block" {
-  value = local.network_block
+  value       = aws_lb_target_group.this.arn
+  description = "string ||| "
 }
 
 output "lb_arn" {
-  value = join("", aws_lb.this.*.arn)
+  value       = join("", aws_lb.this.*.arn)
+  description = "string ||| "
 }
 
 output "lb_security_group_id" {
-  value = join("", aws_security_group.lb.*.id)
+  value       = join("", aws_security_group.lb.*.id)
+  description = "string ||| "
 }
