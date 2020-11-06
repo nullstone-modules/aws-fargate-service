@@ -5,6 +5,12 @@ data "ns_connection" "cluster" {
   type = "cluster/aws-fargate"
 }
 
+data "ns_connection" "network" {
+  name = "network"
+  type = "network/aws"
+  via  = data.ns_connection.cluster.workspace
+}
+
 data "ns_connection" "subdomain" {
   name     = "subdomain"
   type     = "subdomain/aws"
@@ -30,5 +36,5 @@ data "aws_ecs_cluster" "cluster" {
 }
 
 data "aws_iam_role" "execution" {
-  name = data.terraform_remote_state.cluster.outputs.cluster_execution_role_name
+  name = data.ns_connection.cluster.outputs.cluster_execution_role_name
 }
