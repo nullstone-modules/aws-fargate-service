@@ -1,12 +1,8 @@
 resource "aws_security_group" "this" {
-  name   = "${var.stack_name}/${var.env}/${var.block_name}"
-  vpc_id = data.terraform_remote_state.network.outputs.vpc_id
+  name   = data.ns_workspace.this.slashed_name
+  vpc_id = data.ns_connection.network.outputs.vpc_id
 
-  tags = {
-    Stack       = var.stack_name
-    Environment = var.env
-    Block       = var.block_name
-  }
+  tags = data.ns_workspace.this.tags
 }
 
 resource "aws_security_group_rule" "this-https-to-world" {
@@ -24,7 +20,7 @@ resource "aws_security_group_rule" "this-http-from-private-subnets" {
   protocol          = "tcp"
   from_port         = 80
   to_port           = 80
-  cidr_blocks       = data.terraform_remote_state.network.outputs.private_cidrs
+  cidr_blocks       = data.ns_connection.network.outputs.private_cidrs
 }
 
 resource "aws_security_group_rule" "this-http-to-private-subnets" {
@@ -33,5 +29,5 @@ resource "aws_security_group_rule" "this-http-to-private-subnets" {
   protocol          = "tcp"
   from_port         = 80
   to_port           = 80
-  cidr_blocks       = data.terraform_remote_state.network.outputs.private_cidrs
+  cidr_blocks       = data.ns_connection.network.outputs.private_cidrs
 }

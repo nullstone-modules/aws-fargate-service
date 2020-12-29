@@ -1,8 +1,8 @@
 resource "aws_lb" "this" {
-  name               = "${var.stack_name}-${var.env}-${var.block_name}"
+  name               = data.ns_workspace.this.hyphenated_name
   internal           = false
   load_balancer_type = "application"
-  subnets            = data.terraform_remote_state.network.outputs.public_subnet_ids
+  subnets            = data.ns_connection.network.outputs.public_subnet_ids
   security_groups    = [aws_security_group.lb[count.index].id]
   enable_http2       = true
   ip_address_type    = "ipv4"
@@ -12,11 +12,7 @@ resource "aws_lb" "this" {
     enabled = true
   }
 
-  tags = {
-    Stack       = var.stack_name
-    Environment = var.env
-    Block       = var.block_name
-  }
+  tags = data.ns_workspace.this.tags
 
   count = var.enable_lb ? 1 : 0
 }
@@ -68,14 +64,10 @@ resource "aws_lb_listener" "https" {
 }
 
 resource "aws_security_group" "lb" {
-  name   = "${var.stack_name}/${var.env}/${var.block_name}/lb"
-  vpc_id = data.terraform_remote_state.network.outputs.vpc_id
+  name   = "${data.ns_workspace.this.slashed_name}/lb"
+  vpc_id = data.ns_connection.network.outputs.vpc_id
 
-  tags = {
-    Stack       = var.stack_name
-    Environment = var.env
-    Block       = var.block_name
-  }
+  tags = data.ns_workspace.this.tags
 
   count = var.enable_lb ? 1 : 0
 }
