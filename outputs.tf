@@ -4,12 +4,17 @@ output "log_group_name" {
 }
 
 output "repo_name" {
-  value       = aws_ecr_repository.this.name
+  value       = try(aws_ecr_repository.this[0].name, "")
   description = "string ||| "
 }
 
 output "repo_url" {
-  value       = aws_ecr_repository.this.repository_url
+  value       = try(aws_ecr_repository.this[0].repository_url, "")
+  description = "string ||| "
+}
+
+output "service_image" {
+  value       = "${local.service_image}:${var.service_image_tag}"
   description = "string ||| "
 }
 
