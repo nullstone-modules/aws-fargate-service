@@ -2,8 +2,9 @@ locals {
   env_vars = [for k, v in var.service_env_vars : map("name", k, "value", v)]
 
   container_definition = {
-    name  = data.ns_workspace.this.block
-    image = "${local.service_image}:${var.service_image_tag}"
+    name      = data.ns_workspace.this.block
+    image     = "${local.service_image}:${var.service_image_tag}"
+    essential = true
     portMappings = [
       {
         protocol      = "tcp"
@@ -16,6 +17,9 @@ locals {
 
     cpu               = var.service_cpu
     memoryReservation = var.service_memory
+
+    mountPoints = []
+    volumesFrom = []
 
     logConfiguration = {
       logDriver = "awslogs"

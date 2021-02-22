@@ -1,7 +1,8 @@
 terraform {
   required_providers {
     ns = {
-      source = "nullstone-io/ns"
+      source  = "nullstone-io/ns"
+      version = "~> 0.3"
     }
   }
 }
@@ -16,7 +17,7 @@ data "ns_connection" "cluster" {
 data "ns_connection" "network" {
   name = "network"
   type = "network/aws"
-  via  = data.ns_connection.cluster.workspace
+  via  = data.ns_connection.cluster.name
 }
 
 data "ns_connection" "subdomain" {
