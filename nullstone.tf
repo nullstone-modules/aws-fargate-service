@@ -32,18 +32,25 @@ data "ns_connection" "postgres" {
   optional = true
 }
 
+data "ns_connection" "image-registry" {
+  name     = "image-registry"
+  type     = "image-registry/aws"
+  optional = true
+}
+
 locals {
   db_security_group_id      = try(data.ns_connection.postgres.outputs.db_security_group_id, "")
   db_user_security_group_id = try(data.ns_connection.postgres.outputs.db_user_security_group_id, "")
   cert_arn                  = try(data.ns_connection.subdomain.outputs.cert_arn, "")
   subdomain_name            = try(data.ns_connection.subdomain.outputs.subdomain.name, "")
   subdomain_zone_id         = try(data.ns_connection.subdomain.outputs.zone_id, "")
+
+  has_image_registry = data.ns_connection.image_registry.workspace_id != ""
+  image_repo_creds = local.has_image_registry ? {
+    credentialsParameter: data.ns_connection.image_registry.outputs.secrets_arn
+  } : {}
 }
 
 data "aws_ecs_cluster" "cluster" {
   cluster_name = data.ns_connection.cluster.outputs.cluster_name
-}
-
-data "aws_iam_role" "execution" {
-  name = data.ns_connection.cluster.outputs.cluster_execution_role_name
 }

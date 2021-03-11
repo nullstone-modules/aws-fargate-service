@@ -21,6 +21,8 @@ locals {
     mountPoints = []
     volumesFrom = []
 
+    repositoryCredentials = local.image_repo_creds
+
     logConfiguration = {
       logDriver = "awslogs"
       options = {
@@ -38,7 +40,7 @@ resource "aws_ecs_task_definition" "this" {
   memory                   = var.service_memory
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  execution_role_arn       = data.aws_iam_role.execution.arn
+  execution_role_arn       = aws_iam_role.execution.arn
   container_definitions    = jsonencode([local.container_definition])
 
   tags = data.ns_workspace.this.tags
