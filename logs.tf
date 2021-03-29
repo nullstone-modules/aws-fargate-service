@@ -5,15 +5,11 @@ resource "aws_cloudwatch_log_group" "this" {
 }
 
 module "lb_logs_bucket" {
-  source  = "cloudposse/lb-s3-bucket/aws"
-  version = "0.7.0"
+  source = "./lb_logs"
 
-  enabled = var.enable_lb
+  count = var.enable_lb ? 1 : 0
 
-  name   = data.ns_workspace.this.hyphenated_name
-  region = data.aws_region.this.name
-
+  name          = data.ns_workspace.this.hyphenated_name
+  tags          = data.ns_workspace.this.tags
   force_destroy = true
-
-  tags = data.ns_workspace.this.tags
 }
