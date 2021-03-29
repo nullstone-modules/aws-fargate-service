@@ -8,7 +8,7 @@ resource "aws_lb" "this" {
   ip_address_type    = "ipv4"
 
   access_logs {
-    bucket  = module.lb_logs_bucket.bucket_id
+    bucket  = module.lb_logs_bucket[count.index].bucket_id
     enabled = true
   }
 
