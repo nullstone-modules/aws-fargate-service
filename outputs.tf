@@ -1,3 +1,8 @@
+output "cluster_arn" {
+  value       = data.aws_ecs_cluster.cluster.arn
+  description = "string ||| "
+}
+
 output "log_group_name" {
   value       = aws_cloudwatch_log_group.this.name
   description = "string ||| "
