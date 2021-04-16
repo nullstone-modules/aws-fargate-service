@@ -26,6 +26,7 @@ data "aws_iam_policy_document" "image_pusher" {
     effect = "Allow"
 
     actions = [
+      "ecr:GetAuthorizationToken",
       "ecr:GetDownloadUrlForLayer",
       "ecr:BatchGetImage",
       "ecr:BatchCheckLayerAvailability",
