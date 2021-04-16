@@ -8,14 +8,26 @@ output "log_group_name" {
   description = "string ||| "
 }
 
-output "repo_name" {
+output "image_repo_name" {
   value       = try(aws_ecr_repository.this[0].name, "")
   description = "string ||| "
 }
 
-output "repo_url" {
+output "image_repo_url" {
   value       = try(aws_ecr_repository.this[0].repository_url, "")
   description = "string ||| "
+}
+
+output "image_pusher" {
+  value = {
+    name       = aws_iam_user.image_pusher.name
+    access_key = aws_iam_access_key.image_pusher.id
+    secret_key = aws_iam_access_key.image_pusher.secret
+  }
+
+  description = "object({ name: string, access_key: string, secret_key: string }) ||| An AWS User with explicit privilege to push images."
+
+  sensitive = true
 }
 
 output "service_image" {
