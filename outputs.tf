@@ -20,9 +20,9 @@ output "image_repo_url" {
 
 output "image_pusher" {
   value = {
-    name       = aws_iam_user.image_pusher.name
-    access_key = aws_iam_access_key.image_pusher.id
-    secret_key = aws_iam_access_key.image_pusher.secret
+    name       = try(aws_iam_user.image_pusher[0].name, "")
+    access_key = try(aws_iam_access_key.image_pusher[0].id, "")
+    secret_key = try(aws_iam_access_key.image_pusher[0].secret, "")
   }
 
   description = "object({ name: string, access_key: string, secret_key: string }) ||| An AWS User with explicit privilege to push images."
