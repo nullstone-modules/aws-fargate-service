@@ -33,10 +33,8 @@ data "ns_connection" "postgres" {
 }
 
 locals {
-  db_security_group_id      = try(data.ns_connection.postgres.outputs.db_security_group_id, "")
   db_user_security_group_id = try(data.ns_connection.postgres.outputs.db_user_security_group_id, "")
   cert_arn                  = try(data.ns_connection.subdomain.outputs.cert_arn, "")
-  subdomain_name            = try(data.ns_connection.subdomain.outputs.subdomain.name, "")
   subdomain_zone_id         = try(data.ns_connection.subdomain.outputs.zone_id, "")
 }
 
