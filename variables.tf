@@ -42,15 +42,6 @@ Use this variable to configure against docker hub, quay, etc.
 EOF
 }
 
-variable "service_image_tag" {
-  type        = string
-  default     = "latest"
-  description = <<EOF
-The docker image tag to deploy for this service.
-If this value is changed, any subsequent runs will redeploy the service.
-EOF
-}
-
 variable "service_env_vars" {
   type        = map(string)
   default     = {}

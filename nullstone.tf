@@ -9,6 +9,16 @@ terraform {
 
 data "ns_workspace" "this" {}
 
+data "ns_app_env" "this" {
+  app   = data.ns_workspace.this.block
+  stack = data.ns_workspace.this.stack
+  env   = data.ns_workspace.this.env
+}
+
+locals {
+  app_version = data.ns_app_env.this.version
+}
+
 data "ns_connection" "cluster" {
   name = "cluster"
   type = "cluster/aws-fargate"

@@ -3,7 +3,7 @@ locals {
 
   container_definition = {
     name      = data.ns_workspace.this.block
-    image     = "${local.service_image}:${var.service_image_tag}"
+    image     = "${local.service_image}:${local.app_version}"
     essential = true
     portMappings = [
       {
