@@ -4,13 +4,6 @@ Nullstone Block standing up an AWS Fargate container service using ECR and confi
 
 ## Inputs
 
-- `owner_id: string` - Stack Owner ID
-- `stack_name: string` - Stack Name
-- `block_name: string` - Block Name (this represents the service name)
-- `parent_blocks: object({ cluster: string })` - Parent Blocks (cluster = fargate cluster block name)
-- `env: string` - Environment Name
-- `backend_conn_str: string` - Connection string for postgres backend
-
 - `enable_lb: bool`
   - Enable/Disable Load Balancer
   - Default: `true`
@@ -25,22 +18,38 @@ Nullstone Block standing up an AWS Fargate container service using ECR and confi
   - Service Hard-Limit on Memory
   - Measured in MB 
   - Default: `512`
+- `service_image: string`
+  - The docker image to deploy for this service.
+  - The version from the nullstone application will be used as the image tag.
+  - Default: `""` - An ECR repo will be created and used.
+- `service_env_vars: map(string)`
+  - Map of environment variables to inject into the service
 
 ## Outputs
 
-- `log_group_name`
+- `cluster_arn: string`
+  - Fargate Cluster ARN
+- `log_group_name: string`
   - Name of CloudWatch Log Group for service
-- `repo_name`
-  - Container Image Name for Service
-- `service_name`
+- `image_repo_name: string`
+  - Container Image Name for service
+- `image_repo_url: string`
+  - Container Image Repo URL for service
+- `image_pusher: object({name: string, access_key: string, secret_key: string)`
+  - An AWS user that has explicit permission to push to created ECR repo
+- `service_image: string`
+  - Full image URL for the service's docker image
+- `service_name: string`
   - Name of AWS ECS Service
-- `task_family`
-  - Name of single AWS ECS Task 
-- `cluster_block`
-  - Name of Cluster Block
-- `network_block`
-  - Name of Network Block
-- `lb_arn`
+- `service_id: string`
+  - AWS ECS Service ID
+- `task_family: string`
+  - Name of single AWS ECS Task
+- `service_security_group_id: string`
+  - Security Group ID for the service
+- `target_group_arn: string`
+  - Load Balancer Target Group ARN
+- `lb_arn: string`
   - Load Balancer ARN
-- `lb_security_group_id`
+- `lb_security_group_id: string`
   - Load Balancer Security Group
