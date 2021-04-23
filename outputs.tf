@@ -31,7 +31,7 @@ output "image_pusher" {
 }
 
 output "service_image" {
-  value       = "${local.service_image}:${var.service_image_tag}"
+  value       = "${local.service_image}:${local.app_version}"
   description = "string ||| "
 }
 
