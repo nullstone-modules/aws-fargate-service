@@ -1,5 +1,5 @@
 resource "aws_iam_user" "image_pusher" {
-  name = "image-pusher-${random_string.resource_suffix.result}"
+  name = "image-pusher-${local.resource_name}"
   tags = data.ns_workspace.this.tags
 
   count = var.service_image == "" ? 1 : 0
