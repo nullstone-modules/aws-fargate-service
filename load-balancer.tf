@@ -1,5 +1,5 @@
 resource "aws_lb" "this" {
-  name               = data.ns_workspace.this.hyphenated_name
+  name               = local.resource_name
   internal           = false
   load_balancer_type = "application"
   subnets            = data.ns_connection.network.outputs.public_subnet_ids
@@ -64,7 +64,7 @@ resource "aws_lb_listener" "https" {
 }
 
 resource "aws_security_group" "lb" {
-  name   = "${data.ns_workspace.this.slashed_name}/lb"
+  name   = "${local.resource_name}/lb"
   vpc_id = data.ns_connection.network.outputs.vpc_id
 
   tags = data.ns_workspace.this.tags

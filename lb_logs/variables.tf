@@ -11,9 +11,3 @@ variable "force_destroy" {
   type    = bool
   default = false
 }
-
-resource "random_uuid" "bucket_name" {}
-
-locals {
-  bucket_name = random_uuid.bucket_name.result
-}

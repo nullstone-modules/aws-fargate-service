@@ -29,7 +29,7 @@ resource "aws_ecs_service" "this" {
 }
 
 resource "aws_lb_target_group" "this" {
-  name                 = data.ns_workspace.this.hyphenated_name
+  name                 = local.resource_name
   port                 = 80
   protocol             = "HTTP"
   target_type          = "ip"

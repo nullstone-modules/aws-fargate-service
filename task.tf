@@ -33,13 +33,12 @@ locals {
 }
 
 resource "aws_ecs_task_definition" "this" {
-  family                   = data.ns_workspace.this.hyphenated_name
+  family                   = local.resource_name
   cpu                      = var.service_cpu
   memory                   = var.service_memory
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   execution_role_arn       = data.aws_iam_role.execution.arn
   container_definitions    = jsonencode([local.container_definition])
-
-  tags = data.ns_workspace.this.tags
+  tags                     = data.ns_workspace.this.tags
 }
