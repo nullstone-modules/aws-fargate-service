@@ -48,7 +48,7 @@ resource "aws_service_discovery_service" "this" {
   name = data.ns_workspace.this.block
 
   dns_config {
-    namespace_id = data.ns_connection.cluster.outputs.service_discovery_id
+    namespace_id = data.ns_connection.network.outputs.service_discovery_id
 
     dns_records {
       type = "A"
