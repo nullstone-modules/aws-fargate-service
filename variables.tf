@@ -6,7 +6,7 @@ variable "enable_lb" {
 
 variable "enable_https" {
   type        = bool
-  default     = false
+  default     = true
   description = "Enable this to force the load balancer to listen on HTTPS instead of HTTP."
 }
 

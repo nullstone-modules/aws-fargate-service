@@ -1,4 +1,4 @@
-# block-aws-fargate-service
+# aws-fargate-service
 
 Nullstone Block standing up an AWS Fargate container service using ECR and configured to emit to AWS CloudWatch Logs.
 
@@ -9,7 +9,7 @@ Nullstone Block standing up an AWS Fargate container service using ECR and confi
   - Default: `true`
 - `enable_https: bool`
   - Enable/Disable https listener on load balancer
-  - Default: `false`
+  - Default: `true`
 - `service_cpu: number`
   - Service CPU Allocation
   - Measure in CPU shares as defined by docker
