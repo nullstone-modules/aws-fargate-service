@@ -10,6 +10,15 @@ variable "enable_https" {
   description = "Enable this to force the load balancer to listen on HTTPS instead of HTTP."
 }
 
+variable "enable_xray" {
+  type        = bool
+  default     = true
+  description = <<EOF
+Enable this to turn on distributed tracing.
+NOTE: This only has an effect when this service has a mesh connection.
+EOF
+}
+
 variable "service_cpu" {
   type        = number
   default     = 256

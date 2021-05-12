@@ -21,6 +21,11 @@ locals {
     mountPoints       = []
     volumesFrom       = []
 
+    dependsOn = local.has_mesh ? [{
+      containerName = "envoy"
+      condition     = "HEALTHY"
+    }] : []
+
     portMappings = [
       {
         protocol      = "tcp"
@@ -30,6 +35,11 @@ locals {
     ]
   }
 
+  container_defs = compact([
+    local.container_definition,
+    local.has_mesh ? local.mesh_container_definition : null,
+    local.has_mesh && var.enable_xray ? local.xray_container_definition : null
+  ])
 }
 
 resource "aws_ecs_task_definition" "this" {
@@ -39,6 +49,23 @@ resource "aws_ecs_task_definition" "this" {
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   execution_role_arn       = data.aws_iam_role.execution.arn
-  container_definitions    = jsonencode([local.container_definition])
+  container_definitions    = jsonencode(local.container_defs)
   tags                     = data.ns_workspace.this.tags
+
+  dynamic "proxy_configuration" {
+    for_each = local.has_mesh ? [1] : []
+
+    content {
+      container_name = "envoy"
+      type           = "APPMESH"
+
+      properties = {
+        AppPorts         = 80
+        EgressIgnoredIPs = "169.254.170.2,169.254.169.254"
+        IgnoredUID       = "1337"
+        ProxyEgressPort  = 15001
+        ProxyIngressPort = 15000
+      }
+    }
+  }
 }
