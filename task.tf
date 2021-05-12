@@ -45,7 +45,7 @@ locals {
 resource "aws_ecs_task_definition" "this" {
   family                   = local.resource_name
   cpu                      = var.service_cpu
-  memory                   = var.service_memory
+  memory                   = var.service_memory + 512
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   execution_role_arn       = data.aws_iam_role.execution.arn
