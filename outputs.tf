@@ -50,6 +50,11 @@ output "task_family" {
   description = "string ||| "
 }
 
+output "main_container_name" {
+  value       = local.container_definition.name
+  description = "string ||| The name of the container definition for the main service container"
+}
+
 output "service_security_group_id" {
   value       = aws_security_group.this.id
   description = "string ||| "
