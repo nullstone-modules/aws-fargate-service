@@ -30,6 +30,12 @@ data "ns_connection" "network" {
   via  = data.ns_connection.cluster.name
 }
 
+data "ns_connection" "mesh" {
+  name     = "mesh"
+  type     = "mesh/aws"
+  optional = true
+}
+
 data "ns_connection" "subdomain" {
   name     = "subdomain"
   type     = "subdomain/aws"

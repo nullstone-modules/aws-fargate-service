@@ -1,10 +1,26 @@
 locals {
   env_vars = [for k, v in var.service_env_vars : map("name", k, "value", v)]
 
+  logConfiguration = {
+    logDriver = "awslogs"
+    options = {
+      "awslogs-region"        = data.aws_region.this.name
+      "awslogs-group"         = aws_cloudwatch_log_group.this.name
+      "awslogs-stream-prefix" = data.ns_workspace.this.env
+    }
+  }
+
   container_definition = {
-    name      = data.ns_workspace.this.block
-    image     = "${local.service_image}:${local.app_version}"
-    essential = true
+    name              = data.ns_workspace.this.block
+    image             = "${local.service_image}:${local.app_version}"
+    essential         = true
+    logConfiguration  = local.logConfiguration
+    cpu               = var.service_cpu
+    memoryReservation = var.service_memory
+    environment       = local.env_vars
+    mountPoints       = []
+    volumesFrom       = []
+
     portMappings = [
       {
         protocol      = "tcp"
@@ -12,24 +28,8 @@ locals {
         hostPort      = 80
       }
     ]
-
-    environment = local.env_vars
-
-    cpu               = var.service_cpu
-    memoryReservation = var.service_memory
-
-    mountPoints = []
-    volumesFrom = []
-
-    logConfiguration = {
-      logDriver = "awslogs"
-      options = {
-        "awslogs-region"        = data.aws_region.this.name
-        "awslogs-group"         = aws_cloudwatch_log_group.this.name
-        "awslogs-stream-prefix" = data.ns_workspace.this.env
-      }
-    }
   }
+
 }
 
 resource "aws_ecs_task_definition" "this" {
