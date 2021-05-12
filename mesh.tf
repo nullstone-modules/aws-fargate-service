@@ -50,16 +50,15 @@ resource "aws_appmesh_virtual_node" "service" {
 }
 
 locals {
-  mesh_env_vars = compact([
-    {
-      name  = "APPMESH_VIRTUAL_NODE_NAME"
-      value = "mesh/${local.mesh_name}/virtualNode/${join("", aws_appmesh_virtual_node.service.*.name)}"
-    },
-    var.enable_xray ? {
+  mesh_env_vars = concat(local.has_mesh ? [{
+    name  = "APPMESH_VIRTUAL_NODE_NAME"
+    value = "mesh/${local.mesh_name}/virtualNode/${data.ns_workspace.this.block}"
+    }] : [],
+    var.enable_xray ? [{
       name  = "AWS_XRAY_DAEMON_ADDRESS"
       value = "xray-daemon:2000"
-    } : null
-  ])
+    }] : []
+  )
 
   mesh_container_definition = {
     name              = "envoy"

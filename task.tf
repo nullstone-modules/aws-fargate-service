@@ -35,11 +35,11 @@ locals {
     ]
   }
 
-  container_defs = compact([
-    local.container_definition,
-    local.has_mesh ? local.mesh_container_definition : null,
-    local.has_mesh && var.enable_xray ? local.xray_container_definition : null
-  ])
+  container_defs = concat(
+    [local.container_definition],
+    local.has_mesh ? [local.mesh_container_definition] : [],
+    local.has_mesh && var.enable_xray ? [local.xray_container_definition] : []
+  )
 }
 
 resource "aws_ecs_task_definition" "this" {
