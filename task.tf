@@ -8,8 +8,8 @@ locals {
     portMappings = [
       {
         protocol      = "tcp"
-        containerPort = var.service_container_port
-        hostPort      = 80
+        containerPort = var.service_port
+        hostPort      = var.service_port
       }
     ]
 

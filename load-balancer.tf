@@ -99,8 +99,8 @@ resource "aws_security_group_rule" "lb-http-to-service" {
   source_security_group_id = aws_security_group.this.id
   type                     = "egress"
   protocol                 = "tcp"
-  from_port                = 80
-  to_port                  = 80
+  from_port                = var.service_port
+  to_port                  = var.service_port
 
   count = var.enable_lb ? 1 : 0
 }
@@ -110,8 +110,8 @@ resource "aws_security_group_rule" "service-http-from-lb" {
   source_security_group_id = aws_security_group.lb[count.index].id
   type                     = "ingress"
   protocol                 = "tcp"
-  from_port                = 80
-  to_port                  = 80
+  from_port                = var.service_port
+  to_port                  = var.service_port
 
   count = var.enable_lb ? 1 : 0
 }
