@@ -52,12 +52,11 @@ It is dangerous to put sensitive information in this variable because they are n
 EOF
 }
 
-variable "service_container_port" {
+variable "service_port" {
   type        = number
   default     = 80
   description = <<EOF
-The port inside the container to expose externally.
-This will be forwarded to port 80 externally.
+The port that the service is listening on.
 This is set to port 80 by default; however, if the service in the container is a non-root user,
 the service will fail due to bind due to permission errors.
 EOF

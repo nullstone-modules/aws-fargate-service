@@ -21,7 +21,7 @@ resource "aws_ecs_service" "this" {
     content {
       target_group_arn = load_balancer.value
       container_name   = data.ns_workspace.this.block
-      container_port   = 80
+      container_port   = var.service_port
     }
   }
 
