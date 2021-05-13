@@ -18,6 +18,12 @@ locals {
     cpu               = var.service_cpu
     memoryReservation = var.service_memory
 
+    linuxParameters = {
+      capabilities = {
+        add = ["NET_BIND_SERVICE"]
+      }
+    }
+
     mountPoints = []
     volumesFrom = []
 
