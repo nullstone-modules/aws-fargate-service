@@ -22,6 +22,16 @@ resource "aws_security_group_rule" "this-http-from-private-subnets" {
   cidr_blocks       = data.ns_connection.network.outputs.private_cidrs
 }
 
+// TODO: Drop this once we have a better way of reaching via bastion
+resource "aws_security_group_rule" "this-http-from-public-subnets" {
+  security_group_id = aws_security_group.this.id
+  type              = "ingress"
+  protocol          = "tcp"
+  from_port         = var.service_port
+  to_port           = var.service_port
+  cidr_blocks       = data.ns_connection.network.outputs.public_cidrs
+}
+
 resource "aws_security_group_rule" "this-http-to-private-subnets" {
   security_group_id = aws_security_group.this.id
   type              = "egress"
