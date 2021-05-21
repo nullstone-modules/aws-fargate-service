@@ -18,7 +18,7 @@ resource "aws_lb" "this" {
 }
 
 resource "aws_lb_listener" "http" {
-  count = var.enable_lb && ! var.enable_https ? 1 : 0
+  count = var.enable_lb && !local.https_on ? 1 : 0
 
   load_balancer_arn = aws_lb.this[count.index].arn
   protocol          = "HTTP"
@@ -30,8 +30,12 @@ resource "aws_lb_listener" "http" {
   }
 }
 
+locals {
+  https_on = var.enable_https && local.cert_arn != ""
+}
+
 resource "aws_lb_listener" "http-redirect-to-https" {
-  count = var.enable_lb && var.enable_https ? 1 : 0
+  count = var.enable_lb && local.https_on ? 1 : 0
 
   load_balancer_arn = aws_lb.this[count.index].arn
   port              = 80
@@ -49,7 +53,7 @@ resource "aws_lb_listener" "http-redirect-to-https" {
 }
 
 resource "aws_lb_listener" "https" {
-  count = var.enable_lb && var.enable_https ? 1 : 0
+  count = var.enable_lb && local.https_on ? 1 : 0
 
   load_balancer_arn = aws_lb.this[count.index].arn
   protocol          = "HTTPS"
@@ -79,7 +83,7 @@ resource "aws_security_group_rule" "lb-https-from-world" {
   from_port         = 443
   to_port           = 443
 
-  count = var.enable_lb && var.enable_https ? 1 : 0
+  count = var.enable_lb && local.https_on ? 1 : 0
 }
 
 // This rule is always enabled; when we are listening on https, we still want to force http to https through redirect
