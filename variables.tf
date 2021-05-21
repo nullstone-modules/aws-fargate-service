@@ -61,15 +61,3 @@ This is set to port 80 by default; however, if the service in the container is a
 the service will fail due to bind due to permission errors.
 EOF
 }
-
-resource "random_string" "resource_suffix" {
-  length  = 8
-  lower   = true
-  upper   = false
-  number  = false
-  special = false
-}
-
-locals {
-  resource_name = "${data.ns_workspace.this.block}-${random_string.resource_suffix.result}"
-}

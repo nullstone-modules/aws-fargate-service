@@ -66,7 +66,7 @@ resource "aws_lb_listener" "https" {
 resource "aws_security_group" "lb" {
   name   = "${local.resource_name}/lb"
   vpc_id = data.ns_connection.network.outputs.vpc_id
-  tags   = merge(data.ns_workspace.this.tags, { Name = "${data.ns_workspace.this.slashed_name}/lb" })
+  tags   = merge(data.ns_workspace.this.tags, { Name = "${local.resource_name}/lb" })
 
   count = var.enable_lb ? 1 : 0
 }

@@ -2,7 +2,7 @@ locals {
   env_vars = [for k, v in var.service_env_vars : map("name", k, "value", v)]
 
   container_definition = {
-    name      = data.ns_workspace.this.block
+    name      = data.ns_workspace.this.block_name
     image     = "${local.service_image}:${local.app_version}"
     essential = true
     portMappings = [
@@ -26,7 +26,7 @@ locals {
       options = {
         "awslogs-region"        = data.aws_region.this.name
         "awslogs-group"         = aws_cloudwatch_log_group.this.name
-        "awslogs-stream-prefix" = data.ns_workspace.this.env
+        "awslogs-stream-prefix" = data.ns_workspace.this.env_name
       }
     }
   }

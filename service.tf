@@ -1,5 +1,5 @@
 resource "aws_ecs_service" "this" {
-  name            = data.ns_workspace.this.block
+  name            = data.ns_workspace.this.block_name
   cluster         = data.aws_ecs_cluster.cluster.arn
   desired_count   = 1
   task_definition = aws_ecs_task_definition.this.arn
@@ -20,7 +20,7 @@ resource "aws_ecs_service" "this" {
 
     content {
       target_group_arn = load_balancer.value
-      container_name   = data.ns_workspace.this.block
+      container_name   = data.ns_workspace.this.block_name
       container_port   = var.service_port
     }
   }
@@ -45,7 +45,7 @@ resource "aws_lb_target_group" "this" {
 }
 
 resource "aws_service_discovery_service" "this" {
-  name = data.ns_workspace.this.block
+  name = data.ns_workspace.this.block_name
 
   dns_config {
     namespace_id = data.ns_connection.network.outputs.service_discovery_id
