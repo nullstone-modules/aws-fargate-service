@@ -1,3 +1,7 @@
+output "region" {
+  value = data.aws_region.this.name
+}
+
 output "cluster_arn" {
   value       = data.aws_ecs_cluster.cluster.arn
   description = "string ||| "
