@@ -1,6 +1,9 @@
-resource "aws_cloudwatch_log_group" "this" {
-  name = local.resource_name
-  tags = data.ns_workspace.this.tags
+module "logs" {
+  source = "nullstone-modules/logs/aws"
+
+  name              = local.resource_name
+  tags              = data.ns_workspace.this.tags
+  enable_log_reader = true
 }
 
 module "lb_logs_bucket" {
