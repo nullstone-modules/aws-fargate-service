@@ -16,7 +16,7 @@ resource "aws_ecs_service" "this" {
   }
 
   dynamic "load_balancer" {
-    for_each = var.enable_lb ? [aws_lb_target_group.this.arn] : []
+    for_each = module.load_balancer.*.target_group_arn
 
     content {
       target_group_arn = load_balancer.value
@@ -25,23 +25,7 @@ resource "aws_ecs_service" "this" {
     }
   }
 
-  depends_on = [aws_lb_listener.http, aws_lb_listener.https]
-}
-
-resource "aws_lb_target_group" "this" {
-  name                 = local.resource_name
-  port                 = 80
-  protocol             = "HTTP"
-  target_type          = "ip"
-  vpc_id               = data.ns_connection.network.outputs.vpc_id
-  deregistration_delay = 30
-
-  health_check {
-    // TODO: Allowing any HTTP response to imply healthy, expand later
-    matcher = "200-499"
-  }
-
-  tags = data.ns_workspace.this.tags
+  depends_on = [module.load_balancer]
 }
 
 resource "aws_service_discovery_service" "this" {
