@@ -20,15 +20,16 @@ data "aws_iam_policy_document" "log_reader" {
     effect = "Allow"
 
     actions = [
-      "logs:Describe*",
       "logs:Get*",
       "logs:List*",
       "logs:StartQuery",
       "logs:StopQuery",
       "logs:TestMetricFilter",
-      "logs:FilterLogEvents"
+      "logs:Filter*"
     ]
 
-    resources = [aws_cloudwatch_log_group.this.arn]
+    resources = [
+      "${aws_cloudwatch_log_group.this.arn}:log-stream:*"
+    ]
   }
 }
