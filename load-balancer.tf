@@ -18,7 +18,7 @@ resource "aws_lb" "this" {
 }
 
 resource "aws_lb_listener" "http" {
-  count = var.enable_lb && !local.https_on ? 1 : 0
+  count = var.enable_lb && ! local.https_on ? 1 : 0
 
   load_balancer_arn = aws_lb.this[count.index].arn
   protocol          = "HTTP"
