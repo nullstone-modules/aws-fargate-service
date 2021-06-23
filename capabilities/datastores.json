@@ -1,0 +1,15 @@
+[
+  {
+    "security_group": {
+      "id": "",
+      "protocol": "tcp",
+      "port": 5432
+    },
+    "secrets": [
+      {
+        "name": "POSTGRES_URL",
+        "valueFrom": "arn:aws:secretsmanager:us-east-1:522657839841:secret:raspberry-lizard-bvvfc/master-Nbb4xk"
+      }
+    ]
+  }
+]

@@ -14,6 +14,7 @@ locals {
     ]
 
     environment = local.env_vars
+    secrets     = local.ds_secrets
 
     cpu               = var.service_cpu
     memoryReservation = var.service_memory
