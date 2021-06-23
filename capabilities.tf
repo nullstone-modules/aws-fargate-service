@@ -8,10 +8,13 @@ locals {
   datastores      = jsondecode(file("capabilities/datastores.json"))
   ds_secrets_deep = [for ds in local.datastores : ds.secrets if ds.secrets != null]
   ds_secrets      = flatten(local.ds_secrets_deep)
+  ds_env_deep     = [for ds in local.datastores : ds.env if ds.env != null]
+  ds_env          = flatten(local.ds_env_deep)
   ds_sec_groups   = [for ds in local.datastores : ds.security_group if ds.security_group != null]
 }
 
 locals {
+  all_env     = concat([], local.ds_env)
   all_secrets = concat([], local.ds_secrets)
 }
 

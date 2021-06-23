@@ -13,7 +13,7 @@ locals {
       }
     ]
 
-    environment = local.env_vars
+    environment = concat(local.env_vars, local.all_env)
     secrets     = local.ds_secrets
 
     cpu               = var.service_cpu
