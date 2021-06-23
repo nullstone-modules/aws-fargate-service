@@ -18,8 +18,9 @@ locals {
 }
 
 locals {
-  all_env     = concat([], local.ds_env)
-  all_secrets = concat([], local.ds_secrets)
+  all_env         = concat([], local.ds_env)
+  all_secrets     = concat([], local.ds_secrets)
+  all_secret_arns = [for sec in local.all_secrets : sec.valueFrom]
 }
 
 resource "aws_security_group_rule" "this-to-datastore" {

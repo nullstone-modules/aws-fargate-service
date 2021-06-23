@@ -41,7 +41,3 @@ locals {
 data "aws_ecs_cluster" "cluster" {
   cluster_name = data.ns_connection.cluster.outputs.cluster_name
 }
-
-data "aws_iam_role" "execution" {
-  name = data.ns_connection.cluster.outputs.cluster_execution_role_name
-}
