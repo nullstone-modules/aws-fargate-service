@@ -16,12 +16,12 @@ resource "aws_ecs_service" "this" {
   }
 
   dynamic "load_balancer" {
-    for_each = module.load_balancer.*.target_group_arn
+    for_each = local.load_balancers
 
     content {
-      target_group_arn = load_balancer.value
       container_name   = data.ns_workspace.this.block_name
-      container_port   = var.service_port
+      container_port   = load_balancer.value.port
+      target_group_arn = load_balancer.value.target_group_arn
     }
   }
 
