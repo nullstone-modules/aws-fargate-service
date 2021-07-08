@@ -1,4 +1,4 @@
-// This file is replaced by code-generation in nullstone engine
+// This file is replaced by code-generation using 'capabilities.tf.tmpl'
 locals {
   capabilities = {
     security_group_rules = [

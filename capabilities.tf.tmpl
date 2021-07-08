@@ -1,0 +1,21 @@
+{{ range . -}}
+module "cap_{{ .Name }}" {
+  source  = "{{ .Source }}"
+  version = "{{ .SourceVersion }}"
+
+  resource_name = local.resource_name
+  tags          = data.ns_workspace.this.tags
+
+  {{- range $key, $value := .Variables }}
+  {{ $key }} = {{ $value }}
+  {{- end }}
+}
+{{ end }}
+module "caps" {
+  source  = "nullstone-modules/cap-merge/ns"
+  modules = [{{ range $index, $element := . }}{{ if $index }}, {{ end }}module.{{ $element.Name }}{{ end }}]
+}
+
+locals {
+  capabilities = module.caps.outputs
+}
