@@ -29,5 +29,16 @@ locals {
         target_group_arn = ""
       }
     ]
+
+    log_configurations = [
+      {
+        logDriver = "awslogs"
+        options = {
+          "awslogs-region"        = data.aws_region.this.name
+          "awslogs-group"         = module.logs.name
+          "awslogs-stream-prefix" = data.ns_workspace.this.env_name
+        }
+      }
+    ]
   }
 }
