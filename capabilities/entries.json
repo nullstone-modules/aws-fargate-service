@@ -1,8 +1,0 @@
-[
-  {
-    "load_balancer": {
-      "target_group_arn": "",
-      "port": 80
-    }
-  }
-]

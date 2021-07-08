@@ -40,3 +40,25 @@ resource "aws_security_group_rule" "this-http-to-private-subnets" {
   to_port           = 80
   cidr_blocks       = data.ns_connection.network.outputs.private_cidrs
 }
+
+resource "aws_security_group_rule" "this-to-datastore" {
+  for_each = local.capabilities.security_group_rules
+
+  security_group_id        = each.value.id
+  type                     = "egress"
+  from_port                = each.value.port
+  to_port                  = each.value.port
+  protocol                 = each.value.protocol
+  source_security_group_id = aws_security_group.this.id
+}
+
+resource "aws_security_group_rule" "datastore-from-this" {
+  for_each = local.capabilities.security_group_rules
+
+  security_group_id        = aws_security_group.this.id
+  type                     = "ingress"
+  from_port                = each.value.port
+  to_port                  = each.value.port
+  protocol                 = each.value.protocol
+  source_security_group_id = each.value.id
+}

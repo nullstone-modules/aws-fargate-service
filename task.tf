@@ -13,8 +13,8 @@ locals {
       }
     ]
 
-    environment = concat(local.env_vars, local.all_env)
-    secrets     = local.ds_secrets
+    environment = concat(local.env_vars, local.capabilities.env)
+    secrets     = local.capabilities.secrets
 
     cpu               = var.service_cpu
     memoryReservation = var.service_memory
