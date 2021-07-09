@@ -36,14 +36,18 @@ data "aws_iam_policy_document" "execution" {
     resources = [aws_iam_role.execution.arn]
   }
 
-  statement {
-    sid       = "AllowReadSecrets"
-    effect    = "Allow"
-    resources = [for secret in local.capabilities.secrets : secret.valueFrom]
+  dynamic "statement" {
+    for_each = signum(length(local.capabilities.secrets))
+    
+    content {
+      sid = "AllowReadSecrets"
+      effect = "Allow"
+      resources = [for secret in local.capabilities.secrets : secret.valueFrom]
 
-    actions = [
-      "secretsmanager:GetSecretValue",
-      "kms:Decrypt"
-    ]
+      actions = [
+        "secretsmanager:GetSecretValue",
+        "kms:Decrypt"
+      ]
+    }
   }
 }
