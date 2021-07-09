@@ -3,9 +3,6 @@ module "cap_{{ .Name }}" {
   source  = "{{ .Source }}"
   version = "{{ .SourceVersion }}"
 
-  resource_name = local.resource_name
-  tags          = data.ns_workspace.this.tags
-
   {{- range $key, $value := .Variables }}
   {{ if not $value.Unused -}}
   {{ $key }} = jsondecode({{ $value.Value | to_json }})
