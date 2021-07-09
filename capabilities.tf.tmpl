@@ -1,9 +1,10 @@
 {{ range . -}}
-provider "cap_{{ .Name }}" {
+provider "ns" {
   capability_id = "{{ .Id }}"
+  alias         = "cap_{{ .Id }}"
 }
 
-module "cap_{{ .Name }}" {
+module "cap_{{ .Id }}" {
   source  = "{{ .Source }}"
   version = "{{ .SourceVersion }}"
 
@@ -13,13 +14,13 @@ module "cap_{{ .Name }}" {
   {{- end }}{{ end }}
 
   providers = {
-    ns = ns.cap_{{ .Name}}
+    ns = ns.cap_{{ .Id}}
   }
 }
 {{ end }}
 module "caps" {
   source  = "nullstone-modules/cap-merge/ns"
-  modules = [{{ range $index, $element := . }}{{ if $index }}, {{ end }}module.cap_{{ $element.Name }}{{ end }}]
+  modules = [{{ range $index, $element := . }}{{ if $index }}, {{ end }}module.cap_{{ $element.Id }}{{ end }}]
 }
 
 locals {
