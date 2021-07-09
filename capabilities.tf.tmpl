@@ -1,6 +1,6 @@
 {{ range . -}}
 provider "ns" {
-  capability_id = "{{ .Id }}"
+  capability_id = {{ .Id }}
   alias         = "cap_{{ .Id }}"
 }
 
