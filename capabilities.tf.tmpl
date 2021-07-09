@@ -7,13 +7,14 @@ module "cap_{{ .Name }}" {
   tags          = data.ns_workspace.this.tags
 
   {{- range $key, $value := .Variables }}
-  {{ $key }} = {{ $value }}
-  {{- end }}
+  {{ if not $value.Unused -}}
+  {{ $key }} = jsondecode({{ $value.Value | to_json }})
+  {{- end }}{{ end }}
 }
 {{ end }}
 module "caps" {
   source  = "nullstone-modules/cap-merge/ns"
-  modules = [{{ range $index, $element := . }}{{ if $index }}, {{ end }}module.{{ $element.Name }}{{ end }}]
+  modules = [{{ range $index, $element := . }}{{ if $index }}, {{ end }}module.cap_{{ $element.Name }}{{ end }}]
 }
 
 locals {
