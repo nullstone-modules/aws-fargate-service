@@ -1,4 +1,8 @@
 {{ range . -}}
+provider "cap_{{ .Name }}" {
+  capability_id = "{{ .Id }}"
+}
+
 module "cap_{{ .Name }}" {
   source  = "{{ .Source }}"
   version = "{{ .SourceVersion }}"
@@ -7,6 +11,10 @@ module "cap_{{ .Name }}" {
   {{ if not $value.Unused -}}
   {{ $key }} = jsondecode({{ $value.Value | to_json }})
   {{- end }}{{ end }}
+
+  providers = {
+    ns = ns.cap_{{ .Name}}
+  }
 }
 {{ end }}
 module "caps" {
