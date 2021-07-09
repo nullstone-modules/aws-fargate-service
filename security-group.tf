@@ -42,23 +42,23 @@ resource "aws_security_group_rule" "this-http-to-private-subnets" {
 }
 
 resource "aws_security_group_rule" "this-to-datastore" {
-  for_each = local.capabilities.security_group_rules
+  count = length(local.capabilities.security_group_rules)
 
-  security_group_id        = each.value.id
+  security_group_id        = local.capabilities.security_group_rules[count.index].id
   type                     = "egress"
-  from_port                = each.value.port
-  to_port                  = each.value.port
-  protocol                 = each.value.protocol
+  from_port                = local.capabilities.security_group_rules[count.index].port
+  to_port                  = local.capabilities.security_group_rules[count.index].port
+  protocol                 = local.capabilities.security_group_rules[count.index].protocol
   source_security_group_id = aws_security_group.this.id
 }
 
 resource "aws_security_group_rule" "datastore-from-this" {
-  for_each = local.capabilities.security_group_rules
+  count = length(local.capabilities.security_group_rules)
 
   security_group_id        = aws_security_group.this.id
   type                     = "ingress"
-  from_port                = each.value.port
-  to_port                  = each.value.port
-  protocol                 = each.value.protocol
-  source_security_group_id = each.value.id
+  from_port                = local.capabilities.security_group_rules[count.index].port
+  to_port                  = local.capabilities.security_group_rules[count.index].port
+  protocol                 = local.capabilities.security_group_rules[count.index].protocol
+  source_security_group_id = local.capabilities.security_group_rules[count.index].id
 }
