@@ -37,8 +37,8 @@ data "aws_iam_policy_document" "execution" {
   }
 
   dynamic "statement" {
-    for_each = signum(length(local.capabilities.secrets))
-    
+    for_each = length(local.capabilities.secrets) > 0 ? [1] : []
+
     content {
       sid = "AllowReadSecrets"
       effect = "Allow"
