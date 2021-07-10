@@ -42,7 +42,7 @@ resource "aws_security_group_rule" "this-http-to-private-subnets" {
 }
 
 resource "aws_security_group_rule" "this-to-datastore" {
-  count = length(local.capabilities.security_group_rules)
+  count = length(try(local.capabilities.security_group_rules, []))
 
   security_group_id        = local.capabilities.security_group_rules[count.index].id
   type                     = "egress"
@@ -53,7 +53,7 @@ resource "aws_security_group_rule" "this-to-datastore" {
 }
 
 resource "aws_security_group_rule" "datastore-from-this" {
-  count = length(local.capabilities.security_group_rules)
+  count = length(local.security_group_rules)
 
   security_group_id        = aws_security_group.this.id
   type                     = "ingress"

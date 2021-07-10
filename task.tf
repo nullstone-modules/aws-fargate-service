@@ -1,7 +1,7 @@
 locals {
-  env_vars = [for k, v in var.service_env_vars : map("name", k, "value", v)]
+  env_vars = [for k, v in var.service_env_vars : { name = k, value = v }]
 
-  log_configurations = concat(local.capabilities.log_configurations, [{
+  log_configurations = concat(try(local.capabilities.log_configurations, []), [{
     logDriver = "awslogs"
     options = {
       "awslogs-region"        = data.aws_region.this.name
@@ -22,7 +22,7 @@ locals {
       }
     ]
 
-    environment = concat(local.env_vars, local.capabilities.env)
+    environment = concat(local.env_vars, try(local.capabilities.env, []))
     secrets     = local.capabilities.secrets
 
     cpu               = var.service_cpu

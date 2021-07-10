@@ -16,7 +16,7 @@ resource "aws_ecs_service" "this" {
   }
 
   dynamic "load_balancer" {
-    for_each = local.capabilities.load_balancers
+    for_each = try(local.capabilities.load_balancers, [])
 
     content {
       container_name   = data.ns_workspace.this.block_name

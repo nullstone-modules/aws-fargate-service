@@ -20,16 +20,11 @@ module "cap_{{ .Id }}" {
 {{ end }}
 module "caps" {
   source  = "nullstone-modules/cap-merge/ns"
-  modules = [local.default_capability{{ range $index, $element := . }}, module.cap_{{ $element.Id }}{{ end }}]
+  modules = local.modules
 }
 
 locals {
-  default_capability = {
-    security_group_rules = []
-    env                  = []
-    secrets              = []
-    load_balancers       = []
-    log_configurations   = []
-  }
-  capabilities = module.caps.outputs
+  modules              = [{{ range $index, $element := . }}{{ if $index }}, {{ end }}module.cap_{{ $element.Id }}{{ end }}]
+  capabilities         = module.caps.outputs
+  security_group_rules = flatten([for mod in local.modules : try(mod.security_group_rules, [])])
 }
