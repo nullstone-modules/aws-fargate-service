@@ -10,7 +10,7 @@ module "cap_{{ .Id }}" {
 
   {{- range $key, $value := .Variables }}
   {{ if not $value.Unused -}}
-  {{ $key }} = jsondecode({{ $value.Value | to_json }})
+  {{ $key }} = jsondecode({{ $value.Value | to_json_string }})
   {{- end }}{{ end }}
 
   providers = {
