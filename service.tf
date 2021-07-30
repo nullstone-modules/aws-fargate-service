@@ -8,7 +8,7 @@ resource "aws_ecs_service" "this" {
   network_configuration {
     subnets          = data.ns_connection.network.outputs.private_subnet_ids
     assign_public_ip = false
-    security_groups  = compact([aws_security_group.this.id, local.db_user_security_group_id])
+    security_groups  = [aws_security_group.this.id]
   }
 
   service_registries {
