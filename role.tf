@@ -28,6 +28,11 @@ resource "aws_iam_policy" "execution" {
   policy      = data.aws_iam_policy_document.execution.json
 }
 
+locals {
+  secret_valueFroms          = [for secret in try(local.capabilities.secrets, []) : secret.valueFrom]
+  secret_statement_resources = length(local.secret_valueFroms) > 0 ? [[local.secret_valueFroms]] : []
+}
+
 data "aws_iam_policy_document" "execution" {
   statement {
     sid       = "AllowPassRoleToECS"
@@ -37,12 +42,12 @@ data "aws_iam_policy_document" "execution" {
   }
 
   dynamic "statement" {
-    for_each = [for secret in try(local.capabilities.secrets, []) : secret.valueFrom]
+    for_each = local.secret_statement_resources
 
     content {
       sid       = "AllowReadSecrets"
       effect    = "Allow"
-      resources = [statement.value]
+      resources = statement.value
 
       actions = [
         "secretsmanager:GetSecretValue",
