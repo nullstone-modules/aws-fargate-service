@@ -37,12 +37,12 @@ data "aws_iam_policy_document" "execution" {
   }
 
   dynamic "statement" {
-    for_each = [[for secret in try(local.capabilities.secrets, []) : secret.valueFrom]]
+    for_each = [for secret in try(local.capabilities.secrets, []) : secret.valueFrom]
 
     content {
       sid       = "AllowReadSecrets"
       effect    = "Allow"
-      resources = statement.value
+      resources = [statement.value]
 
       actions = [
         "secretsmanager:GetSecretValue",
