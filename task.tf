@@ -23,7 +23,7 @@ locals {
     ]
 
     environment = concat(local.env_vars, try(local.capabilities.env, []))
-    secrets     = local.capabilities.secrets
+    secrets     = try(local.capabilities.secrets, [])
 
     cpu               = var.service_cpu
     memoryReservation = var.service_memory
