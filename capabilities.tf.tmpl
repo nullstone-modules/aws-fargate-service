@@ -1,0 +1,30 @@
+{{ range . -}}
+provider "ns" {
+  capability_id = {{ .Id }}
+  alias         = "cap_{{ .Id }}"
+}
+
+module "cap_{{ .Id }}" {
+  source  = "{{ .Source }}/any"
+  {{ if (ne .SourceVersion "latest") }}version = "{{ .SourceVersion }}"{{ end }}
+
+  {{- range $key, $value := .Variables }}
+  {{ if not $value.Unused -}}
+  {{ $key }} = jsondecode({{ $value.Value | to_json_string }})
+  {{- end }}{{ end }}
+
+  providers = {
+    ns = ns.cap_{{ .Id}}
+  }
+}
+{{ end }}
+module "caps" {
+  source  = "nullstone-modules/cap-merge/ns"
+  modules = local.modules
+}
+
+locals {
+  modules              = [{{ range $index, $element := . }}{{ if $index }}, {{ end }}module.cap_{{ $element.Id }}{{ end }}]
+  capabilities         = module.caps.outputs
+  security_group_rules = flatten([for mod in local.modules : try(mod.security_group_rules, [])])
+}

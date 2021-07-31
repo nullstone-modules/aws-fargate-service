@@ -40,3 +40,25 @@ resource "aws_security_group_rule" "this-http-to-private-subnets" {
   to_port           = 80
   cidr_blocks       = data.ns_connection.network.outputs.private_cidrs
 }
+
+resource "aws_security_group_rule" "this-to-datastore" {
+  count = length(try(local.capabilities.security_group_rules, []))
+
+  security_group_id        = local.capabilities.security_group_rules[count.index].id
+  type                     = "egress"
+  from_port                = local.capabilities.security_group_rules[count.index].port
+  to_port                  = local.capabilities.security_group_rules[count.index].port
+  protocol                 = local.capabilities.security_group_rules[count.index].protocol
+  source_security_group_id = aws_security_group.this.id
+}
+
+resource "aws_security_group_rule" "datastore-from-this" {
+  count = length(local.security_group_rules)
+
+  security_group_id        = aws_security_group.this.id
+  type                     = "ingress"
+  from_port                = local.capabilities.security_group_rules[count.index].port
+  to_port                  = local.capabilities.security_group_rules[count.index].port
+  protocol                 = local.capabilities.security_group_rules[count.index].protocol
+  source_security_group_id = local.capabilities.security_group_rules[count.index].id
+}

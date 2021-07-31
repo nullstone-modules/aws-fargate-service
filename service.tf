@@ -8,7 +8,7 @@ resource "aws_ecs_service" "this" {
   network_configuration {
     subnets          = data.ns_connection.network.outputs.private_subnet_ids
     assign_public_ip = false
-    security_groups  = compact([aws_security_group.this.id, local.db_user_security_group_id])
+    security_groups  = [aws_security_group.this.id]
   }
 
   service_registries {
@@ -16,12 +16,12 @@ resource "aws_ecs_service" "this" {
   }
 
   dynamic "load_balancer" {
-    for_each = module.load_balancer.*.target_group_arn
+    for_each = try(local.capabilities.load_balancers, [])
 
     content {
-      target_group_arn = load_balancer.value
       container_name   = data.ns_workspace.this.block_name
-      container_port   = var.service_port
+      container_port   = load_balancer.value.port
+      target_group_arn = load_balancer.value.target_group_arn
     }
   }
 

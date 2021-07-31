@@ -26,22 +26,11 @@ data "ns_connection" "subdomain" {
   optional = true
 }
 
-data "ns_connection" "postgres" {
-  name     = "postgres"
-  type     = "postgres/aws-rds"
-  optional = true
-}
-
 locals {
-  db_user_security_group_id = try(data.ns_connection.postgres.outputs.db_user_security_group_id, "")
-  cert_arn                  = try(data.ns_connection.subdomain.outputs.cert_arn, "")
-  subdomain_zone_id         = try(data.ns_connection.subdomain.outputs.zone_id, "")
+  cert_arn          = try(data.ns_connection.subdomain.outputs.cert_arn, "")
+  subdomain_zone_id = try(data.ns_connection.subdomain.outputs.zone_id, "")
 }
 
 data "aws_ecs_cluster" "cluster" {
   cluster_name = data.ns_connection.cluster.outputs.cluster_name
-}
-
-data "aws_iam_role" "execution" {
-  name = data.ns_connection.cluster.outputs.cluster_execution_role_name
 }
