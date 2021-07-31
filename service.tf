@@ -24,8 +24,6 @@ resource "aws_ecs_service" "this" {
       target_group_arn = load_balancer.value.target_group_arn
     }
   }
-
-  depends_on = [module.load_balancer]
 }
 
 resource "aws_service_discovery_service" "this" {
