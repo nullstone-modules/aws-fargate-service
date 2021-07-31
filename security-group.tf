@@ -53,7 +53,7 @@ resource "aws_security_group_rule" "this-to-datastore" {
 }
 
 resource "aws_security_group_rule" "datastore-from-this" {
-  count = length(local.security_group_rules)
+  count = length(try(local.capabilities.security_group_rules, []))
 
   security_group_id        = aws_security_group.this.id
   type                     = "ingress"
@@ -61,4 +61,26 @@ resource "aws_security_group_rule" "datastore-from-this" {
   to_port                  = local.capabilities.security_group_rules[count.index].port
   protocol                 = local.capabilities.security_group_rules[count.index].protocol
   source_security_group_id = local.capabilities.security_group_rules[count.index].id
+}
+
+resource "aws_security_group_rule" "lb-http-to-this" {
+  count = length(try(local.capabilities.load_balancers, []))
+
+  security_group_id        = local.capabilities.load_balancers[count.index].security_group_id
+  type                     = "egress"
+  protocol                 = "tcp"
+  from_port                = local.capabilities.load_balancers[count.index].port
+  to_port                  = local.capabilities.load_balancers[count.index].port
+  source_security_group_id = aws_security_group.this.id
+}
+
+resource "aws_security_group_rule" "this-http-from-lb" {
+  count = length(try(local.capabilities.load_balancers, []))
+
+  security_group_id        = aws_security_group.this.id
+  type                     = "ingress"
+  protocol                 = "tcp"
+  from_port                = local.capabilities.load_balancers[count.index].port
+  to_port                  = local.capabilities.load_balancers[count.index].port
+  source_security_group_id = local.capabilities.load_balancers[count.index].security_group_id
 }

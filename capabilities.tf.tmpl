@@ -24,7 +24,6 @@ module "caps" {
 }
 
 locals {
-  modules              = [{{ range $index, $element := . }}{{ if $index }}, {{ end }}module.cap_{{ $element.Id }}{{ end }}]
-  capabilities         = module.caps.outputs
-  security_group_rules = flatten([for mod in local.modules : try(mod.security_group_rules, [])])
+  modules       = [{{ range $index, $element := . }}{{ if $index }}, {{ end }}module.cap_{{ $element.Id }}{{ end }}]
+  capabilities  = module.caps.outputs
 }

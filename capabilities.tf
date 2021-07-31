@@ -25,8 +25,9 @@ locals {
 
     load_balancers = [
       {
-        port             = 80
-        target_group_arn = ""
+        port              = 80
+        target_group_arn  = ""
+        security_group_id = ""
       }
     ]
 
