@@ -30,7 +30,7 @@ resource "aws_iam_policy" "execution" {
 
 locals {
   secret_valueFroms          = [for secret in try(local.capabilities.secrets, []) : secret.valueFrom]
-  secret_statement_resources = length(local.secret_valueFroms) > 0 ? [[local.secret_valueFroms]] : []
+  secret_statement_resources = length(local.secret_valueFroms) > 0 ? [local.secret_valueFroms] : []
 }
 
 data "aws_iam_policy_document" "execution" {
