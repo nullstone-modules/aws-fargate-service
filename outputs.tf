@@ -74,13 +74,3 @@ output "service_security_group_id" {
   value       = aws_security_group.this.id
   description = "string ||| "
 }
-
-output "lb_arn" {
-  value       = join("", module.load_balancer.*.lb_arn)
-  description = "string ||| "
-}
-
-output "lb_security_group_id" {
-  value       = join("", module.load_balancer.*.lb_security_group_id)
-  description = "string ||| "
-}
