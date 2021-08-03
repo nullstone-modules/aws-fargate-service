@@ -34,3 +34,7 @@ locals {
 data "aws_ecs_cluster" "cluster" {
   cluster_name = data.ns_connection.cluster.outputs.cluster_name
 }
+
+locals {
+  deployer_name = data.ns_connection.cluster.outputs.deployer["name"]
+}

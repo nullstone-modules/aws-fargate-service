@@ -34,13 +34,6 @@ locals {
 }
 
 data "aws_iam_policy_document" "execution" {
-  statement {
-    sid       = "AllowPassRoleToECS"
-    effect    = "Allow"
-    actions   = ["iam:PassRole"]
-    resources = [aws_iam_role.execution.arn]
-  }
-
   dynamic "statement" {
     for_each = local.secret_statement_resources
 
