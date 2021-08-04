@@ -22,10 +22,9 @@ resource "aws_iam_role_policy_attachment" "execution-managed" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-// Create policy to pass the execution role to ECS
-resource "aws_iam_policy" "execution" {
-  name_prefix = "execution-${local.resource_name}"
-  policy      = data.aws_iam_policy_document.execution.json
+resource "aws_iam_role_policy" "execution" {
+  role   = aws_iam_role.execution.id
+  policy = data.aws_iam_policy_document.execution.json
 }
 
 locals {
