@@ -1,14 +1,6 @@
 // This file is replaced by code-generation using 'capabilities.tf.tmpl'
 locals {
   capabilities = {
-    security_group_rules = [
-      {
-        id       = ""
-        protocol = "tcp"
-        port     = 0
-      }
-    ]
-
     env = [
       {
         name  = ""
@@ -25,9 +17,8 @@ locals {
 
     load_balancers = [
       {
-        port              = 80
-        target_group_arn  = ""
-        security_group_id = ""
+        port             = 80
+        target_group_arn = ""
       }
     ]
 
