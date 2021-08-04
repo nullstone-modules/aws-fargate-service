@@ -8,6 +8,10 @@ module "cap_{{ .Id }}" {
   source  = "{{ .Source }}/any"
   {{ if (ne .SourceVersion "latest") }}version = "{{ .SourceVersion }}"{{ end }}
 
+  app_metadata = {
+    security_group_id = aws_security_group.this.id
+  }
+
   {{- range $key, $value := .Variables }}
   {{ if not $value.Unused -}}
   {{ $key }} = jsondecode({{ $value.Value | to_json_string }})
