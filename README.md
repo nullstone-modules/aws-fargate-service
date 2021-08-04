@@ -4,12 +4,6 @@ Nullstone Block standing up an AWS Fargate container service using ECR and confi
 
 ## Inputs
 
-- `enable_lb: bool`
-  - Enable/Disable Load Balancer
-  - Default: `true`
-- `enable_https: bool`
-  - Enable/Disable https listener on load balancer
-  - Default: `true`
 - `service_cpu: number`
   - Service CPU Allocation
   - Measure in CPU shares as defined by docker

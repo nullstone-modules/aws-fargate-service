@@ -1,15 +1,3 @@
-variable "enable_lb" {
-  type        = bool
-  default     = true
-  description = "Enable this to add a load balancer in front of the Fargate service."
-}
-
-variable "enable_https" {
-  type        = bool
-  default     = true
-  description = "Enable this to force the load balancer to listen on HTTPS instead of HTTP."
-}
-
 variable "service_cpu" {
   type        = number
   default     = 256
