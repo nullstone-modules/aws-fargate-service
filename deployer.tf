@@ -15,7 +15,7 @@ resource "aws_iam_policy" "execution-pass-role" {
 
 data "aws_iam_policy_document" "deployer-execution" {
   statement {
-    side      = "AllowPassRoleToExecutionRole"
+    sid       = "AllowPassRoleToExecutionRole"
     effect    = "Allow"
     actions   = ["iam:PassRole"]
     resources = [aws_iam_role.execution.arn]
