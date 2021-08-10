@@ -25,5 +25,6 @@ data "aws_ecs_cluster" "cluster" {
 }
 
 locals {
-  deployer_name = data.ns_connection.cluster.outputs.deployer["name"]
+  deployer_name  = data.ns_connection.cluster.outputs.deployer["name"]
+  service_domain = data.ns_connection.network.outputs.service_discovery_name
 }
