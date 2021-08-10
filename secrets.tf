@@ -5,6 +5,8 @@ locals {
   // This is because the name of secrets isn't computed in the modules; only the secret value
   secret_keys = toset(nonsensitive([for secret in local.capabilities.secrets : secret["name"]]))
   cap_secrets = { for secret in local.capabilities.secrets : secret["name"] => secret["value"] }
+
+  // app_secrets is prepared in the form [{ name = "", valueFrom = "<arn>" }, ...] for injection into ECS services
   app_secrets = [for key in local.secret_keys : { name = key, valueFrom = aws_secretsmanager_secret.app_secret[key].arn }]
 }
 
