@@ -74,3 +74,18 @@ output "service_security_group_id" {
   value       = aws_security_group.this.id
   description = "string ||| "
 }
+
+locals {
+  additional_private_urls = [
+    "http://${aws_service_discovery_service.this.name}.${local.service_domain}:${var.service_port}"
+  ]
+  additional_public_urls = []
+}
+
+output "private_urls" {
+  value = concat([for url in try(local.capabilities.private_urls, []) : url.value], local.additional_private_urls)
+}
+
+output "public_urls" {
+  value = concat([for url in try(local.capabilities.public_urls, []) : url.value], local.additional_public_urls)
+}
