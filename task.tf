@@ -18,7 +18,7 @@ locals {
     name      = data.ns_workspace.this.block_name
     image     = "${local.service_image}:${local.app_version}"
     essential = true
-    portMappings = [
+    portMappings = var.service_port == 0 ? [] : [
       {
         protocol      = "tcp"
         containerPort = var.service_port

@@ -11,8 +11,12 @@ resource "aws_ecs_service" "this" {
     security_groups  = [aws_security_group.this.id]
   }
 
-  service_registries {
-    registry_arn = aws_service_discovery_service.this.arn
+  dynamic "service_registries" {
+    for_each = aws_service_discovery_service.this
+
+    content {
+      registry_arn = service_registries.value.arn
+    }
   }
 
   dynamic "load_balancer" {
@@ -27,6 +31,8 @@ resource "aws_ecs_service" "this" {
 }
 
 resource "aws_service_discovery_service" "this" {
+  count = var.service_port == 0 ? 0 : 1
+
   name = data.ns_workspace.this.block_name
 
   dns_config {

@@ -52,5 +52,6 @@ variable "service_port" {
 The port that the service is listening on.
 This is set to port 80 by default; however, if the service in the container is a non-root user,
 the service will fail due to bind due to permission errors.
+Specify 0 to disable network connectivity to this container.
 EOF
 }
