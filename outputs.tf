@@ -76,8 +76,8 @@ output "service_security_group_id" {
 }
 
 locals {
-  additional_private_urls = [
-    "http://${aws_service_discovery_service.this.name}.${local.service_domain}:${var.service_port}"
+  additional_private_urls = var.service_port == 0 ? [] : [
+    "http://${aws_service_discovery_service.this[0].name}.${local.service_domain}:${var.service_port}"
   ]
   additional_public_urls = []
 }

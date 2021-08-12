@@ -18,7 +18,7 @@ locals {
     name      = data.ns_workspace.this.block_name
     image     = "${local.service_image}:${local.app_version}"
     essential = true
-    portMappings = [
+    portMappings = var.service_port == 0 ? [] : [
       {
         protocol      = "tcp"
         containerPort = var.service_port
@@ -46,6 +46,7 @@ resource "aws_ecs_task_definition" "this" {
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   execution_role_arn       = aws_iam_role.execution.arn
+  depends_on               = [aws_iam_role_policy.execution]
   container_definitions    = jsonencode([local.container_definition])
   tags                     = data.ns_workspace.this.tags
 }

@@ -1,7 +1,7 @@
 resource "aws_ecs_service" "this" {
   name            = data.ns_workspace.this.block_name
   cluster         = data.aws_ecs_cluster.cluster.arn
-  desired_count   = 1
+  desired_count   = var.service_count
   task_definition = aws_ecs_task_definition.this.arn
   launch_type     = "FARGATE"
 
@@ -11,8 +11,12 @@ resource "aws_ecs_service" "this" {
     security_groups  = [aws_security_group.this.id]
   }
 
-  service_registries {
-    registry_arn = aws_service_discovery_service.this.arn
+  dynamic "service_registries" {
+    for_each = aws_service_discovery_service.this
+
+    content {
+      registry_arn = service_registries.value.arn
+    }
   }
 
   dynamic "load_balancer" {
@@ -27,6 +31,8 @@ resource "aws_ecs_service" "this" {
 }
 
 resource "aws_service_discovery_service" "this" {
+  count = var.service_port == 0 ? 0 : 1
+
   name = data.ns_workspace.this.block_name
 
   dns_config {
