@@ -83,9 +83,9 @@ locals {
 }
 
 output "private_urls" {
-  value = concat([for url in try(local.capabilities.private_urls, []) : url.value], local.additional_private_urls)
+  value = concat([for url in try(local.capabilities.private_urls, []) : url["url"]], local.additional_private_urls)
 }
 
 output "public_urls" {
-  value = concat([for url in try(local.capabilities.public_urls, []) : url.value], local.additional_public_urls)
+  value = concat([for url in try(local.capabilities.public_urls, []) : url["url"]], local.additional_public_urls)
 }
