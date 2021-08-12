@@ -1,3 +1,8 @@
+variable "service_count" {
+  type    = number
+  default = 1
+}
+
 variable "service_cpu" {
   type        = number
   default     = 256
