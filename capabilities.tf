@@ -46,7 +46,7 @@ locals {
         options = {
           "awslogs-region"        = data.aws_region.this.name
           "awslogs-group"         = module.logs.name
-          "awslogs-stream-prefix" = local.main_container_name
+          "awslogs-stream-prefix" = local.block_name
         }
       }
     ]

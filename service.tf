@@ -1,5 +1,5 @@
 resource "aws_ecs_service" "this" {
-  name            = data.ns_workspace.this.block_name
+  name            = local.block_name
   cluster         = data.aws_ecs_cluster.cluster.arn
   desired_count   = var.service_count
   task_definition = aws_ecs_task_definition.this.arn
@@ -23,7 +23,7 @@ resource "aws_ecs_service" "this" {
     for_each = lookup(local.capabilities, "load_balancers", [])
 
     content {
-      container_name   = data.ns_workspace.this.block_name
+      container_name   = local.block_name
       container_port   = load_balancer.value.port
       target_group_arn = load_balancer.value.target_group_arn
     }
@@ -33,7 +33,7 @@ resource "aws_ecs_service" "this" {
 resource "aws_service_discovery_service" "this" {
   count = var.service_port == 0 ? 0 : 1
 
-  name = data.ns_workspace.this.block_name
+  name = local.block_name
 
   dns_config {
     namespace_id = data.ns_connection.network.outputs.service_discovery_id

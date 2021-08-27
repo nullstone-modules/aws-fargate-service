@@ -3,7 +3,7 @@ locals {
     NULLSTONE_ENV = data.ns_workspace.this.env_name
   })
 
-  main_container_name = data.ns_workspace.this.block_name
+  main_container_name = "main"
 
   env_vars = [for k, v in merge(local.standard_env_vars, var.service_env_vars) : { name = k, value = v }]
 
@@ -12,7 +12,7 @@ locals {
     options = {
       "awslogs-region"        = data.aws_region.this.name
       "awslogs-group"         = module.logs.name
-      "awslogs-stream-prefix" = local.main_container_name
+      "awslogs-stream-prefix" = local.block_name
     }
   }])
 
