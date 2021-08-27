@@ -5,6 +5,11 @@ locals {
 
   main_container_name = "main"
 
+  // has_port_mapping dictates whether the main container should map a port to the network
+  // If the user specifies service_port=0, then that will disable
+  // If a capability sidecar specifies as owns_service_port=true, then that will also disable
+  disable_main_port_mapping = !(var.service_port > 0) || anytrue([for s in local.sidecars : tobool(lookup(s, "owns_service_port", false))])
+
   env_vars = [for k, v in merge(local.standard_env_vars, var.service_env_vars) : { name = k, value = v }]
 
   log_configurations = concat(try(local.capabilities.log_configurations, []), [{
@@ -20,7 +25,7 @@ locals {
     name      = local.main_container_name
     image     = "${local.service_image}:${local.app_version}"
     essential = true
-    portMappings = var.service_port == 0 ? [] : [
+    portMappings = local.disable_main_port_mapping ? [] : [
       {
         protocol      = "tcp"
         containerPort = var.service_port
