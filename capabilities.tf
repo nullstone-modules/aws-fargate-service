@@ -59,5 +59,20 @@ locals {
         path = "/path/on/main/disk"
       }
     ]
+
+    // sidecars allow capabilities to attach additional containers to the service
+    sidecars = [
+      {
+        name         = ""
+        image        = ""
+        essential    = false
+        portMappings = [{ protocol = "tcp", containerPort = 0, hostPort = 0 }]
+        environment  = [{ name = "", value = "" }]
+        secrets      = [{ name = "", valueFrom = "" }]
+        mountPoints  = [{ sourceVolume = "", containerPath = "" }]
+        volumesFrom  = [{ sourceContainer = "" }]
+        dependsOn    = [{ containerName = "", condition = "" }]
+      }
+    ]
   }
 }

@@ -46,7 +46,7 @@ resource "aws_ecs_task_definition" "this" {
   requires_compatibilities = ["FARGATE"]
   execution_role_arn       = aws_iam_role.execution.arn
   depends_on               = [aws_iam_role_policy.execution]
-  container_definitions    = jsonencode([local.container_definition])
+  container_definitions    = jsonencode(concat([local.container_definition], local.addl_container_defs))
   tags                     = data.ns_workspace.this.tags
 
   dynamic "volume" {
