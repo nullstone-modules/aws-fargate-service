@@ -3,6 +3,8 @@ locals {
     NULLSTONE_ENV = data.ns_workspace.this.env_name
   })
 
+  main_container_name = data.ns_workspace.this.block_name
+
   env_vars = [for k, v in merge(local.standard_env_vars, var.service_env_vars) : { name = k, value = v }]
 
   log_configurations = concat(try(local.capabilities.log_configurations, []), [{
@@ -10,12 +12,12 @@ locals {
     options = {
       "awslogs-region"        = data.aws_region.this.name
       "awslogs-group"         = module.logs.name
-      "awslogs-stream-prefix" = data.ns_workspace.this.env_name
+      "awslogs-stream-prefix" = local.main_container_name
     }
   }])
 
   container_definition = {
-    name      = data.ns_workspace.this.block_name
+    name      = local.main_container_name
     image     = "${local.service_image}:${local.app_version}"
     essential = true
     portMappings = var.service_port == 0 ? [] : [
