@@ -34,7 +34,7 @@ locals {
     cpu               = var.service_cpu
     memoryReservation = var.service_memory
 
-    mountPoints = []
+    mountPoints = local.mount_points
     volumesFrom = []
 
     logConfiguration = local.log_configurations[0]
@@ -51,4 +51,12 @@ resource "aws_ecs_task_definition" "this" {
   depends_on               = [aws_iam_role_policy.execution]
   container_definitions    = jsonencode([local.container_definition])
   tags                     = data.ns_workspace.this.tags
+
+  dynamic "volume" {
+    for_each = local.volumes
+
+    content {
+      name = volume.key
+    }
+  }
 }

@@ -50,5 +50,14 @@ locals {
         }
       }
     ]
+
+    // capabilities can attach mount points to pull/push data from/to the main container
+    // The name of each mount point will be added to the task as a volume, then mounted in the main container
+    mount_points = [
+      {
+        name = "volume-name"
+        path = "/path/on/main/disk"
+      }
+    ]
   }
 }
