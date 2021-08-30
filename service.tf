@@ -23,7 +23,7 @@ resource "aws_ecs_service" "this" {
     for_each = lookup(local.capabilities, "load_balancers", [])
 
     content {
-      container_name   = local.block_name
+      container_name   = local.lb_container_name
       container_port   = load_balancer.value.port
       target_group_arn = load_balancer.value.target_group_arn
     }

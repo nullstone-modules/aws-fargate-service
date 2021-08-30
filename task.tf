@@ -8,7 +8,7 @@ locals {
   // has_port_mapping dictates whether the main container should map a port to the network
   // If the user specifies service_port=0, then that will disable
   // If a capability sidecar specifies as owns_service_port=true, then that will also disable
-  disable_main_port_mapping = !(var.service_port > 0) || anytrue([for s in local.sidecars : tobool(lookup(s, "owns_service_port", false))])
+  disable_main_port_mapping = !(var.service_port > 0) || anytrue(values(local.sidecars_owns_service_port))
 
   env_vars = [for k, v in merge(local.standard_env_vars, var.service_env_vars) : { name = k, value = v }]
 
