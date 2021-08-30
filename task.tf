@@ -3,6 +3,13 @@ locals {
     NULLSTONE_ENV = data.ns_workspace.this.env_name
   })
 
+  main_container_name = "main"
+
+  // has_port_mapping dictates whether the main container should map a port to the network
+  // If the user specifies service_port=0, then that will disable
+  // If a capability sidecar specifies as owns_service_port=true, then that will also disable
+  disable_main_port_mapping = !(var.service_port > 0) || anytrue([for s in local.sidecars : tobool(lookup(s, "owns_service_port", false))])
+
   env_vars = [for k, v in merge(local.standard_env_vars, var.service_env_vars) : { name = k, value = v }]
 
   log_configurations = concat(try(local.capabilities.log_configurations, []), [{
@@ -10,15 +17,15 @@ locals {
     options = {
       "awslogs-region"        = data.aws_region.this.name
       "awslogs-group"         = module.logs.name
-      "awslogs-stream-prefix" = data.ns_workspace.this.env_name
+      "awslogs-stream-prefix" = local.block_name
     }
   }])
 
   container_definition = {
-    name      = data.ns_workspace.this.block_name
+    name      = local.main_container_name
     image     = "${local.service_image}:${local.app_version}"
     essential = true
-    portMappings = var.service_port == 0 ? [] : [
+    portMappings = local.disable_main_port_mapping ? [] : [
       {
         protocol      = "tcp"
         containerPort = var.service_port
@@ -29,10 +36,7 @@ locals {
     environment = concat(local.env_vars, try(local.capabilities.env, []))
     secrets     = local.app_secrets
 
-    cpu               = var.service_cpu
-    memoryReservation = var.service_memory
-
-    mountPoints = []
+    mountPoints = local.mount_points
     volumesFrom = []
 
     logConfiguration = local.log_configurations[0]
@@ -47,6 +51,14 @@ resource "aws_ecs_task_definition" "this" {
   requires_compatibilities = ["FARGATE"]
   execution_role_arn       = aws_iam_role.execution.arn
   depends_on               = [aws_iam_role_policy.execution]
-  container_definitions    = jsonencode([local.container_definition])
+  container_definitions    = jsonencode(concat([local.container_definition], local.addl_container_defs))
   tags                     = data.ns_workspace.this.tags
+
+  dynamic "volume" {
+    for_each = local.volumes
+
+    content {
+      name = volume.key
+    }
+  }
 }

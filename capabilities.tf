@@ -46,8 +46,32 @@ locals {
         options = {
           "awslogs-region"        = data.aws_region.this.name
           "awslogs-group"         = module.logs.name
-          "awslogs-stream-prefix" = data.ns_workspace.this.env_name
+          "awslogs-stream-prefix" = local.block_name
         }
+      }
+    ]
+
+    // capabilities can attach mount points to pull/push data from/to the main container
+    // The name of each mount point will be added to the task as a volume, then mounted in the main container
+    mount_points = [
+      {
+        name = "volume-name"
+        path = "/path/on/main/disk"
+      }
+    ]
+
+    // sidecars allow capabilities to attach additional containers to the service
+    sidecars = [
+      {
+        name         = ""
+        image        = ""
+        essential    = false
+        portMappings = [{ protocol = "tcp", containerPort = 0, hostPort = 0 }]
+        environment  = [{ name = "", value = "" }]
+        secrets      = [{ name = "", valueFrom = "" }]
+        mountPoints  = [{ sourceVolume = "", containerPath = "" }]
+        volumesFrom  = [{ sourceContainer = "" }]
+        dependsOn    = [{ containerName = "", condition = "" }]
       }
     ]
   }
