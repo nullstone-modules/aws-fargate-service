@@ -4,6 +4,24 @@ resource "aws_security_group" "this" {
   tags   = merge(data.ns_workspace.this.tags, { Name = local.resource_name })
 }
 
+resource "aws_security_group_rule" "this-dns-tcp-to-world" {
+  security_group_id = aws_security_group.this.id
+  type              = "egress"
+  protocol          = "tcp"
+  from_port         = 53
+  to_port           = 53
+  cidr_blocks       = ["0.0.0.0/0"]
+}
+
+resource "aws_security_group_rule" "this-dns-udp-to-world" {
+  security_group_id = aws_security_group.this.id
+  type              = "egress"
+  protocol          = "udp"
+  from_port         = 53
+  to_port           = 53
+  cidr_blocks       = ["0.0.0.0/0"]
+}
+
 resource "aws_security_group_rule" "this-https-to-world" {
   security_group_id = aws_security_group.this.id
   type              = "egress"
