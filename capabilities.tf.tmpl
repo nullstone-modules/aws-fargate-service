@@ -4,7 +4,7 @@ provider "ns" {
   alias         = "cap_{{ .Id }}"
 }
 
-module "cap_{{ .Id }}" {
+module "{{ .TfModuleName }}" {
   source  = "{{ .Source }}/any"
   {{ if (ne .SourceVersion "latest") }}version = "{{ .SourceVersion }}"{{ end }}
 
@@ -30,6 +30,10 @@ module "caps" {
 }
 
 locals {
-  modules       = [{{ range $index, $element := .ExceptNeedsDestroyed }}{{ if $index }}, {{ end }}module.cap_{{ $element.Id }}{{ end }}]
+  modules       = [
+{{- range $index, $element := .ExceptNeedsDestroyed.TfModuleAddrs -}}
+{{ if $index }}, {{ end }}{{ $element }}
+{{- end -}}
+]
   capabilities  = module.caps.outputs
 }
