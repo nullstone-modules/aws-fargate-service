@@ -30,6 +30,6 @@ module "caps" {
 }
 
 locals {
-  modules       = [{{ range $index, $element := . }}{{ if $index }}, {{ end }}module.cap_{{ $element.Id }}{{ end }}]
+  modules       = [{{ range $index, $element := .ExceptNeedsDestroyed }}{{ if $index }}, {{ end }}module.cap_{{ $element.Id }}{{ end }}]
   capabilities  = module.caps.outputs
 }
