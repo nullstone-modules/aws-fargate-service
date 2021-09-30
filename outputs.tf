@@ -8,7 +8,7 @@ output "cluster_arn" {
 }
 
 output "log_provider" {
-  value       = "cloudwatch"
+  value       = local.log_provider
   description = "string ||| "
 }
 

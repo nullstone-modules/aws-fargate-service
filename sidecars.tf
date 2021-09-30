@@ -11,12 +11,13 @@ locals {
       containerPort = tonumber(mapping.containerPort)
       hostPort      = tonumber(mapping.hostPort)
     }]
-    environment = jsondecode(lookup(s, "environment", "[]"))
-    secrets     = jsondecode(lookup(s, "secrets", "[]"))
-    mountPoints = jsondecode(lookup(s, "mountPoints", "[]"))
-    volumesFrom = jsondecode(lookup(s, "volumesFrom", "[]"))
-    healthCheck = jsondecode(lookup(s, "healthCheck", "null"))
-    dependsOn   = jsondecode(lookup(s, "dependsOn", "[]"))
+    environment           = jsondecode(lookup(s, "environment", "[]"))
+    secrets               = jsondecode(lookup(s, "secrets", "[]"))
+    mountPoints           = jsondecode(lookup(s, "mountPoints", "[]"))
+    volumesFrom           = jsondecode(lookup(s, "volumesFrom", "[]"))
+    healthCheck           = jsondecode(lookup(s, "healthCheck", "null"))
+    dependsOn             = jsondecode(lookup(s, "dependsOn", "[]"))
+    firelensConfiguration = jsondecode(lookup(s, "firelensConfiguration", ""))
 
     logConfiguration = local.log_configurations[0]
   }]

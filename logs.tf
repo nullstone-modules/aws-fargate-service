@@ -26,4 +26,7 @@ locals {
   log_configurations = concat(local.addl_log_configurations, [local.cw_log_configuration])
 
   log_secret_option_arns = [for so in lookup(local.log_configurations[0], "secretOptions", []) : so.valueFrom]
+
+  default_log_provider = "cloudwatch"
+  log_provider         = length(local.cap_log_configurations) > 0 ? lookup(local.cap_log_configurations[0], "provider", "") : local.default_log_provider
 }
