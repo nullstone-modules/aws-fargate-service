@@ -30,7 +30,7 @@ locals {
     mountPoints = local.mount_points
     volumesFrom = []
 
-    logConfiguration = local.log_configurations[0]
+    logConfiguration = local.log_configuration
   }
 }
 

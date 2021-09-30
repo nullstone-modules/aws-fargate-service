@@ -7,7 +7,7 @@ module "logs" {
 }
 
 locals {
-  cw_log_configuration = {
+  log_configuration = {
     logDriver = "awslogs"
     options = {
       "awslogs-region"        = data.aws_region.this.name
@@ -15,18 +15,5 @@ locals {
       "awslogs-stream-prefix" = local.block_name
     }
   }
-
-  cap_log_configurations = lookup(local.capabilities, "log_configurations", [])
-  addl_log_configurations = [for lc in local.cap_log_configurations : {
-    logDriver     = lc.logDriver
-    options       = jsondecode(lookup(lc, "options", "{}"))
-    secretOptions = jsondecode(lookup(lc, "secretOptions", "{}"))
-  }]
-
-  log_configurations = concat(local.addl_log_configurations, [local.cw_log_configuration])
-
-  log_secret_option_arns = [for so in lookup(local.log_configurations[0], "secretOptions", []) : so.valueFrom]
-
-  default_log_provider = "cloudwatch"
-  log_provider         = length(local.cap_log_configurations) > 0 ? lookup(local.cap_log_configurations[0], "provider", "") : local.default_log_provider
+  log_provider = "cloudwatch"
 }
