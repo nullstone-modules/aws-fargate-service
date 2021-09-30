@@ -24,4 +24,6 @@ locals {
   }]
 
   log_configurations = concat(local.addl_log_configurations, [local.cw_log_configuration])
+
+  log_secret_option_arns = [for so in lookup(local.log_configurations[0], "secretOptions", []) : so.valueFrom]
 }
