@@ -12,15 +12,6 @@ locals {
 
   env_vars = [for k, v in merge(local.standard_env_vars, var.service_env_vars) : { name = k, value = v }]
 
-  log_configurations = concat(try(local.capabilities.log_configurations, []), [{
-    logDriver = "awslogs"
-    options = {
-      "awslogs-region"        = data.aws_region.this.name
-      "awslogs-group"         = module.logs.name
-      "awslogs-stream-prefix" = local.block_name
-    }
-  }])
-
   container_definition = {
     name      = local.main_container_name
     image     = "${local.service_image}:${local.app_version}"
@@ -39,7 +30,7 @@ locals {
     mountPoints = local.mount_points
     volumesFrom = []
 
-    logConfiguration = local.log_configurations[0]
+    logConfiguration = local.log_configuration
   }
 }
 
