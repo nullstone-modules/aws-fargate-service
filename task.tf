@@ -50,6 +50,15 @@ resource "aws_ecs_task_definition" "this" {
 
     content {
       name = volume.key
+
+      dynamic "efs_volume_configuration" {
+        for_each = length(volume.value.efs_volume) > 0 ? tomap({ "1" = jsondecode(volume.value.efs_volume) }) : tomap({})
+
+        content {
+          file_system_id = efs_volume_configuration.value.file_system_id
+          root_directory = efs_volume_configuration.value.root_directory
+        }
+      }
     }
   }
 }

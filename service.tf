@@ -1,5 +1,6 @@
 resource "aws_ecs_service" "this" {
   name            = local.block_name
+  tags            = data.ns_workspace.this.tags
   cluster         = data.aws_ecs_cluster.cluster.arn
   desired_count   = var.service_count
   task_definition = aws_ecs_task_definition.this.arn
