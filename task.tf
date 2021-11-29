@@ -44,6 +44,7 @@ resource "aws_ecs_task_definition" "this" {
   depends_on               = [aws_iam_role_policy.execution]
   container_definitions    = jsonencode(concat([local.container_definition], local.addl_container_defs))
   tags                     = data.ns_workspace.this.tags
+  task_role_arn            = aws_iam_role.task.arn
 
   dynamic "volume" {
     for_each = local.volumes
@@ -60,5 +61,43 @@ resource "aws_ecs_task_definition" "this" {
         }
       }
     }
+  }
+}
+
+resource "aws_iam_role" "task" {
+  name               = "task-${local.resource_name}"
+  assume_role_policy = data.aws_iam_policy_document.task_assume.json
+}
+
+data "aws_iam_policy_document" "task_assume" {
+  statement {
+    effect  = "Allow"
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ecs-tasks.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_role_policy" "task" {
+  role   = aws_iam_role.task.id
+  name   = local.resource_name
+  policy = data.aws_iam_policy_document.task.json
+}
+
+data "aws_iam_policy_document" "task" {
+  statement {
+    sid       = "AllowSSH"
+    effect    = "Allow"
+    resources = ["*"]
+
+    actions = [
+      "ssmmessages:CreateControlChannel",
+      "ssmmessages:CreateDataChannel",
+      "ssmmessages:OpenControlChannel",
+      "ssmmessages:OpenDataChannel"
+    ]
   }
 }
