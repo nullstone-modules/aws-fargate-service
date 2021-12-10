@@ -10,14 +10,18 @@ resource "aws_iam_user_policy_attachment" "deployer-execution" {
 
 resource "aws_iam_policy" "execution-pass-role" {
   name_prefix = "${local.resource_name}-pass-role"
-  policy      = data.aws_iam_policy_document.deployer-execution.json
+  policy      = data.aws_iam_policy_document.execution-pass-role.json
 }
 
-data "aws_iam_policy_document" "deployer-execution" {
+data "aws_iam_policy_document" "execution-pass-role" {
   statement {
-    sid       = "AllowPassRoleToExecutionRole"
-    effect    = "Allow"
-    actions   = ["iam:PassRole"]
-    resources = [aws_iam_role.execution.arn]
+    sid     = "AllowPassRoleToServiceRoles"
+    effect  = "Allow"
+    actions = ["iam:PassRole"]
+
+    resources = [
+      aws_iam_role.execution.arn,
+      aws_iam_role.task.arn,
+    ]
   }
 }
