@@ -10,8 +10,8 @@ locals {
 
     secrets = [
       {
-        name      = ""
-        valueFrom = ""
+        name  = ""
+        value = ""
       }
     ]
 
@@ -27,7 +27,7 @@ locals {
     // They will be flattened into list(string) when we output from this module
     private_urls = [
       {
-        value = ""
+        url = ""
       }
     ]
 
@@ -36,7 +36,7 @@ locals {
     // They will be flattened into list(string) when we output from this module
     public_urls = [
       {
-        value = ""
+        url = ""
       }
     ]
 
