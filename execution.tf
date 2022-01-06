@@ -1,6 +1,6 @@
 resource "aws_iam_role" "execution" {
   name               = "execution-${local.resource_name}"
-  tags               = data.ns_workspace.this.tags
+  tags               = local.tags
   assume_role_policy = data.aws_iam_policy_document.execution-assume.json
 }
 
