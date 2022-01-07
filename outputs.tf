@@ -45,6 +45,18 @@ output "image_pusher" {
   sensitive = true
 }
 
+output "deployer" {
+  value = {
+    name       = aws_iam_user.deployer.name
+    access_key = aws_iam_access_key.deployer.id
+    secret_key = aws_iam_access_key.deployer.secret
+  }
+
+  description = "object({ name: string, access_key: string, secret_key: string }) ||| An AWS User with explicit privilege to deploy ECS services."
+
+  sensitive = true
+}
+
 output "service_image" {
   value       = "${local.service_image}:${local.app_version}"
   description = "string ||| "
