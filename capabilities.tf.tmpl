@@ -14,7 +14,7 @@ module "{{ .TfModuleName }}" {
     service_port       = var.service_port
     log_group_name     = module.logs.name
     internal_subdomain = var.service_port == 0 ? "" : "${local.block_name}.${local.service_domain}"
-    role_name     = aws_iam_role.task.name
+    role_name          = aws_iam_role.task.name
   }
 
   {{- range $key, $value := .Variables }}
