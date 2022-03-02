@@ -1,0 +1,12 @@
+org_name: nullstone
+name: aws-fargate-service
+friendly_name: Fargate Service
+description: |
+    Produces a fargate service backed by ECR image
+category: app/container
+type: service/aws-fargate
+appCategories: []
+layer: service
+is_public: true
+provider_types:
+    - aws

@@ -1,4 +1,5 @@
 // This file is replaced by code-generation using 'capabilities.tf.tmpl'
+// This file helps app module creators define a contract for what types of capability outputs are supported.
 locals {
   capabilities = {
     env = [
