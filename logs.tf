@@ -2,8 +2,10 @@ module "logs" {
   source = "nullstone-modules/logs/aws"
 
   name              = local.resource_name
-  tags              = data.ns_workspace.this.tags
+  tags              = local.tags
   enable_log_reader = true
+  retention_in_days = 90
+  kms_key_arn       = aws_kms_key.this.arn
 }
 
 locals {

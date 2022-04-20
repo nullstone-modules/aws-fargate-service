@@ -7,8 +7,13 @@ locals {
 // This is a bit odd - we're creating a repository for every environment
 // We need to find a better way to do this
 resource "aws_ecr_repository" "this" {
-  name = local.resource_name
-  tags = data.ns_workspace.this.tags
+  name                 = local.resource_name
+  tags                 = local.tags
+
+  encryption_configuration {
+    encryption_type = "KMS"
+    kms_key         = aws_kms_key.this.arn
+  }
 
   count = var.service_image == "" ? 1 : 0
 }
