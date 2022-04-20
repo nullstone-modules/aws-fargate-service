@@ -1,6 +1,6 @@
 resource "aws_iam_user" "image_pusher" {
   name = "image-pusher-${local.resource_name}"
-  tags = data.ns_workspace.this.tags
+  tags = local.tags
 
   count = var.service_image == "" ? 1 : 0
 }
@@ -11,8 +11,8 @@ resource "aws_iam_access_key" "image_pusher" {
   count = var.service_image == "" ? 1 : 0
 }
 
-// The actions listed are necessary to perform actions to push ECR images
 resource "aws_iam_user_policy" "image_pusher" {
+  #bridgecrew:skip=CKV_AWS_40: Skipping `IAM policies attached only to groups or roles reduces management complexity`; Adding a role or group would increase complexity
   name   = "AllowECRPush"
   user   = aws_iam_user.image_pusher[count.index].name
   policy = data.aws_iam_policy_document.image_pusher.json
@@ -25,6 +25,7 @@ data "aws_iam_policy_document" "image_pusher" {
     sid    = "AllowPushPull"
     effect = "Allow"
 
+    // The actions listed are necessary to perform actions to push ECR images
     actions = [
       "ecr:GetDownloadUrlForLayer",
       "ecr:BatchGetImage",
