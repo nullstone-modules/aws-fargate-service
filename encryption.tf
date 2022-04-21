@@ -7,12 +7,10 @@ resource "aws_kms_key" "this" {
 }
 
 data "aws_iam_policy_document" "encryption_key" {
-  #bridgecrew:skip=CKV_AWS_109: Skipping "Permissions management without constraints". False positive as this is attached as a key policy and is implicitly constrained by the key.
-  #bridgecrew:skip=CKV_AWS_111: Skipping "Write IAM policies without constraints". False positive as this is attached as a key policy and is implicitly constrained by the key.
   statement {
     sid       = "Enable IAM User permissions"
     effect    = "Allow"
-    resources = ["*"]
+    resources = [aws_kms_key.this.arn]
     actions   = ["kms:*"]
 
     principals {
@@ -22,17 +20,9 @@ data "aws_iam_policy_document" "encryption_key" {
   }
 
   statement {
-    sid = "Enable ECR image encryption"
-  }
-
-  statement {
-    sid = "Enable "
-  }
-
-  statement {
     sid       = "Enable Cloudwatch Log encryption"
     effect    = "Allow"
-    resources = ["*"]
+    resources = [aws_kms_key.this.arn]
     actions = [
       "kms:Encrypt*",
       "kms:Decrypt*",
