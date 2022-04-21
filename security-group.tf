@@ -36,7 +36,7 @@ resource "aws_security_group_rule" "this-https-to-world" {
 }
 
 resource "aws_security_group_rule" "this-http-from-private-subnets" {
-  description       = "Allow any service on this network (in private subnets) to communicate with this service on the service's port"
+  description       = "Allow any service on this network in private subnets to communicate with this service on the service port"
   security_group_id = aws_security_group.this.id
   type              = "ingress"
   protocol          = "tcp"
@@ -49,7 +49,7 @@ resource "aws_security_group_rule" "this-http-from-private-subnets" {
 
 // TODO: Drop this once we have a better way of reaching via bastion
 resource "aws_security_group_rule" "this-http-from-public-subnets" {
-  description       = "Allow any service on this network (in public subnets) to communicate with this service on the service's port"
+  description       = "Allow any service on this network in public subnets to communicate with this service on the service port"
   security_group_id = aws_security_group.this.id
   type              = "ingress"
   protocol          = "tcp"
