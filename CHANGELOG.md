@@ -1,4 +1,4 @@
-# 0.12.0 (Unreleased)
+# 0.12.0 (Apr 21, 2022)
 
 * Enabled in-transit encryption for EFS volumes.
 * Using CMK (customer-managed key) when encrypting cloudwatch logs, secrets, and image repository.
