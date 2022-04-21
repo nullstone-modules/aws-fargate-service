@@ -1,3 +1,8 @@
+resource "aws_kms_alias" "this" {
+  name          = "alias/${local.resource_name}"
+  target_key_id = aws_kms_key.this.id
+}
+
 resource "aws_kms_key" "this" {
   description         = "Encryption key for service ${local.resource_name}"
   enable_key_rotation = true

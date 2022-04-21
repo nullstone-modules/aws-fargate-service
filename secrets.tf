@@ -16,7 +16,7 @@ resource "aws_secretsmanager_secret" "app_secret" {
 
   name       = "${local.resource_name}/${each.value}"
   tags       = local.tags
-  kms_key_id = aws_kms_key.this.arn
+  kms_key_id = aws_kms_alias.this.arn
 }
 
 resource "aws_secretsmanager_secret_version" "app_secret" {

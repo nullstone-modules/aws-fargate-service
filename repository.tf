@@ -17,7 +17,7 @@ resource "aws_ecr_repository" "this" {
 
   encryption_configuration {
     encryption_type = "KMS"
-    kms_key         = aws_kms_key.this.arn
+    kms_key         = aws_kms_alias.this.arn
   }
 
   count = var.service_image == "" ? 1 : 0
