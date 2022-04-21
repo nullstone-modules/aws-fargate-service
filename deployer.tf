@@ -20,6 +20,7 @@ resource "aws_iam_user_group_membership" "deployers" {
 }
 
 resource "aws_iam_user_policy" "deployer" {
+  #bridgecrew:skip=CKV_AWS_40: Skipping `IAM policies attached only to groups or roles reduces management complexity`; Adding a role or group would increase complexity
   user   = aws_iam_user.deployer.name
   policy = data.aws_iam_policy_document.deployer.json
 }

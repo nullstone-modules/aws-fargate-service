@@ -8,6 +8,7 @@ terraform {
 
 data "ns_workspace" "this" {}
 
+// Generate a random suffix to ensure uniqueness of resources
 resource "random_string" "resource_suffix" {
   length  = 5
   lower   = true
@@ -34,6 +35,9 @@ data "ns_connection" "network" {
 }
 
 locals {
+  vpc_id               = data.ns_connection.network.outputs.vpc_id
+  private_cidrs        = data.ns_connection.network.outputs.private_cidrs
+  public_cidrs         = data.ns_connection.network.outputs.public_cidrs
   cluster_name         = data.ns_connection.cluster.outputs.cluster_name
   deployers_name       = data.ns_connection.cluster.outputs.deployers_name
   service_domain       = data.ns_connection.network.outputs.service_discovery_name
