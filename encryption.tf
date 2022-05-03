@@ -49,4 +49,16 @@ data "aws_iam_policy_document" "encryption_key" {
       values   = ["arn:aws:logs:${data.aws_region.this.name}:${data.aws_caller_identity.current.account_id}:*"]
     }
   }
+
+  statement {
+    sid       = "Enable App Decrypt secrets"
+    effect    = "Allow"
+    resources = ["*"]
+    actions   = ["kms:Decrypt"]
+
+    principals {
+      type        = "AWS"
+      identifiers = [aws_iam_role.execution.arn]
+    }
+  }
 }
