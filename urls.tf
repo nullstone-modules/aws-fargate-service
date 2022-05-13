@@ -28,12 +28,12 @@ locals {
   test6 = regex(local.authority_matcher, "brad:password@nullstone.io:9000")
 
   tests = tomap({
-    "terraform.io": local.test1,
-    "brad@terraform.io": local.test2,
-    "brad:password@terraform.io": local.test3,
-    "terraform.io:9000": local.test4,
-    "brad@terraform.io:9000": local.test5,
-    "brad:password@terraform.io:9000": local.test6,
+    "nullstone.io": local.test1,
+    "brad@nullstone.io": local.test2,
+    "brad:password@nullstone.io": local.test3,
+    "nullstone.io:9000": local.test4,
+    "brad@nullstone.io:9000": local.test5,
+    "brad:password@nullstone.io:9000": local.test6,
   })
   */
 }
