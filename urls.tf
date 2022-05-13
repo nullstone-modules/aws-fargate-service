@@ -20,20 +20,13 @@ locals {
   // These tests are here to verify the authority_matcher regex above
   // To verify, uncomment the following lines and issue `echo 'local.tests' | terraform console`
   /*
-  test1 = regex(local.authority_matcher, "nullstone.io")
-  test2 = regex(local.authority_matcher, "brad@nullstone.io")
-  test3 = regex(local.authority_matcher, "brad:password@nullstone.io")
-  test4 = regex(local.authority_matcher, "nullstone.io:9000")
-  test5 = regex(local.authority_matcher, "brad@nullstone.io:9000")
-  test6 = regex(local.authority_matcher, "brad:password@nullstone.io:9000")
-
   tests = tomap({
-    "nullstone.io": local.test1,
-    "brad@nullstone.io": local.test2,
-    "brad:password@nullstone.io": local.test3,
-    "nullstone.io:9000": local.test4,
-    "brad@nullstone.io:9000": local.test5,
-    "brad:password@nullstone.io:9000": local.test6,
+    "nullstone.io" : regex(local.authority_matcher, "nullstone.io"),
+    "brad@nullstone.io" : regex(local.authority_matcher, "brad@nullstone.io"),
+    "brad:password@nullstone.io" : regex(local.authority_matcher, "brad:password@nullstone.io"),
+    "nullstone.io:9000" : regex(local.authority_matcher, "nullstone.io:9000"),
+    "brad@nullstone.io:9000" : regex(local.authority_matcher, "brad@nullstone.io:9000"),
+    "brad:password@nullstone.io:9000" : regex(local.authority_matcher, "brad:password@nullstone.io:9000"),
   })
   */
 }
