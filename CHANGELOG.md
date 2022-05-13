@@ -1,5 +1,6 @@
 # 0.12.2 (May 13, 2022)
 * Added `NULLSTONE_PUBLIC_HOSTS` and `NULLSTONE_PRIVATE_HOSTS` to app env vars.
+* Added `public_hosts` and `private_hosts` outputs.
 * Fixed ECR repository being replaced on every apply due to using KMS alias instead of KMS key.
 
 # 0.12.1 (May 03, 2022)
