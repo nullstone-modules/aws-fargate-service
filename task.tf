@@ -1,6 +1,8 @@
 locals {
   standard_env_vars = tomap({
-    NULLSTONE_ENV = data.ns_workspace.this.env_name
+    NULLSTONE_ENV           = data.ns_workspace.this.env_name
+    NULLSTONE_PUBLIC_HOSTS  = join(",", local.public_hosts)
+    NULLSTONE_PRIVATE_HOSTS = join(",", local.private_hosts)
   })
 
   main_container_name = "main"
