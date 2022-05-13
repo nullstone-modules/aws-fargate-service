@@ -10,3 +10,35 @@ locals {
   private_urls = concat([for url in try(local.capabilities.private_urls, []) : url["url"]], local.additional_private_urls)
   public_urls  = concat([for url in try(local.capabilities.public_urls, []) : url["url"]], local.additional_public_urls)
 }
+
+locals {
+  uri_matcher = "^(?:(?P<scheme>[^:/?#]+):)?(?://(?P<authority>[^/?#]*))?"
+}
+
+locals {
+  authority_matcher = "^(?:(?P<user>[^@]*)@)?(?:(?P<host>[^:]*))(?:[:](?P<port>[\\d]*))?"
+  // These tests are here to verify the authority_matcher regex above
+  // To verify, uncomment the following lines and issue `echo 'local.tests' | terraform console`
+  /*
+  test1 = regex(local.authority_matcher, "nullstone.io")
+  test2 = regex(local.authority_matcher, "brad@nullstone.io")
+  test3 = regex(local.authority_matcher, "brad:password@nullstone.io")
+  test4 = regex(local.authority_matcher, "nullstone.io:9000")
+  test5 = regex(local.authority_matcher, "brad@nullstone.io:9000")
+  test6 = regex(local.authority_matcher, "brad:password@nullstone.io:9000")
+
+  tests = tomap({
+    "terraform.io": local.test1,
+    "brad@terraform.io": local.test2,
+    "brad:password@terraform.io": local.test3,
+    "terraform.io:9000": local.test4,
+    "brad@terraform.io:9000": local.test5,
+    "brad:password@terraform.io:9000": local.test6,
+  })
+  */
+}
+
+locals {
+  private_hosts = [for url in local.private_urls : lookup(regex(local.authority_matcher, lookup(regex(local.uri_matcher, url), "authority")), "host")]
+  public_hosts  = [for url in local.public_urls : lookup(regex(local.authority_matcher, lookup(regex(local.uri_matcher, url), "authority")), "host")]
+}
