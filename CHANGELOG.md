@@ -1,3 +1,8 @@
+# 0.12.6 (Jul 01, 2022)
+* Removed outputs: `service_image`, `service_id`, `task_family`.
+* Added outputs: `task_arn`.
+* Renamed output: `service_security_group_id` => `app_security_group_id`.
+
 # 0.12.5 (Jun 11, 2022)
 * Upgrade `ns_connection` to use `contract` instead of `type`.
 

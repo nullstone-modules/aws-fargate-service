@@ -58,24 +58,9 @@ output "deployer" {
   sensitive = true
 }
 
-output "service_image" {
-  value       = "${local.service_image}:${local.app_version}"
-  description = "string ||| "
-}
-
 output "service_name" {
   value       = aws_ecs_service.this.name
-  description = "string ||| "
-}
-
-output "service_id" {
-  value       = aws_ecs_service.this.id
-  description = "string ||| "
-}
-
-output "task_family" {
-  value       = aws_ecs_task_definition.this.family
-  description = "string ||| "
+  description = "string ||| The name of the ECS service."
 }
 
 output "main_container_name" {
@@ -83,9 +68,14 @@ output "main_container_name" {
   description = "string ||| The name of the container definition for the main service container"
 }
 
-output "service_security_group_id" {
+output "task_arn" {
+  value       = aws_ecs_task_definition.this.arn
+  description = "string ||| The AWS ARN of the app task definition."
+}
+
+output "app_security_group_id" {
   value       = aws_security_group.this.id
-  description = "string ||| "
+  description = "string ||| The ID of the security group attached to the app."
 }
 
 output "private_urls" {
