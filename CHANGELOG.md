@@ -1,3 +1,6 @@
+# 0.12.7 (Jul 26, 2022)
+* Configured `aws_ecr_repository` with `force_delete` to fix destroy plans.
+
 # 0.12.6 (Jul 01, 2022)
 * Removed outputs: `service_image`, `service_id`, `task_family`.
 * Added outputs: `task_arn`.
