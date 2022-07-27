@@ -32,6 +32,7 @@ jobs:
         run: echo ::set-output name=tag::${GITHUB_REF#refs/tags/v}
 
       # Publish to nullstone
+      #bridgecrew:skip=CKV_GHA_3: Skipping insecure curl
       - name: Publish
         env:
           NULLSTONE_ORG: nullstone
