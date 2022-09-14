@@ -27,7 +27,7 @@ resource "aws_secretsmanager_secret_version" "app_secret" {
   for_each = local.secret_keys
 
   secret_id     = aws_secretsmanager_secret.app_secret[each.value].id
-  secret_string = local.cap_secrets[each.value]
+  secret_string = local.all_secrets[each.value]
 
   lifecycle {
     create_before_destroy = true
