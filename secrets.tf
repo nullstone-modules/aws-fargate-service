@@ -3,7 +3,6 @@ locals {
   // If we used `length(local.capabilities.secrets)`,
   //   terraform would complain about not knowing count of the resource until after apply
   // This is because the name of secrets isn't computed in the modules; only the secret value
-  cap_secrets = { for secret in try(local.capabilities.secrets, []) : secret["name"] => secret["value"] }
   all_secrets = merge(local.cap_secrets, var.service_secrets)
   secret_keys = can(nonsensitive(keys(local.all_secrets))) ? toset(nonsensitive(keys(local.all_secrets))) : toset(keys(local.all_secrets))
 
