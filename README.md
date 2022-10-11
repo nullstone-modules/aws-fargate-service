@@ -1,6 +1,11 @@
-# aws-fargate-service
+# Fargate Application
 
-Nullstone Block standing up an AWS Fargate container service using ECR and configured to emit to AWS CloudWatch Logs.
+This module is used to create a container application.
+This module uses AWS Fargate, which is a technology that allows you to run container applications without managing EC2 boxes (Virtual Machines).
+
+This supports running container applications as web apps (long-running services) or background workers (short-lived service triggered on-demand or on a schedule).
+
+
 
 ## Security & Compliance
 
