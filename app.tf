@@ -1,4 +1,3 @@
-
 data "ns_app_env" "this" {
   stack_id = data.ns_workspace.this.stack_id
   app_id   = data.ns_workspace.this.block_id
