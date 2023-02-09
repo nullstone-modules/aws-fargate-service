@@ -44,7 +44,7 @@ resource "aws_security_group_rule" "this-http-from-private-subnets" {
   to_port           = var.service_port
   cidr_blocks       = local.private_cidrs
 
-  count = var.service_port == 0 ? 0 : 1
+  count = var.service_port == 0 ? 0 : signum(local.private_cidrs)
 }
 
 // TODO: Drop this once we have a better way of reaching via bastion
@@ -57,7 +57,7 @@ resource "aws_security_group_rule" "this-http-from-public-subnets" {
   to_port           = var.service_port
   cidr_blocks       = local.public_cidrs
 
-  count = var.service_port == 0 ? 0 : 1
+  count = var.service_port == 0 ? 0 : signum(local.public_cidrs)
 }
 
 resource "aws_security_group_rule" "this-http-to-private-subnets" {
@@ -68,4 +68,6 @@ resource "aws_security_group_rule" "this-http-to-private-subnets" {
   from_port         = 80
   to_port           = 80
   cidr_blocks       = local.private_cidrs
+
+  count = signum(local.private_cidrs)
 }

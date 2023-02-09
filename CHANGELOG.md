@@ -1,3 +1,28 @@
+# 0.12.25 (Feb 09, 2023)
+* Fix security groups from failing when network does not have private or public subnets.
+
+# 0.12.24 (Feb 01, 2023)
+* Fixed generation of newlines in capabilities template.
+
+# 0.12.13 (Jan 24, 2023)
+* Updated capabilities template to not generate a capability variable if the value is `null`.
+
+# 0.12.12 (Oct 24, 2022)
+* Added `NULLSTONE_STACK`, `NULLSTONE_APP`, `NULLSTONE_VERSION`, `NULLSTONE_COMMIT_SHA` to app env vars.
+
+# 0.12.11 (Oct 11, 2022)
+* Add support for overriding the run command of a sidecar container.
+
+# 0.12.10 (Oct 05, 2022)
+* Fix reading of secrets keys.
+
+# 0.12.9 (Sep 29, 2022)
+* Fix "known after apply" error.
+
+# 0.12.8 (Sep 29, 2022)
+* Added support capability namespace.
+* Added `service_secrets` variable to enable user-created secrets that are marked sensitive.
+
 # 0.12.7 (Jul 26, 2022)
 * Configured `aws_ecr_repository` with `force_delete` to fix destroy plans.
 
