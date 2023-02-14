@@ -1,3 +1,8 @@
+locals {
+  // secret_refs is prepared in the form [{ name = "", valueFrom = "<arn>" }, ...] for injection into ECS services
+  secret_refs = [for key in local.secret_keys : { name = key, valueFrom = aws_secretsmanager_secret.app_secret[key].arn }]
+}
+
 resource "aws_secretsmanager_secret" "app_secret" {
   for_each = local.secret_keys
 
@@ -14,7 +19,7 @@ resource "aws_secretsmanager_secret_version" "app_secret" {
   for_each = local.secret_keys
 
   secret_id     = aws_secretsmanager_secret.app_secret[each.value].id
-  secret_string = local.secrets[each.value]
+  secret_string = local.all_secrets[each.value]
 
   lifecycle {
     create_before_destroy = true
