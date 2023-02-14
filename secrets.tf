@@ -1,11 +1,4 @@
 locals {
-  // We use `local.secret_keys` to create secret resources
-  // If we used `length(local.capabilities.secrets)`,
-  //   terraform would complain about not knowing count of the resource until after apply
-  // This is because the name of secrets isn't computed in the modules; only the secret value
-  all_secrets = merge(local.cap_secrets, var.service_secrets)
-  secret_keys = toset(nonsensitive(concat(keys(local.cap_secrets), keys(var.service_secrets))))
-
   // secret_refs is prepared in the form [{ name = "", valueFrom = "<arn>" }, ...] for injection into ECS services
   secret_refs = [for key in local.secret_keys : { name = key, valueFrom = aws_secretsmanager_secret.app_secret[key].arn }]
 }
