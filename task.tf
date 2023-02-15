@@ -40,6 +40,14 @@ resource "aws_ecs_task_definition" "this" {
   tags                     = local.tags
   task_role_arn            = aws_iam_role.task.arn
 
+  dynamic "ephemeral_storage" {
+    for_each = var.ephemeral_storage > 20 ? [var.ephemeral_storage] : []
+
+    content {
+      size_in_gib = ephemeral_storage.value
+    }
+  }
+
   dynamic "volume" {
     for_each = local.volumes
 

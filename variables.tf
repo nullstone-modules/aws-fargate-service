@@ -45,3 +45,23 @@ the service will fail due to bind due to permission errors.
 Specify 0 to disable network connectivity to this container.
 EOF
 }
+
+variable "ephemeral_storage" {
+  type        = number
+  default     = 20
+  description = <<EOF
+The amount of ephemeral disk space (in GiB) allocated to the app.
+AWS supports 20 - 200 GiB of ephemeral disk space.
+By default, AWS grants 20 GiB.
+EOF
+
+  validation {
+    condition     = var.ephemeral_storage > 19
+    error_message = "AWS does not support ephemeral storage smaller than 20 GiB"
+  }
+
+  validation {
+    condition     = var.ephemeral_storage <= 200
+    error_message = "AWS does not support ephemeral storage larger than 200 GiB"
+  }
+}
