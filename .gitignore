@@ -10,7 +10,5 @@
 *.tfvars
 envs/
 
-.nullstone.json
-.terraform.lock.hcl
 __backend__.tf
 .nullstone/active-workspace.yml

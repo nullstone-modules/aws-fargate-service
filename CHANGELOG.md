@@ -1,5 +1,6 @@
 # 0.12.18 (Feb 15, 2023)
 * Added variable `ephemeral_storage` to allow a user to expand the disk.
+* Added `.terraform.lock.hcl` to module.
 
 # 0.12.17 (Feb 14, 2023)
 * Added env var interpolation to all environment variables (including secrets) injected into the app.
