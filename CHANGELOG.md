@@ -1,7 +1,16 @@
-# 0.12.25 (Feb 09, 2023)
+# 0.12.18 (Feb 15, 2023)
+* Added variable `ephemeral_storage` to allow a user to expand the disk.
+
+# 0.12.17 (Feb 14, 2023)
+* Added env var interpolation to all environment variables (including secrets) injected into the app.
+
+# 0.12.16 (Feb 09, 2023)
+* Fixed incorrect usage of `signum` in security group updates.
+
+# 0.12.15 (Feb 09, 2023)
 * Fix security groups from failing when network does not have private or public subnets.
 
-# 0.12.24 (Feb 01, 2023)
+# 0.12.14 (Feb 01, 2023)
 * Fixed generation of newlines in capabilities template.
 
 # 0.12.13 (Jan 24, 2023)
