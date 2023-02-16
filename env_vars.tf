@@ -25,15 +25,12 @@ locals {
     NULLSTONE_ENV           = data.ns_workspace.this.env_name
     NULLSTONE_VERSION       = data.ns_app_env.this.version
     NULLSTONE_COMMIT_SHA    = data.ns_app_env.this.commit_sha
-  })
-  hosts_env_vars = tomap({
     NULLSTONE_PUBLIC_HOSTS  = join(",", local.public_hosts)
     NULLSTONE_PRIVATE_HOSTS = join(",", local.private_hosts)
   })
 
   input_env_vars = merge(local.standard_env_vars, local.cap_env_vars, var.service_env_vars)
   input_secrets  = merge(local.cap_secrets, var.service_secrets)
-  input_secret_keys = nonsensitive(keys(local.input_secrets))
 }
 
 data "ns_env_variables" "this" {
@@ -42,12 +39,12 @@ data "ns_env_variables" "this" {
 }
 
 data "ns_secret_keys" "this" {
-  input_env_variables = local.input_env_vars
-  input_secret_keys = local.input_secret_keys
+  input_env_variables = var.service_env_vars
+  input_secret_keys = nonsensitive(keys(local.input_secrets))
 }
 
 locals {
   secret_keys = data.ns_secret_keys.this.secret_keys
   all_secrets  = data.ns_env_variables.this.secrets
-  all_env_vars = merge(data.ns_env_variables.this.env_variables, local.hosts_env_vars)
+  all_env_vars = data.ns_env_variables.this.env_variables
 }
