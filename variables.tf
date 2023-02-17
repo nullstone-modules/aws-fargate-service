@@ -57,11 +57,11 @@ EOF
 
   validation {
     condition     = var.ephemeral_storage > 19
-    error_message = "AWS does not support ephemeral storage smaller than 20 GiB"
+    error_message = "AWS does not support ephemeral storage smaller than 20 GiB."
   }
 
   validation {
     condition     = var.ephemeral_storage <= 200
-    error_message = "AWS does not support ephemeral storage larger than 200 GiB"
+    error_message = "AWS does not support ephemeral storage larger than 200 GiB."
   }
 }
