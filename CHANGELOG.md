@@ -1,3 +1,12 @@
+# 0.12.21 (Feb 24, 2023)
+* Fixed capability generation to emit variable that is set to a zero value, but not nil.
+
+# 0.12.20 (Feb 16, 2023)
+* Fixed `.terraform.lock.hcl`.
+
+# 0.12.19 (Feb 16, 2023)
+* Fixed "(known after apply)" issue with secret interpolation.
+
 # 0.12.18 (Feb 15, 2023)
 * Added variable `ephemeral_storage` to allow a user to expand the disk.
 * Added `.terraform.lock.hcl` to module.
