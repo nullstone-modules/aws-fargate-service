@@ -1,12 +1,18 @@
 data "ns_connection" "cluster_namespace" {
   name     = "cluster-namespace"
   contract = "cluster-namespace/aws/ecs:*"
+  optional = true
+}
+
+locals {
+  has_namespace_conn = data.ns_connection.cluster_namespace.workspace_id != ""
 }
 
 data "ns_connection" "cluster" {
   name     = "cluster"
   contract = "cluster/aws/ecs:fargate"
-  via      = data.ns_connection.cluster_namespace.name
+  // cluster is specified directly if cluster-namespace is unspecified
+  via = local.has_namespace_conn ? data.ns_connection.cluster_namespace.name : ""
 }
 
 locals {

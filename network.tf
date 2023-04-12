@@ -1,3 +1,8 @@
+locals {
+  // If cluster-namespace is specified, network connection is reached via <cluster-namespace>/<cluster>
+  cluster_via = local.has_namespace_conn ? "${data.ns_connection.cluster_namespace.name}/${data.ns_connection.cluster.name}" : data.ns_connection.cluster.name
+}
+
 data "ns_connection" "network" {
   name     = "network"
   contract = "network/aws/vpc"
