@@ -4,7 +4,7 @@ output "region" {
 }
 
 output "cluster_arn" {
-  value       = data.aws_ecs_cluster.cluster.arn
+  value       = local.cluster_arn
   description = "string ||| "
 }
 
