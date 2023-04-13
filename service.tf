@@ -1,14 +1,14 @@
 resource "aws_ecs_service" "this" {
   name                   = local.block_name
-  tags                   = data.ns_workspace.this.tags
-  cluster                = data.aws_ecs_cluster.cluster.arn
+  tags                   = local.tags
+  cluster                = local.cluster_arn
   desired_count          = var.service_count
-  task_definition        = aws_ecs_task_definition.this.arn
+  task_definition         = aws_ecs_task_definition.this.arn
   launch_type            = "FARGATE"
   enable_execute_command = true
 
   network_configuration {
-    subnets          = data.ns_connection.network.outputs.private_subnet_ids
+    subnets          = local.private_subnet_ids
     assign_public_ip = false
     security_groups  = [aws_security_group.this.id]
   }
