@@ -3,7 +3,7 @@ resource "aws_ecs_service" "this" {
   tags                   = local.tags
   cluster                = local.cluster_arn
   desired_count          = var.service_count
-  task_definition         = aws_ecs_task_definition.this.arn
+  task_definition        = aws_ecs_task_definition.this.arn
   launch_type            = "FARGATE"
   enable_execute_command = true
 
