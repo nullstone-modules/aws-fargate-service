@@ -3,7 +3,7 @@ variable "service_count" {
   default = 1
 }
 
-variable "service_cpu" {
+variable "cpu" {
   type        = number
   default     = 256
   description = <<EOF
@@ -14,7 +14,7 @@ A vCPU is a virtualization of a physical CPU.
 EOF
 }
 
-variable "service_memory" {
+variable "memory" {
   type        = number
   default     = 512
   description = <<EOF
@@ -25,7 +25,7 @@ This means the default is 512 MiB or 0.5 GiB.
 EOF
 }
 
-variable "service_image" {
+variable "image" {
   type        = string
   default     = ""
   description = <<EOF
@@ -35,7 +35,7 @@ Use this variable to configure against docker hub, quay, etc.
 EOF
 }
 
-variable "service_port" {
+variable "port" {
   type        = number
   default     = 80
   description = <<EOF

@@ -33,7 +33,7 @@ resource "aws_ecs_service" "this" {
 }
 
 resource "aws_service_discovery_service" "this" {
-  count = var.service_port == 0 ? 0 : 1
+  count = var.port == 0 ? 0 : 1
 
   name = local.block_name
 

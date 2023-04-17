@@ -14,8 +14,8 @@ locals {
     security_group_id  = aws_security_group.this.id
     role_name          = aws_iam_role.task.name
     main_container     = local.main_container_name
-    service_port       = var.service_port
+    service_port       = var.port
     log_group_name     = module.logs.name
-    internal_subdomain = var.service_port == 0 ? "" : "${local.block_name}.${local.service_domain}"
+    internal_subdomain = var.port == 0 ? "" : "${local.block_name}.${local.service_domain}"
   })
 }

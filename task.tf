@@ -4,7 +4,7 @@ locals {
   // has_port_mapping dictates whether the main container should map a port to the network
   // If the user specifies service_port=0, then that will disable
   // If a capability sidecar specifies as owns_service_port=true, then that will also disable
-  disable_main_port_mapping = !(var.service_port > 0) || anytrue(values(local.sidecars_owns_service_port))
+  disable_main_port_mapping = !(var.port > 0) || anytrue(values(local.sidecars_owns_service_port))
 
   container_definition = {
     name      = local.main_container_name
@@ -13,8 +13,8 @@ locals {
     portMappings = local.disable_main_port_mapping ? [] : [
       {
         protocol      = "tcp"
-        containerPort = var.service_port
-        hostPort      = var.service_port
+        containerPort = var.port
+        hostPort      = var.port
       }
     ]
 
@@ -30,8 +30,8 @@ locals {
 
 resource "aws_ecs_task_definition" "this" {
   family                   = local.resource_name
-  cpu                      = var.service_cpu
-  memory                   = var.service_memory
+  cpu                      = var.cpu
+  memory                   = var.memory
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   execution_role_arn       = aws_iam_role.execution.arn

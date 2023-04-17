@@ -1,7 +1,7 @@
 locals {
   // If someone specifies `var.service_image`, the ecr repository will not be created
   // The following variable sets up the effective docker image
-  service_image = try(aws_ecr_repository.this[0].repository_url, var.service_image)
+  service_image = try(aws_ecr_repository.this[0].repository_url, var.image)
 }
 
 // This is a bit odd - we're creating a repository for every environment
@@ -21,5 +21,5 @@ resource "aws_ecr_repository" "this" {
     kms_key         = aws_kms_key.this.arn
   }
 
-  count = var.service_image == "" ? 1 : 0
+  count = var.image == "" ? 1 : 0
 }
