@@ -1,6 +1,10 @@
-variable "service_count" {
-  type    = number
-  default = 1
+variable "num_tasks" {
+  type        = number
+  default     = 1
+  description = <<EOF
+The desired number of tasks for this application to run.
+A task consists of the primary application container and any supporting containers that may be added via capabilities.
+EOF
 }
 
 variable "cpu" {
