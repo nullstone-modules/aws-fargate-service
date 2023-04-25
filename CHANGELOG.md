@@ -1,3 +1,7 @@
+# 0.13.0 (Unreleased)
+* Changed `cluster` connection to `cluster-namespace` connection.
+* Dropped `service_` prefix from variables.
+
 # 0.12.21 (Feb 24, 2023)
 * Fixed capability generation to emit variable that is set to a zero value, but not nil.
 
