@@ -1,4 +1,4 @@
-# 0.13.0 (Unreleased)
+# 0.13.0 (Apr 25, 2023)
 * Changed `cluster` connection to `cluster-namespace` connection.
 * Dropped `service_` prefix from variables.
 
