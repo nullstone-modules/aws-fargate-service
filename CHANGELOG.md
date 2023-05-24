@@ -1,3 +1,6 @@
+# 0.13.1 (May 23, 2023)
+* Changed service discovery to gracefully update a namespace changes using `create_before_destroy`.
+
 # 0.13.0 (Apr 25, 2023)
 * Changed `cluster` connection to `cluster-namespace` connection.
 * Dropped `service_` prefix from variables.
