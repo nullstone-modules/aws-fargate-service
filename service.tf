@@ -22,7 +22,7 @@ resource "aws_ecs_service" "this" {
   }
 
   dynamic "load_balancer" {
-    for_each = lookup(local.capabilities, "load_balancers", [])
+    for_each = local.cap_load_balancers
 
     content {
       container_name   = local.lb_container_name

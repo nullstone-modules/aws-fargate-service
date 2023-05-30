@@ -1,22 +1,15 @@
 locals {
   main_container_name = "main"
 
-  // has_port_mapping dictates whether the main container should map a port to the network
-  // If the user specifies service_port=0, then that will disable
-  // If a capability sidecar specifies as owns_service_port=true, then that will also disable
-  disable_main_port_mapping = !(var.port > 0) || anytrue(values(local.sidecars_owns_service_port))
-
   container_definition = {
     name      = local.main_container_name
     image     = "${local.service_image}:${local.app_version}"
     essential = true
-    portMappings = local.disable_main_port_mapping ? [] : [
-      {
-        protocol      = "tcp"
-        containerPort = var.port
-        hostPort      = var.port
-      }
-    ]
+    portMappings = [for port, obj in local.all_port_mappings : {
+      protocol      = "tcp"
+      containerPort = tonumber(port)
+      hostPort      = tonumber(port)
+    }]
 
     environment = [for k, v in local.all_env_vars : { name = k, value = v }]
     secrets     = local.secret_refs

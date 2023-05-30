@@ -1,3 +1,6 @@
+# 0.13.2 (May 30, 2023)
+* Added support for additional ports in load balancers.
+
 # 0.13.1 (May 23, 2023)
 * Changed service discovery to gracefully update a namespace changes using `create_before_destroy`.
 
