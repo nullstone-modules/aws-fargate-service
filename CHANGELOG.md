@@ -1,3 +1,6 @@
+# 0.13.3 (Jun 13, 2023)
+* Fixed duplicate port mappings when using sidecars.
+
 # 0.13.2 (May 30, 2023)
 * Added support for additional ports in load balancers.
 
