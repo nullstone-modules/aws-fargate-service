@@ -5,8 +5,8 @@ locals {
   disable_main_port_mapping = !(var.port > 0) || anytrue(values(local.sidecars_owns_service_port))
 
   cap_load_balancers   = lookup(local.capabilities, "load_balancers", [])
-  cap_port_mappings    = { for lb in local.cap_load_balancers : lb.port => { protocol = "tcp" } if lb.port != var.port }
+  cap_port_mappings    = { for lb in local.cap_load_balancers : lb.port => { protocol = "tcp" } if lb.port != tostring(var.port) }
   prelim_port_mappings = merge(tomap({ (var.port) = { protocol = "tcp" } }), local.cap_port_mappings)
   // Exclude main port from all_port_mappings if disabled
-  all_port_mappings = { for port, obj in local.prelim_port_mappings : port => obj if !(port == var.port && local.disable_main_port_mapping) }
+  all_port_mappings = { for port, obj in local.prelim_port_mappings : port => obj if !(port == tostring(var.port) && local.disable_main_port_mapping) }
 }
