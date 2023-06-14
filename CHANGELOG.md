@@ -1,4 +1,4 @@
-# 0.13.3 (Jun 13, 2023)
+# 0.13.3 (Jun 14, 2023)
 * Fixed duplicate port mappings when using sidecars.
 
 # 0.13.2 (May 30, 2023)
