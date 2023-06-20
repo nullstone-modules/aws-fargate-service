@@ -1,3 +1,6 @@
+# 0.13.4 (Jun 20, 2023)
+* Added `task_definition_arn` and `launch_type` to `app_metadata` for capabilities.
+
 # 0.13.3 (Jun 14, 2023)
 * Fixed duplicate port mappings when using sidecars.
 
