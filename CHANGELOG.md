@@ -1,3 +1,6 @@
+# 0.13.7 (Jun 21, 2023)
+* Fixed "known after apply" for event capabilities.
+
 # 0.13.6 (Jun 21, 2023)
 * Added support for events.
 * Changed `task_definition_arn` to `task_definition_name` to avoid cyclical dependencies.
