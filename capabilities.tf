@@ -87,5 +87,16 @@ locals {
         dependsOn    = [{ containerName = "", condition = "" }]
       }
     ]
+
+    // events allow capabilities to attach event targets
+    // The app module expects the capability to create the event rule and role and export it
+    // The app module will use information about the app, cluster, and network to create event targets
+    events = [
+      {
+        rule_name = ""
+        role_arn  = ""
+        input     = "{}"
+      }
+    ]
   }
 }
