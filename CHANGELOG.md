@@ -1,5 +1,6 @@
-# 0.13.5 (Jun 21, 2023)
-* Change `task_definition_arn` to `task_definition_name` to avoid cyclical dependencies.
+# 0.13.6 (Jun 21, 2023)
+* Added support for events.
+* Changed `task_definition_arn` to `task_definition_name` to avoid cyclical dependencies.
 
 # 0.13.4 (Jun 20, 2023)
 * Added `task_definition_name` and `launch_type` to `app_metadata` for capabilities.
