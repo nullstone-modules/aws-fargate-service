@@ -1,5 +1,8 @@
+# 0.13.5 (Jun 21, 2023)
+* Change `task_definition_arn` to `task_definition_name` to avoid cyclical dependencies.
+
 # 0.13.4 (Jun 20, 2023)
-* Added `task_definition_arn` and `launch_type` to `app_metadata` for capabilities.
+* Added `task_definition_name` and `launch_type` to `app_metadata` for capabilities.
 
 # 0.13.3 (Jun 14, 2023)
 * Fixed duplicate port mappings when using sidecars.
