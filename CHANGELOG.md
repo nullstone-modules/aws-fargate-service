@@ -1,4 +1,4 @@
-# 0.13.8 (Unreleased)
+# 0.13.8 (Jun 23, 2023)
 * Added optional `var.command` to override image `CMD`.
 
 # 0.13.7 (Jun 21, 2023)
