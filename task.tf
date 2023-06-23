@@ -1,8 +1,10 @@
 locals {
   main_container_name = "main"
+  command             = length(var.command) > 0 ? var.command : null
 
   container_definition = {
     name      = local.main_container_name
+    command   = local.command
     image     = "${local.service_image}:${local.app_version}"
     essential = true
     portMappings = [for port, obj in local.all_port_mappings : {
