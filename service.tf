@@ -1,4 +1,5 @@
 resource "aws_ecs_service" "this" {
+  // The name of the service determines the internal DNS name (i.e. <service-name>.<dns-namespace>)
   name                   = local.block_name
   tags                   = local.tags
   cluster                = local.cluster_arn

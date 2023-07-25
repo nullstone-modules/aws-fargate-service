@@ -1,3 +1,6 @@
+# 0.13.10 (Jul 25, 2023)
+* Prevent collisions of fargate services when using shared infrastructure.
+
 # 0.13.8 (Jun 23, 2023)
 * Added optional `var.command` to override image `CMD`.
 
