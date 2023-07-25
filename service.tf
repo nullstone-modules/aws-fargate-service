@@ -1,9 +1,6 @@
-locals {
-  service_name = local.is_preview_env ? "${local.block_name}-${random_string.resource_suffix.result}" : local.block_name
-}
-
 resource "aws_ecs_service" "this" {
-  name                   = local.service_name
+  // The name of the service determines the internal DNS name (i.e. <service-name>.<dns-namespace>)
+  name                   = local.block_name
   tags                   = local.tags
   cluster                = local.cluster_arn
   desired_count          = var.num_tasks
@@ -33,6 +30,10 @@ resource "aws_ecs_service" "this" {
       container_port   = load_balancer.value.port
       target_group_arn = load_balancer.value.target_group_arn
     }
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
