@@ -1,3 +1,7 @@
+locals {
+  service_name = local.is_preview_env ? "${local.block_name}-${random_string.resource_suffix.result}" : local.block_name
+}
+
 resource "aws_ecs_service" "this" {
   name                   = local.block_name
   tags                   = local.tags
