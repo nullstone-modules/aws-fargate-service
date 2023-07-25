@@ -3,7 +3,7 @@ locals {
 }
 
 resource "aws_ecs_service" "this" {
-  name                   = local.block_name
+  name                   = local.service_name
   tags                   = local.tags
   cluster                = local.cluster_arn
   desired_count          = var.num_tasks
