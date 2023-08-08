@@ -1,4 +1,5 @@
 resource "aws_iam_user" "image_pusher" {
+  #bridgecrew:skip=CKV_AWS_273: Skipping "Ensure access is controlled through SSO and not AWS IAM defined users". SSO is unavailable to configure.
   name = "image-pusher-${local.resource_name}"
   tags = local.tags
 

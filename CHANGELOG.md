@@ -1,3 +1,6 @@
+# 0.13.11 (Aug 08, 2023)
+* Updated `README.md` with application management info.
+
 # 0.13.10 (Jul 25, 2023)
 * Prevent collisions of fargate services when using shared infrastructure.
 
