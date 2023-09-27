@@ -1,6 +1,7 @@
 locals {
   // secret_refs is prepared in the form [{ name = "", valueFrom = "<arn>" }, ...] for injection into ECS services
   secret_refs = [for key in local.secret_keys : { name = key, valueFrom = aws_secretsmanager_secret.app_secret[key].arn }]
+  all_secret_refs = concat(local.secret_refs, local.existing_secret_refs)
 }
 
 resource "aws_secretsmanager_secret" "app_secret" {
