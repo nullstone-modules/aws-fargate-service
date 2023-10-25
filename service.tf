@@ -7,6 +7,7 @@ resource "aws_ecs_service" "this" {
   task_definition        = aws_ecs_task_definition.this.arn
   launch_type            = "FARGATE"
   enable_execute_command = true
+  health_check_grace_period_seconds = var.health_check_grace_period
 
   network_configuration {
     subnets          = local.private_subnet_ids

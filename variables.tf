@@ -80,3 +80,13 @@ EOF
     error_message = "AWS does not support ephemeral storage larger than 200 GiB."
   }
 }
+
+variable health_check_grace_period {
+  type        = number
+  default     = 0
+  description = <<EOF
+The period of time (in seconds) that the Amazon ECS service scheduler ignores unhealthy Elastic Load Balancing health checks after a task has first started.
+This grace period can prevent the service scheduler from marking tasks as unhealthy and stopping them before they have time to transition to a RUNNING state.
+The default value is 0. This will not be used if not configured with a load balancer.
+EOF
+}
