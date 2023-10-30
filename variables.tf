@@ -83,7 +83,7 @@ EOF
 
 variable health_check_grace_period {
   type        = number
-  default     = 0
+  default     = 15
   description = <<EOF
 The period of time (in seconds) that the Amazon ECS service scheduler ignores unhealthy Elastic Load Balancing health checks after a task has first started.
 This grace period can prevent the service scheduler from marking tasks as unhealthy and stopping them before they have time to transition to a RUNNING state.
