@@ -1,3 +1,16 @@
+# 0.13.20 (Unreleased)
+* Added `execution_role_name` to injected `app_metadata` in capabilities.
+* Increased default `var.health_check_grace_period` to `30s`.
+
+# 0.13.19 (Oct 30, 2023)
+* Fixed `var.health_check_grace_period` to configure only when load balancers are attached. 
+
+# 0.13.18 (Oct 30, 2023)
+* Added `var.health_check_grace_period` to delay enforcement of failed health checks.
+
+# 0.13.12 (Sep 27, 2023)
+* Added support for `secret()` ref.
+
 # 0.13.11 (Aug 08, 2023)
 * Updated `README.md` with application management info.
 
