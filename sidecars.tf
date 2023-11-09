@@ -12,7 +12,7 @@ locals {
         for mapping in jsondecode(lookup(s, "portMappings", "[]")) : {
           protocol      = mapping.protocol
           containerPort = tonumber(mapping.containerPort)
-          hostPort      = tonumber(mapping.hostPort)
+          hostPort      = try(tonumber(mapping.hostPort), null)
         }
       ]
       environment = jsondecode(lookup(s, "environment", "[]"))
