@@ -1,4 +1,4 @@
-# 0.13.20 (Unreleased)
+# 0.13.20 (Nov 09, 2023)
 * Added `execution_role_name` to injected `app_metadata` in capabilities.
 * Increased default `var.health_check_grace_period` to `30s`.
 
