@@ -1,3 +1,6 @@
+# 0.13.22 (Dec 28, 2023)
+* Added support for querying metric data from the log reader.
+
 # 0.13.21 (Dec 28, 2023)
 * Added support for "target-group" metric alarms.
 
