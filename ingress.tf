@@ -9,4 +9,8 @@ locals {
   prelim_port_mappings = merge(tomap({ (var.port) = { protocol = "tcp" } }), local.cap_port_mappings)
   // Exclude main port from all_port_mappings if disabled
   all_port_mappings = { for port, obj in local.prelim_port_mappings : port => obj if !(port == tostring(var.port) && local.disable_main_port_mapping) }
+
+  // This strips the arn down to the target group name in the form: targetgroup/<name>/<id>
+  // This is useful for specifying target groups in cloudwatch metric alarms
+  target_group_arn_suffixes = [ for lb in local.cap_load_balancers : element(split(":", lb.target_group_arn), 5) ]
 }

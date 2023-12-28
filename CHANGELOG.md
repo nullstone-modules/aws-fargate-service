@@ -1,3 +1,6 @@
+# 0.13.21 (Dec 28, 2023)
+* Added support for "target-group" metric alarms.
+
 # 0.13.20 (Nov 09, 2023)
 * Added `execution_role_name` to injected `app_metadata` in capabilities.
 * Increased default `var.health_check_grace_period` to `30s`.
