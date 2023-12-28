@@ -3,7 +3,7 @@ locals {
 
   tg_metric_alarms = [for ma in local.metric_alarms : ma if ma.type == "target-group"]
   all_tg_metric_alarms = merge([
-    for ma in local.tg_metric_alarms : {for arn_suffix in local.target_group_arn_suffixes : arn_suffix => ma }
+    for ma in local.tg_metric_alarms : {for arn_suffix in local.target_group_arn_suffixes : "${arn_suffix}/${ma.name}" => ma }
   ]...)
 }
 
