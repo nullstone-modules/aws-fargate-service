@@ -3,7 +3,7 @@ locals {
 
   tg_metric_alarms = [for ma in local.metric_alarms : ma if ma.type == "target-group"]
   all_tg_metric_alarms = merge([
-    for ma in local.tg_metric_alarms : {for arn_suffix in local.target_group_arn_suffixes : "${arn_suffix}/${ma.name}" => ma }
+    for ma in local.tg_metric_alarms : {for arn_suffix in local.target_group_arn_suffixes : "${arn_suffix}/${ma.name}" => merge(ma, { target_group = arn_suffix }) }
   ]...)
 }
 
@@ -22,6 +22,8 @@ resource "aws_cloudwatch_metric_alarm" "target-groups" {
   alarm_actions       = try(jsondecode(each.value.actions), null)
 
   dimensions = {
-    TargetGroup = each.key
+    TargetGroup = each.value.target_group
   }
+
+  tags = local.tags
 }
