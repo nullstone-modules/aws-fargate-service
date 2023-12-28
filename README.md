@@ -45,3 +45,37 @@ To access through the Nullstone CLI, use `nullstone logs` CLI command. (See [`lo
 
 Nullstone automatically injects secrets into your Fargate Service through environment variables.
 (They are stored in AWS Secrets Manager and injected by AWS during launch.)
+
+## Metric Alarms
+
+### Target Group
+
+Load Balancers use Target Groups as a backend registration.
+As more containers are launched, AWS automatically registers these containers with the Target Group.
+
+This app module enables the creation of Cloudwatch metric alarms through capability outputs.
+This is especially useful when creating auto-scaling capabilities based on metrics on the Target Group (e.g. `RequestCountPerTarget`).
+
+To create a metric alarm in a capability, add an output that looks like the following.
+Note that `type` must be `"target-group"` and `name` must be unique amongst metric alarms.
+```hcl
+output "metric_alarms" {
+  value = [
+    {
+      type = "target-group"
+
+      name                = "HighRequestCountPerTarget"
+      comparison_operator = "GreaterThanThreshold"
+      evaluation_periods  = "2"
+      metric_name         = "RequestCountPerTarget"
+      namespace           = "AWS/ApplicationELB"
+      period              = "60"
+      statistic           = "Sum"
+      threshold           = "1000"
+      alarm_description   = "Triggers a scale up of containers when the TargetGroup has a high number of requests per target"
+      actions             = jsonencode([aws_appautoscaling_policy.scale_up.arn])
+    }
+  ]
+}
+
+```
