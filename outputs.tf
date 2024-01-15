@@ -24,6 +24,11 @@ output "log_reader" {
   sensitive   = true
 }
 
+output "metrics_provider" {
+  value       = "cloudwatch"
+  description = "string ||| "
+}
+
 output "metrics_reader" {
   value       = module.logs.reader
   description = "object({ name: string, access_key: string, secret_key: string }) ||| An AWS User with explicit privilege to read metrics from Cloudwatch."

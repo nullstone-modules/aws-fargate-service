@@ -81,7 +81,7 @@ EOF
   }
 }
 
-variable health_check_grace_period {
+variable "health_check_grace_period" {
   type        = number
   default     = 30
   description = <<EOF

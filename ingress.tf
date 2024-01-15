@@ -12,5 +12,5 @@ locals {
 
   // This strips the arn down to the target group name in the form: targetgroup/<name>/<id>
   // This is useful for specifying target groups in cloudwatch metric alarms
-  target_group_arn_suffixes = [ for lb in local.cap_load_balancers : element(split(":", lb.target_group_arn), 5) ]
+  target_group_arn_suffixes = [for lb in local.cap_load_balancers : element(split(":", lb.target_group_arn), 5)]
 }

@@ -1,12 +1,12 @@
 resource "aws_ecs_service" "this" {
   // The name of the service determines the internal DNS name (i.e. <service-name>.<dns-namespace>)
-  name                   = local.block_name
-  tags                   = local.tags
-  cluster                = local.cluster_arn
-  desired_count          = var.num_tasks
-  task_definition        = aws_ecs_task_definition.this.arn
-  launch_type            = "FARGATE"
-  enable_execute_command = true
+  name                              = local.block_name
+  tags                              = local.tags
+  cluster                           = local.cluster_arn
+  desired_count                     = var.num_tasks
+  task_definition                   = aws_ecs_task_definition.this.arn
+  launch_type                       = "FARGATE"
+  enable_execute_command            = true
   health_check_grace_period_seconds = length(local.cap_load_balancers) > 0 ? var.health_check_grace_period : null
 
   network_configuration {
