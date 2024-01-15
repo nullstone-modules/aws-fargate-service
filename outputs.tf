@@ -24,6 +24,16 @@ output "log_reader" {
   sensitive   = true
 }
 
+output "metrics_reader" {
+  value       = module.logs.reader
+  description = "object({ name: string, access_key: string, secret_key: string }) ||| An AWS User with explicit privilege to read metrics from Cloudwatch."
+  sensitive   = true
+}
+
+output "metrics_mappings" {
+  value = local.metrics_mappings
+}
+
 output "image_repo_name" {
   value       = try(aws_ecr_repository.this[0].name, "")
   description = "string ||| "
