@@ -1,3 +1,9 @@
+# 0.13.24 (Jan 15, 2023)
+* Fixed mapping syntax.
+
+# 0.13.23 (Jan 15, 2023)
+* Added metrics configuration. (`metrics_provider`, `metrics_reader`, `metrics_mappings`)
+
 # 0.13.22 (Dec 28, 2023)
 * Added support for querying metric data from the log reader.
 
