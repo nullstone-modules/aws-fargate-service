@@ -1,7 +1,10 @@
-# 0.13.24 (Jan 15, 2023)
+# 0.13.25 (Feb 06, 2024)
+* Added support for metrics for capabilities.
+
+# 0.13.24 (Jan 15, 2024)
 * Fixed mapping syntax.
 
-# 0.13.23 (Jan 15, 2023)
+# 0.13.23 (Jan 15, 2024)
 * Added metrics configuration. (`metrics_provider`, `metrics_reader`, `metrics_mappings`)
 
 # 0.13.22 (Dec 28, 2023)
