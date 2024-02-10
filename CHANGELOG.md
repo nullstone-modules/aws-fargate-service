@@ -1,3 +1,6 @@
+# 0.13.26 (Feb 10, 2024)
+* Added permissions to list image tags in image repository.
+
 # 0.13.25 (Feb 06, 2024)
 * Added support for metrics for capabilities.
 
