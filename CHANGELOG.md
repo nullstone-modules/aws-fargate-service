@@ -1,3 +1,6 @@
+# 0.13.27 (Mar 19, 2024)
+* Upgrade terraform providers (aws -> `5.41.0`).
+
 # 0.13.26 (Feb 10, 2024)
 * Added permissions to list image tags in image repository.
 
