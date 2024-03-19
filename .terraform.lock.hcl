@@ -74,25 +74,3 @@ provider "registry.terraform.io/nullstone-io/ns" {
     "zh:f24ab46165449884ed8e761b005fb0be0e3c72382d94d1fd230871b5e12ea331",
   ]
 }
-
-provider "registry.terraform.io/tlkamp/validation" {
-  version = "1.1.1"
-  hashes = [
-    "h1:O+lg+RbRMPUaaCyLIFynlY1OsMdcsp/4cIiCwCvMuL0=",
-    "zh:05f2e8fc4e4f1e6df8e86d2d60a250efc1dd2dd41b46809db404ee44c82d5bfb",
-    "zh:099911ff27fd8b2e94ffa5c5ca8e7041c95f86ffd82a072b96a72df715b57471",
-    "zh:118db3394d3aa93648e7a4b5bce5062fe961096c129844bd4123e04cc675562e",
-    "zh:16f91aa6db46702d911738f2fa895a328db2e36cad42a8c4c8c4710d30ce2115",
-    "zh:1c3e89cf19118fc07d7b04257251fc9897e722c16e0a0df7b07fcd261f8c12e7",
-    "zh:32664186e5fcbcc9ed5557c530bbbc481f2e1dd129645e22ee616dfd85dd935e",
-    "zh:38935bfc992217bdb5681516dec5c8c0031e591cb67a93ed5281359aac56d0f3",
-    "zh:55ebe724ad97ea839c651d2b8e416ff9ddb6af2836fa14a43e8f1a1f389c5ee2",
-    "zh:573afad90cd5720cce02aade87a24863e7188cb118d411c6736c0180eee9c0a9",
-    "zh:5ec4de07f45b08bd7c1e8822344cd41625e805d7e10d5548f30c4fddf0eb153a",
-    "zh:7be4a994bbb3e03f5eaf11009aea2a61b429b65a6dc616e73c7ef2d78d33f07f",
-    "zh:928f7e3ce74ddddb92cdd8a4facc09ce573c0946407f023c90fd8ac1f1b3a56e",
-    "zh:a860caa99f0e143e41da32ce4013ab19b12acc02a3ffb3f31bb7e657c5aa71e4",
-    "zh:b08e0cd7b21ae126c694b3b3e5dd9d285b3f56126ec4d29d5d7dee46219da487",
-    "zh:c5d113053435d627d3c9a28591ba54cd405848ecdc0e23b9fecb312437997cbe",
-  ]
-}

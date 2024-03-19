@@ -1,3 +1,6 @@
+# 0.13.28 (Mar 19, 2024)
+* Removed extra `validation` stanza from `.terraform.lock.hcl` that prevented plans from running.
+
 # 0.13.27 (Mar 19, 2024)
 * Upgrade terraform providers (aws -> `5.41.0`).
 
