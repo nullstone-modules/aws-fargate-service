@@ -1,3 +1,6 @@
+# 0.13.30 (May 17, 2024)
+* Fixed issue with `.terraform.lock.hcl` containing `tlkamp/validation`.
+
 # 0.13.29 (May 16, 2024)
 * Upgraded Terraform providers.
 
