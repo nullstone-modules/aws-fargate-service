@@ -1,3 +1,6 @@
+# 0.13.33 (Sep 16, 2024)
+* Fixed removal of `ulimit` capability.
+
 # 0.13.32 (Sep 16, 2024)
 * Fixed `ulimit` capabilities definition.
 
