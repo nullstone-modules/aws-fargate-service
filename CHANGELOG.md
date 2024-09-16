@@ -1,3 +1,7 @@
+# 0.13.31 (Sep 16, 2024)
+* Added `app/` prefix to cpu and memory metrics so they are grouped on the dashboard.
+* Added support for `ulimit` on main container definition from capability modules.
+
 # 0.13.30 (May 17, 2024)
 * Fixed issue with `.terraform.lock.hcl` containing `tlkamp/validation`.
 

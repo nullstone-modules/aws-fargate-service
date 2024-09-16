@@ -99,6 +99,15 @@ locals {
       }
     ]
 
+    // ulimits allow capabilities to modify ulimits on the main container
+    ulimits = [
+      {
+        name       = "" // "core"|"cpu"|"data"|"fsize"|"locks"|"memlock"|"msgqueue"|"nice"|"nofile"|"nproc"|"rss"|"rtprio"|"rttime"|"sigpending"|"stack"
+        soft_limit = 0  // integer
+        hard_limit = 0  // integer
+      }
+    ]
+
     // metrics allows capabilities to attach metrics to the application
     // These metrics are displayed on the Application Monitoring page
     // See https://docs.nullstone.io/extending/metrics/aws-cloudwatch.html#metrics-mappings

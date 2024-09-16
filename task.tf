@@ -20,6 +20,8 @@ locals {
     volumesFrom = []
 
     logConfiguration = local.log_configuration
+
+    ulimits = local.ulimits
   }
 }
 
