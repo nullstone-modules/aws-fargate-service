@@ -29,7 +29,7 @@ locals {
 
   base_metrics = [
     {
-      name = "cpu"
+      name = "app/cpu"
       type = "usage"
       unit = "vCPU"
 
@@ -65,7 +65,7 @@ locals {
       }
     },
     {
-      name = "memory"
+      name = "app/memory"
       type = "usage"
       unit = "MiB"
 
