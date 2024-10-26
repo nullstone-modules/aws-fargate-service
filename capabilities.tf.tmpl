@@ -55,7 +55,7 @@ locals {
 
   cap_secrets = merge([
     for mod in local.cap_modules : {
-      for item in lookup(mod.outputs, "secrets", []) : "${mod.env_prefix}${item.name}" => item.value
+      for item in lookup(mod.outputs, "secrets", []) : "${mod.env_prefix}${item.name}" => sensitive(item.value)
     }
   ]...)
 }

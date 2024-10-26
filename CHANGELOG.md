@@ -1,3 +1,6 @@
+# 0.13.34 (Oct 26, 2024)
+* Fixed inconsistency with env vars/secrets interpolation.
+
 # 0.13.33 (Sep 16, 2024)
 * Fixed removal of `ulimit` capability.
 

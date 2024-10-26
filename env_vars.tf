@@ -29,8 +29,9 @@ locals {
     NULLSTONE_PRIVATE_HOSTS = join(",", local.private_hosts)
   })
 
-  input_env_vars = merge(local.standard_env_vars, local.cap_env_vars, var.env_vars)
-  input_secrets  = merge(local.cap_secrets, var.secrets)
+  input_env_vars    = merge(local.standard_env_vars, local.cap_env_vars, var.env_vars)
+  input_secrets     = merge(local.cap_secrets, var.secrets)
+  input_secret_keys = nonsensitive(concat(keys(local.cap_secrets), keys(var.secrets)))
 }
 
 data "ns_env_variables" "this" {
@@ -39,8 +40,8 @@ data "ns_env_variables" "this" {
 }
 
 data "ns_secret_keys" "this" {
-  input_env_variables = var.env_vars
-  input_secret_keys   = nonsensitive(keys(local.input_secrets))
+  input_env_variables = local.input_env_vars
+  input_secret_keys   = local.input_secret_keys
 }
 
 locals {
