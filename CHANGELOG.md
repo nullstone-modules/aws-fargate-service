@@ -1,3 +1,6 @@
+# 0.13.35 (Nov 05, 2024)
+* Fixed failed Terraform plans when creating secrets on initial launch.
+
 # 0.13.34 (Oct 26, 2024)
 * Fixed inconsistency with env vars/secrets interpolation.
 

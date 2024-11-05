@@ -39,8 +39,13 @@ data "ns_env_variables" "this" {
   input_secrets       = local.input_secrets
 }
 
+// ns_secret_keys.this is used to calculate a set of secrets to add to aws secrets manager
+// The resulting `secret_keys` attribute must be known at plan time
+// This doesn't need to do a full interpolation because we only care about which inputs need to be added to aws secrets manager
+// ns_secret_keys.input_env_variables should contain only var.env_vars since they could contain interpolation that promotes them to sensitive
+// We exclude `local.cap_env_vars` because capabilities must use `cap_secrets` to create secrets
 data "ns_secret_keys" "this" {
-  input_env_variables = local.input_env_vars
+  input_env_variables = var.env_vars
   input_secret_keys   = local.input_secret_keys
 }
 
