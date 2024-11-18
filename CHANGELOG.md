@@ -1,3 +1,6 @@
+# 0.13.36 (Nov 18, 2024)
+* Propagate tags from ECS service to ECS tasks.
+
 # 0.13.35 (Nov 05, 2024)
 * Fixed failed Terraform plans when creating secrets on initial launch.
 
