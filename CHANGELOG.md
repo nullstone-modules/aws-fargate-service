@@ -1,3 +1,6 @@
+# 0.13.37 (Jan 22, 2025)
+* When an app secret is removed, it is immediately deleted from AWS secrets manager.
+
 # 0.13.36 (Nov 18, 2024)
 * Propagate tags from ECS service to ECS tasks.
 
