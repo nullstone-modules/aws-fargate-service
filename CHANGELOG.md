@@ -1,3 +1,6 @@
+# 0.13.38 (Apr 04, 2025)
+* Added support for mounting `volumes` to the fargate task defined in capabilities. 
+
 # 0.13.37 (Jan 22, 2025)
 * When an app secret is removed, it is immediately deleted from AWS secrets manager.
 
