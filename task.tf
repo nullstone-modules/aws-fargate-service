@@ -3,15 +3,19 @@ locals {
   command             = length(var.command) > 0 ? var.command : null
 
   container_definition = {
-    name      = local.main_container_name
-    command   = local.command
-    image     = "${local.service_image}:${local.app_version}"
-    essential = true
-    portMappings = [for port, obj in local.all_port_mappings : {
-      protocol      = "tcp"
-      containerPort = tonumber(port)
-      hostPort      = tonumber(port)
-    }]
+    name           = local.main_container_name
+    command        = local.command
+    image          = "${local.service_image}:${local.app_version}"
+    essential      = true
+    pseudoTerminal = true
+
+    portMappings = [
+      for port, obj in local.all_port_mappings : {
+        protocol      = "tcp"
+        containerPort = tonumber(port)
+        hostPort      = tonumber(port)
+      }
+    ]
 
     environment = [for k, v in local.all_env_vars : { name = k, value = v }]
     secrets     = local.all_secret_refs

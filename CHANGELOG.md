@@ -1,3 +1,6 @@
+# 0.13.39 (Apr 30, 2025)
+* Configured main container with `pseudoTerminal`.
+
 # 0.13.38 (Apr 04, 2025)
 * Added support for mounting `volumes` to the fargate task defined in capabilities. 
 
