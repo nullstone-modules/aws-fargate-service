@@ -1,3 +1,6 @@
+# 0.13.40 (Jul 09, 2025)
+* Added `nullstone.io/version` tag to task definition.
+
 # 0.13.39 (Apr 30, 2025)
 * Configured main container with `pseudoTerminal`.
 

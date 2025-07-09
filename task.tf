@@ -2,6 +2,10 @@ locals {
   main_container_name = "main"
   command             = length(var.command) > 0 ? var.command : null
 
+  task_tags = merge(local.tags, {
+    "nullstone.io/version" = local.app_version
+  })
+
   container_definition = {
     name           = local.main_container_name
     command        = local.command
@@ -38,7 +42,7 @@ resource "aws_ecs_task_definition" "this" {
   execution_role_arn       = aws_iam_role.execution.arn
   depends_on               = [aws_iam_role_policy.execution]
   container_definitions    = jsonencode(concat([local.container_definition], local.addl_container_defs))
-  tags                     = local.tags
+  tags                     = local.task_tags
   task_role_arn            = aws_iam_role.task.arn
 
   dynamic "ephemeral_storage" {
