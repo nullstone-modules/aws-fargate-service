@@ -28,6 +28,8 @@ jobs:
 
       - name: Set up Nullstone
         uses: nullstone-io/setup-nullstone-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Find version
         id: version
