@@ -1,3 +1,7 @@
+# 0.13.42 (Jul 21, 2025)
+* Allow more than one EFS volume attached to fargate service.
+* Fixed deprecation warnings in new AWS terraform provider.
+
 # 0.13.41 (Jul 21, 2025)
 * Upgraded all terraform providers to latest.
 

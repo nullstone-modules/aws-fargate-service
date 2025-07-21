@@ -66,7 +66,7 @@ resource "aws_ecs_task_definition" "this" {
           file_system_id          = efs_volume_configuration.value.file_system_id
           root_directory          = efs_volume_configuration.value.root_directory
           transit_encryption      = "ENABLED"
-          transit_encryption_port = 2999
+          transit_encryption_port = local.efs_encryption_ports[volume.key]
         }
       }
     }
