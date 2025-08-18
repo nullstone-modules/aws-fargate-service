@@ -1,3 +1,6 @@
+# 0.13.44 (Aug 18, 2025)
+* Added support for `linuxParameters` in capabilities.
+
 # 0.13.43 (Jul 21, 2025)
 * Revert service discovery deprecation as it causes Terraform to fail.
 
