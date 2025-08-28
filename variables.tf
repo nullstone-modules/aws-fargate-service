@@ -23,7 +23,7 @@ variable "memory" {
   default     = 512
   description = <<EOF
 The amount of memory to reserve and cap the service.
-If the service exceeds this amount, the service will be killed with exit code 127 representing "Out-of-memory".
+If the service exceeds this amount, the service will be killed with exit code 137 representing "Out-of-memory".
 Memory is measured in MiB, or megabytes.
 This means the default is 512 MiB or 0.5 GiB.
 EOF
