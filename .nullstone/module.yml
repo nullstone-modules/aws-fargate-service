@@ -11,3 +11,4 @@ subplatform: fargate
 type: service/aws-fargate
 appCategories: []
 is_public: true
+tool_name: "terraform"

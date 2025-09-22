@@ -1,5 +1,5 @@
 locals {
-  events = merge([for cp in local.cap_modules : { for i, event in lookup(cp.outputs, "events", []) : "cap_${cp.id}_${i}" => event }]...)
+  events = merge([for cp in local.cap_modules : { for i, event in lookup(cp.outputs, "events", []) : "cap_${cp.tfId}_${i}" => event }]...)
 }
 
 resource "aws_cloudwatch_event_target" "this" {

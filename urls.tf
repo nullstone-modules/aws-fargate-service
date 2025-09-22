@@ -18,7 +18,7 @@ locals {
 locals {
   authority_matcher = "^(?:(?P<user>[^@]*)@)?(?:(?P<host>[^:]*))(?:[:](?P<port>[\\d]*))?"
   // These tests are here to verify the authority_matcher regex above
-  // To verify, uncomment the following lines and issue `echo 'local.tests' | terraform console`
+  // To verify, uncomment the following lines and issue "echo 'local.tests' | terraform console"
   /*
   tests = tomap({
     "nullstone.io" : regex(local.authority_matcher, "nullstone.io"),
