@@ -10,9 +10,10 @@ data "ns_connection" "cluster" {
 }
 
 locals {
-  service_domain       = data.ns_connection.cluster_namespace.outputs.namespace
-  service_discovery_id = data.ns_connection.cluster_namespace.outputs.service_discovery_id
-  cluster_arn          = data.ns_connection.cluster_namespace.outputs.cluster_arn
-  cluster_name         = data.ns_connection.cluster_namespace.outputs.cluster_name
-  deployers_name       = data.ns_connection.cluster_namespace.outputs.deployers_name
+  service_domain        = data.ns_connection.cluster_namespace.outputs.namespace
+  service_discovery_id  = data.ns_connection.cluster_namespace.outputs.service_discovery_id
+  cluster_arn           = data.ns_connection.cluster_namespace.outputs.cluster_arn
+  cluster_name          = data.ns_connection.cluster_namespace.outputs.cluster_name
+  deployers_name        = data.ns_connection.cluster_namespace.outputs.deployers_name
+  log_retention_in_days = try(data.ns_connection.cluster.outputs.log_retention_in_days, 90)
 }

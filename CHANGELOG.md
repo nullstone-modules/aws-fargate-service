@@ -1,3 +1,6 @@
+# 0.14.1 (Sep 26, 2025)
+* Configure log retention via cluster configuration.
+
 # 0.14.0 (Sep 22, 2025)
 * Upgraded terraform providers.
 
