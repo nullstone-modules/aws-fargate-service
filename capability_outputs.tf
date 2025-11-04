@@ -5,6 +5,7 @@ locals {
     "secrets",
     "load_balancers",
     "metric_alarms",
+    "auto_scaling",
     "private_urls",
     "public_urls",
     "log_configurations",

@@ -1,10 +1,14 @@
+locals {
+  has_auto_scaling = anytrue([for item in local.capabilities.auto_scaling : item.enabled])
+}
+
 resource "aws_ecs_service" "this" {
   // The name of the service determines the internal DNS name (i.e. <service-name>.<dns-namespace>)
   name                              = local.block_name
   tags                              = local.tags
   propagate_tags                    = "SERVICE"
   cluster                           = local.cluster_arn
-  desired_count                     = var.num_tasks
+  desired_count                     = local.has_auto_scaling ? null : var.num_tasks
   task_definition                   = aws_ecs_task_definition.this.arn
   launch_type                       = "FARGATE"
   enable_execute_command            = true
