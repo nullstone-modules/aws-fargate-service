@@ -41,6 +41,8 @@ locals {
       namespace  = "{{ $element.Namespace }}"
       env_prefix = "{{ $element.EnvPrefix }}"
       outputs    = {{ $element.TfModuleAddr }}
+
+      meta = jsondecode({{ $element.Meta | to_json_string }})
     }
 {{- end }}
   ]

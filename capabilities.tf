@@ -8,6 +8,13 @@ locals {
       namespace  = ""
       env_prefix = ""
       outputs    = {}
+
+      meta = {
+        subcategory = ""
+        platform    = ""
+        subplatform = ""
+        outputNames = []
+      }
     }
   ]
 
@@ -33,6 +40,21 @@ locals {
       {
         port             = 80
         target_group_arn = ""
+      }
+    ]
+
+    metric_alarms = [
+      {
+        type                = ""
+        comparison_operator = ""
+        evaluation_periods  = ""
+        metric_name         = ""
+        namespace           = ""
+        period              = 0
+        statistic           = ""
+        threshold           = 0
+        alarm_description   = ""
+        actions             = "[]" // json-encoded array
       }
     ]
 
