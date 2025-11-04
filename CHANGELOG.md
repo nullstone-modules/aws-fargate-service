@@ -1,6 +1,6 @@
 # 0.15.0 (Unreleased)
 * Improved launch reliability by limiting dependencies when aggregating capability outputs.
-* Don't change service's `desired_count` when autoscaling is enabled.
+* Always use app autoscaling; set to `var.num_tasks` when autoscaling is disabled.
 
 # 0.14.2 (Mar 05, 2026)
 * Upgrade to latest ns terraform provider to improve env var interpolation

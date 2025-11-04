@@ -67,8 +67,10 @@ locals {
 
     auto_scaling = [
       {
-        cap_tf_id = ""
-        enabled   = false
+        cap_tf_id    = ""
+        enabled      = false
+        min_capacity = 1
+        max_capacity = 1
       }
     ]
 
