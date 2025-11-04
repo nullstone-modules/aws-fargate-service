@@ -1,9 +1,7 @@
 locals {
-  sidecars = lookup(local.capabilities, "sidecars", [])
-
   // Using jsondecode because all map values must be of the same type
   addl_container_defs = [
-    for s in local.sidecars : {
+    for s in local.capabilities.sidecars : {
       name      = s.name
       image     = s.image
       command   = jsondecode(lookup(s, "command", "[]"))
@@ -27,6 +25,6 @@ locals {
   ]
 
   // If a sidecar takes over the service_port, we will configure the load balancer against that container instead of "main"
-  sidecars_owns_service_port = { for s in local.sidecars : s.name => tobool(lookup(s, "owns_service_port", false)) }
+  sidecars_owns_service_port = { for s in local.capabilities.sidecars : s.name => tobool(lookup(s, "owns_service_port", false)) }
   lb_container_name          = try(compact([for name, owns in local.sidecars_owns_service_port : (owns == true ? name : "")])[0], "main")
 }

@@ -6,9 +6,8 @@ locals {
 
   metrics_mappings = concat(local.base_metrics, local.cap_metrics)
 
-  cap_metrics_defs = lookup(local.capabilities, "metrics", [])
   cap_metrics = [
-    for m in local.cap_metrics_defs : {
+    for m in local.capabilities.metrics : {
       name = m.name
       type = m.type
       unit = m.unit

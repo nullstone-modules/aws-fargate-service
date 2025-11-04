@@ -1,16 +1,18 @@
 locals {
-  metric_alarms = lookup(local.capabilities, "metric_alarms", [])
-
-  tg_metric_alarms = [for ma in local.metric_alarms : ma if ma.type == "target-group"]
-  all_tg_metric_alarms = merge([
-    for ma in local.tg_metric_alarms : { for arn_suffix in local.target_group_arn_suffixes : "${arn_suffix}/${ma.name}" => merge(ma, { target_group = arn_suffix }) }
+  tg_metric_alarms = merge([
+    for ma in local.capabilities.metric_alarms : { for tg in local.cap_target_groups : "${tg.capTfId}-${ma.cap_tf_id}-${ma.name}" =>
+      merge(ma, {
+        alarm_name   = "${tg.name}-${tg.id}-${ma.name}-${random_string.resource_suffix.result}"
+        target_group = tg.arn_suffix
+      })
+    } if ma.type == "target-group"
   ]...)
 }
 
 resource "aws_cloudwatch_metric_alarm" "target-groups" {
-  for_each = local.all_tg_metric_alarms
+  for_each = local.tg_metric_alarms
 
-  alarm_name          = "${local.resource_name}-${each.value.name}"
+  alarm_name          = each.value.alarm_name
   comparison_operator = try(each.value.comparison_operator, null)
   evaluation_periods  = try(each.value.evaluation_periods, null)
   metric_name         = try(each.value.metric_name, null)
