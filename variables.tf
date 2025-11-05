@@ -4,16 +4,6 @@ variable "num_tasks" {
   description = <<EOF
 The desired number of tasks for this application to run.
 A task consists of the primary application container and any supporting containers that may be added via capabilities.
-When autoscaling is enabled through capabilities, this serves as the minimum number of tasks to run.
-EOF
-}
-
-variable "max_tasks" {
-  type = number
-  default = 10
-  description = <<EOF
-The maximum number of tasks for this application to run.
-When autoscaling is enabled through capabilities, this serves as the maximum capacity to prevent scaling to infinity.
 EOF
 }
 
