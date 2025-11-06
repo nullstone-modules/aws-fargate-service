@@ -42,7 +42,7 @@ locals {
 
     load_balancers = [
       {
-        cap_tf_id        = ""
+        cap_tf_id        = "x"
         port             = 80
         target_group_arn = ""
       }
@@ -50,7 +50,7 @@ locals {
 
     metric_alarms = [
       {
-        cap_tf_id           = ""
+        cap_tf_id           = "x"
         type                = ""
         name                = ""
         comparison_operator = ""
@@ -67,7 +67,7 @@ locals {
 
     auto_scaling = [
       {
-        cap_tf_id    = ""
+        cap_tf_id    = "x"
         enabled      = false
         min_capacity = 1
         max_capacity = 1
@@ -79,8 +79,8 @@ locals {
     // They will be flattened into list(string) when we output from this module
     private_urls = [
       {
-        cap_tf_id = ""
-        url       = "https://example"
+        cap_tf_id = "x"
+        url       = "http://example"
       }
     ]
 
@@ -89,14 +89,14 @@ locals {
     // They will be flattened into list(string) when we output from this module
     public_urls = [
       {
-        cap_tf_id = ""
+        cap_tf_id = "x"
         url       = "https://example.com"
       }
     ]
 
     log_configurations = [
       {
-        cap_tf_id = ""
+        cap_tf_id = "x"
         logDriver = "awslogs"
         options = {
           "awslogs-region"        = data.aws_region.this.region
@@ -110,7 +110,7 @@ locals {
     // The name of each mount point will be added to the task as a volume, then mounted in the main container
     mount_points = [
       {
-        cap_tf_id = ""
+        cap_tf_id = "x"
         name      = "volume-name"
         path      = "/path/on/main/disk"
       }
@@ -118,7 +118,8 @@ locals {
 
     volumes = [
       {
-        name = ""
+        cap_tf_id = "x"
+        name      = ""
         efs_volume = jsonencode({
           file_system_id = ""
           root_directory = ""
@@ -129,7 +130,7 @@ locals {
     // sidecars allow capabilities to attach additional containers to the service
     sidecars = [
       {
-        cap_tf_id    = ""
+        cap_tf_id    = "x"
         name         = ""
         image        = ""
         essential    = false
@@ -147,7 +148,7 @@ locals {
     // The app module will use information about the app, cluster, and network to create event targets
     events = [
       {
-        cap_tf_id = ""
+        cap_tf_id = "x"
         rule_name = ""
         role_arn  = ""
         input     = "{}"
@@ -157,7 +158,7 @@ locals {
     // ulimits allow capabilities to modify ulimits on the main container
     ulimits = [
       {
-        cap_tf_id = ""
+        cap_tf_id = "x"
         name      = "" // "core"|"cpu"|"data"|"fsize"|"locks"|"memlock"|"msgqueue"|"nice"|"nofile"|"nproc"|"rss"|"rtprio"|"rttime"|"sigpending"|"stack"
         softLimit = 0  // integer
         hardLimit = 0  // integer
@@ -166,6 +167,7 @@ locals {
 
     linux_parameters = [
       {
+        cap_tf_id          = "x"
         initProcessEnabled = false
       }
     ]
@@ -175,7 +177,7 @@ locals {
     // See https://docs.nullstone.io/extending/metrics/aws-cloudwatch.html#metrics-mappings
     metrics = [
       {
-        cap_tf_id = ""
+        cap_tf_id = "x"
         name      = ""
         type      = "usage|usage-percent|duration|generic"
         unit      = ""
