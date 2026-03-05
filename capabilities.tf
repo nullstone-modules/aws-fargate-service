@@ -8,31 +8,69 @@ locals {
       namespace  = ""
       env_prefix = ""
       outputs    = {}
+
+      meta = {
+        subcategory = ""
+        platform    = ""
+        subplatform = ""
+        outputNames = []
+      }
     }
   ]
 
-  cap_env_vars = {}
-  cap_secrets  = {}
+  // cap_env_prefixes is a map indexed by tfId which points to the env_prefix in local.cap_modules
+  cap_env_prefixes = tomap({
+    x = ""
+  })
 
   capabilities = {
     env = [
       {
-        name  = ""
-        value = ""
+        cap_tf_id = "x"
+        name      = ""
+        value     = ""
       }
     ]
 
     secrets = [
       {
-        name  = ""
-        value = ""
+        cap_tf_id = "x"
+        name      = ""
+        value     = sensitive("")
       }
     ]
 
     load_balancers = [
       {
+        cap_tf_id        = "x"
         port             = 80
         target_group_arn = ""
+      }
+    ]
+
+    metric_alarms = [
+      {
+        cap_tf_id           = "x"
+        type                = ""
+        name                = ""
+        comparison_operator = ""
+        evaluation_periods  = ""
+        metric_name         = ""
+        namespace           = ""
+        period              = 0
+        statistic           = ""
+        threshold           = 0
+        alarm_description   = ""
+        actions             = jsonencode([])
+      }
+    ]
+
+    auto_scaling = [
+      {
+        cap_tf_id    = "x"
+        enabled      = false
+        min_capacity = 1
+        max_capacity = 1
       }
     ]
 
@@ -41,7 +79,8 @@ locals {
     // They will be flattened into list(string) when we output from this module
     private_urls = [
       {
-        url = ""
+        cap_tf_id = "x"
+        url       = "http://example"
       }
     ]
 
@@ -50,15 +89,17 @@ locals {
     // They will be flattened into list(string) when we output from this module
     public_urls = [
       {
-        url = ""
+        cap_tf_id = "x"
+        url       = "https://example.com"
       }
     ]
 
     log_configurations = [
       {
+        cap_tf_id = "x"
         logDriver = "awslogs"
         options = {
-          "awslogs-region"        = data.aws_region.this.name
+          "awslogs-region"        = data.aws_region.this.region
           "awslogs-group"         = module.logs.name
           "awslogs-stream-prefix" = local.block_name
         }
@@ -69,23 +110,36 @@ locals {
     // The name of each mount point will be added to the task as a volume, then mounted in the main container
     mount_points = [
       {
-        name = "volume-name"
-        path = "/path/on/main/disk"
+        cap_tf_id = "x"
+        name      = "volume-name"
+        path      = "/path/on/main/disk"
+      }
+    ]
+
+    volumes = [
+      {
+        cap_tf_id = "x"
+        name      = ""
+        efs_volume = jsonencode({
+          file_system_id = ""
+          root_directory = ""
+        })
       }
     ]
 
     // sidecars allow capabilities to attach additional containers to the service
     sidecars = [
       {
+        cap_tf_id    = "x"
         name         = ""
         image        = ""
         essential    = false
-        portMappings = [{ protocol = "tcp", containerPort = 0, hostPort = 0 }]
-        environment  = [{ name = "", value = "" }]
-        secrets      = [{ name = "", valueFrom = "" }]
-        mountPoints  = [{ sourceVolume = "", containerPath = "" }]
-        volumesFrom  = [{ sourceContainer = "" }]
-        dependsOn    = [{ containerName = "", condition = "" }]
+        portMappings = jsonencode([{ protocol = "tcp", containerPort = 0, hostPort = 0 }])
+        environment  = jsonencode([{ name = "", value = "" }])
+        secrets      = jsonencode([{ name = "", valueFrom = "" }])
+        mountPoints  = jsonencode([{ sourceVolume = "", containerPath = "" }])
+        volumesFrom  = jsonencode([{ sourceContainer = "" }])
+        dependsOn    = jsonencode([{ containerName = "", condition = "" }])
       }
     ]
 
@@ -94,6 +148,7 @@ locals {
     // The app module will use information about the app, cluster, and network to create event targets
     events = [
       {
+        cap_tf_id = "x"
         rule_name = ""
         role_arn  = ""
         input     = "{}"
@@ -103,9 +158,17 @@ locals {
     // ulimits allow capabilities to modify ulimits on the main container
     ulimits = [
       {
+        cap_tf_id = "x"
         name      = "" // "core"|"cpu"|"data"|"fsize"|"locks"|"memlock"|"msgqueue"|"nice"|"nofile"|"nproc"|"rss"|"rtprio"|"rttime"|"sigpending"|"stack"
         softLimit = 0  // integer
         hardLimit = 0  // integer
+      }
+    ]
+
+    linux_parameters = [
+      {
+        cap_tf_id          = "x"
+        initProcessEnabled = false
       }
     ]
 
@@ -114,11 +177,12 @@ locals {
     // See https://docs.nullstone.io/extending/metrics/aws-cloudwatch.html#metrics-mappings
     metrics = [
       {
-        name = ""
-        type = "usage|usage-percent|duration|generic"
-        unit = ""
+        cap_tf_id = "x"
+        name      = ""
+        type      = "usage|usage-percent|duration|generic"
+        unit      = ""
 
-        mappings = "{}"
+        mappings = jsonencode({})
       }
     ]
   }

@@ -1,5 +1,11 @@
+# 0.15.0 (Unreleased)
+* Improved launch reliability by limiting dependencies when aggregating capability outputs.
+
 # 0.14.2 (Mar 05, 2026)
 * Upgrade to latest ns terraform provider to improve env var interpolation
+
+# 0.14.1 (Sep 26, 2025)
+* Configure log retention via cluster configuration.
 
 # 0.14.1 (Sep 26, 2025)
 * Configure log retention via cluster configuration.
