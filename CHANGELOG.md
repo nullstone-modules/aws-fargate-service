@@ -1,3 +1,6 @@
+# 0.15.2 (Mar 22, 2026)
+* Fixed deployer output.
+
 # 0.15.1 (Mar 22, 2026)
 * Fixed lock file.
 
