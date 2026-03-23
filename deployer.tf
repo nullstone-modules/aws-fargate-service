@@ -1,12 +1,12 @@
 locals {
   deployer_role = {
-    role_arn         = aws_iam_role.deployer[0].arn
+    role_arn         = try(aws_iam_role.deployer[0].arn, "")
     session_duration = 3600 // 1 hour
   }
   deployer_user = {
-    name       = aws_iam_user.deployer[0].name
-    access_key = aws_iam_access_key.deployer[0].id
-    secret_key = aws_iam_access_key.deployer[0].secret
+    name       = try(aws_iam_user.deployer[0].name, "")
+    access_key = try(aws_iam_access_key.deployer[0].id, "")
+    secret_key = try(aws_iam_access_key.deployer[0].secret, "")
   }
   deployer = local.use_roles ? local.deployer_role : local.deployer_user
 }
