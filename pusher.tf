@@ -1,6 +1,6 @@
 locals {
   pusher = {
-    role_arn         = try(aws_iam_role.pusher[0].name, "")
+    role_arn         = try(aws_iam_role.pusher[0].arn, "")
     session_duration = 3600 // 1 hour
   }
 }

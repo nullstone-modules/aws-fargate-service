@@ -1,4 +1,7 @@
-# 0.15.2 (Mar 22, 2026)
+# 0.15.4 (Mar 22, 2026)
+* Fixed pusher output ARN.
+
+# 0.15.3 (Mar 22, 2026)
 * Fixed sensitive outputs.
 
 # 0.15.2 (Mar 22, 2026)
