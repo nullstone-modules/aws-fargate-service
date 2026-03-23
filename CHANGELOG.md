@@ -1,3 +1,6 @@
+# 0.15.1 (Mar 22, 2026)
+* Fixed lock file.
+
 # 0.15.0 (Mar 22, 2026)
 * Migrated from AWS access keys to IAM roles for automation roles (push, deploy, log reader).
 
