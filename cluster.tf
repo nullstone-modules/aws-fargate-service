@@ -15,5 +15,7 @@ locals {
   cluster_arn           = data.ns_connection.cluster_namespace.outputs.cluster_arn
   cluster_name          = data.ns_connection.cluster_namespace.outputs.cluster_name
   deployers_name        = data.ns_connection.cluster_namespace.outputs.deployers_name
+  deployers_policy_arn  = try(data.ns_connection.cluster_namespace.outputs.deployers_policy_arn, "")
+  use_roles             = local.deployers_policy_arn != ""
   log_retention_in_days = try(data.ns_connection.cluster.outputs.log_retention_in_days, 90)
 }

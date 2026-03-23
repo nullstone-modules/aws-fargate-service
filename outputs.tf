@@ -19,9 +19,8 @@ output "log_group_name" {
 }
 
 output "log_reader" {
-  value       = module.logs.reader
-  description = "object({ name: string, access_key: string, secret_key: string }) ||| An AWS User with explicit privilege to read logs from Cloudwatch."
-  sensitive   = true
+  value       = merge(module.logs.reader, { session_duration : 3600 })
+  description = "object({ role_arn: string, session_duration: number }) ||| An AWS Role with explicit privilege to read logs from Cloudwatch."
 }
 
 output "metrics_provider" {
@@ -30,9 +29,8 @@ output "metrics_provider" {
 }
 
 output "metrics_reader" {
-  value       = module.logs.reader
-  description = "object({ name: string, access_key: string, secret_key: string }) ||| An AWS User with explicit privilege to read metrics from Cloudwatch."
-  sensitive   = true
+  value       = merge(module.logs.reader, { session_duration : 3600 })
+  description = "object({ role_arn: string, session_duration: number }) ||| An AWS Role with explicit privilege to read metrics from Cloudwatch."
 }
 
 output "metrics_mappings" {
@@ -50,15 +48,8 @@ output "image_repo_url" {
 }
 
 output "image_pusher" {
-  value = {
-    name       = try(aws_iam_user.image_pusher[0].name, "")
-    access_key = try(aws_iam_access_key.image_pusher[0].id, "")
-    secret_key = try(aws_iam_access_key.image_pusher[0].secret, "")
-  }
-
-  description = "object({ name: string, access_key: string, secret_key: string }) ||| An AWS User with explicit privilege to push images."
-
-  sensitive = true
+  value       = local.pusher
+  description = "object({ role_arn: string, session_duration: number }) ||| An AWS role with explicit privilege to push images."
 }
 
 output "deployer" {

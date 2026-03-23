@@ -1,3 +1,6 @@
+# 0.15.0 (Mar 22, 2026)
+* Migrated from AWS access keys to IAM roles for automation roles (push, deploy, log reader).
+
 # 0.14.2 (Mar 05, 2026)
 * Upgrade to latest ns terraform provider to improve env var interpolation
 

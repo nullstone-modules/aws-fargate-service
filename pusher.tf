@@ -1,21 +1,38 @@
-resource "aws_iam_user" "image_pusher" {
-  #bridgecrew:skip=CKV_AWS_273: Skipping "Ensure access is controlled through SSO and not AWS IAM defined users". SSO is unavailable to configure.
-  name = "image-pusher-${local.resource_name}"
-  tags = local.tags
+locals {
+  pusher = {
+    role_arn         = try(aws_iam_role.pusher[0].name, "")
+    session_duration = 3600 // 1 hour
+  }
+}
+
+resource "aws_iam_role" "pusher" {
+  name               = "pusher-${local.resource_name}"
+  tags               = local.tags
+  assume_role_policy = data.aws_iam_policy_document.pusher_assume.json
 
   count = var.image == "" ? 1 : 0
 }
 
-resource "aws_iam_access_key" "image_pusher" {
-  user = aws_iam_user.image_pusher[count.index].name
+data "aws_iam_policy_document" "pusher_assume" {
+  statement {
+    effect = "Allow"
 
-  count = var.image == "" ? 1 : 0
+    actions = [
+      "sts:AssumeRole",
+      "sts:SetSourceIdentity",
+      "sts:TagSession",
+    ]
+
+    principals {
+      type        = "AWS"
+      identifiers = [local.ns_agent_user_arn]
+    }
+  }
 }
 
-resource "aws_iam_user_policy" "image_pusher" {
-  #bridgecrew:skip=CKV_AWS_40: Skipping `IAM policies attached only to groups or roles reduces management complexity`; Adding a role or group would increase complexity
-  name   = "AllowECRPush"
-  user   = aws_iam_user.image_pusher[count.index].name
+resource "aws_iam_role_policy" "pusher" {
+  name   = "AllowImagePush"
+  role   = aws_iam_role.pusher[count.index].name
   policy = data.aws_iam_policy_document.image_pusher.json
 
   count = var.image == "" ? 1 : 0
