@@ -1,3 +1,6 @@
+# 0.15.6 (Mar 22, 2026)
+* Fixed deployer output values.
+
 # 0.15.5 (Mar 22, 2026)
 * Fixed conditional deployer output.
 

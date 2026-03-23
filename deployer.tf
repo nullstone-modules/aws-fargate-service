@@ -1,14 +1,11 @@
 locals {
-  deployer_role = {
-    role_arn         = try(aws_iam_role.deployer[0].arn, "")
+  deployer = {
+    role_arn         = try(aws_iam_role.deployer[0].arn, null)
     session_duration = 3600 // 1 hour
+    name             = try(aws_iam_user.deployer[0].name, null)
+    access_key       = try(aws_iam_access_key.deployer[0].id, null)
+    secret_key       = try(aws_iam_access_key.deployer[0].secret, null)
   }
-  deployer_user = {
-    name       = try(aws_iam_user.deployer[0].name, "")
-    access_key = try(aws_iam_access_key.deployer[0].id, "")
-    secret_key = try(aws_iam_access_key.deployer[0].secret, "")
-  }
-  deployer = local.use_roles ? local.deployer_role : local.deployer_user
 }
 
 // ECS requires the user/role that initiates a deployment
