@@ -1,5 +1,10 @@
 locals {
   events = merge([for cp in local.cap_modules : { for i, event in lookup(cp.outputs, "events", []) : "cap_${cp.tfId}_${i}" => event }]...)
+
+  # Strip the trailing ':<revision>' so event targets resolve to the latest ACTIVE revision at invocation time.
+  # The deployer registers a new task definition revision and deregisters the previous one on every deploy;
+  # pinning a specific revision here would leave event targets pointing at a deregistered (INACTIVE) revision.
+  task_definition_family_arn = replace(aws_ecs_task_definition.this.arn, "/:\\d+$/", "")
 }
 
 resource "aws_cloudwatch_event_target" "this" {
@@ -13,7 +18,7 @@ resource "aws_cloudwatch_event_target" "this" {
   ecs_target {
     tags                   = local.tags
     task_count             = 1
-    task_definition_arn    = aws_ecs_task_definition.this.arn
+    task_definition_arn    = local.task_definition_family_arn
     launch_type            = "FARGATE"
     enable_execute_command = true
 

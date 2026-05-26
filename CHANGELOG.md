@@ -1,3 +1,6 @@
+# 0.15.7 (May 26, 2026)
+* Use "latest" revision to trigger task via events.
+
 # 0.15.6 (Mar 22, 2026)
 * Fixed deployer output values.
 
