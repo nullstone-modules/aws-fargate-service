@@ -29,6 +29,13 @@ locals {
     NULLSTONE_PRIVATE_HOSTS = join(",", local.private_hosts)
   })
 
+  cap_env_vars = {
+    for item in local.capabilities.env : "${local.cap_env_prefixes[item.cap_tf_id]}${item.name}" => item.value
+  }
+  cap_secrets = {
+    for item in local.capabilities.secrets : "${local.cap_env_prefixes[item.cap_tf_id]}${item.name}" => sensitive(item.value)
+  }
+
   input_env_vars    = merge(local.standard_env_vars, local.cap_env_vars, var.env_vars)
   input_secrets     = merge(local.cap_secrets, var.secrets)
   input_secret_keys = nonsensitive(concat(keys(local.cap_secrets), keys(var.secrets)))
