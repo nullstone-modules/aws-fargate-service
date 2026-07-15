@@ -1,3 +1,6 @@
+# 0.16.2 (Jul 15, 2026)
+* Added `image_repo_name` to capability `app_metadata`.
+
 # 0.16.1 (Jun 29, 2026)
 * Fixed conflict when adding two load balancers.
 

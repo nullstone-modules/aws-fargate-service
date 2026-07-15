@@ -20,5 +20,6 @@ locals {
     internal_subdomain   = var.port == 0 ? "" : "${local.block_name}.${local.service_domain}"
     task_definition_name = local.resource_name
     launch_type          = "FARGATE"
+    image_repo_name      = try(aws_ecr_repository.this[0].name, "")
   })
 }
