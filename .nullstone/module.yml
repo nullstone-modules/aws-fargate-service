@@ -4,6 +4,7 @@ friendly_name: Fargate Service
 description: Produces a fargate service backed by an ECR docker registry
 category: app
 subcategory: container
+app_type: generic
 provider_types:
     - aws
 platform: ecs
