@@ -30,7 +30,7 @@ resource "aws_iam_role_policy" "execution" {
 locals {
   // These are used to generate an IAM policy statement to allow the app to read the secrets
   secret_arns                = [for as in aws_secretsmanager_secret.app_secret : as.arn]
-  existing_arns              = values(data.ns_env_variables.this.secret_refs)
+  existing_arns              = values(data.ns_env_values.this.unmanaged_secret_refs)
   all_arns                   = concat(local.secret_arns, local.existing_arns)
   secret_statement_resources = length(local.all_arns) > 0 ? [local.all_arns] : []
 }
