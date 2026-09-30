@@ -28,12 +28,20 @@ locals {
     NULLSTONE_PUBLIC_HOSTS  = join(",", local.public_hosts)
     NULLSTONE_PRIVATE_HOSTS = join(",", local.private_hosts)
   })
+
+  // ECS injects these into every Fargate task; they are reported, not added to the task definition
+  cloud_env_vars = tomap({
+    AWS_REGION         = data.aws_region.this.region
+    AWS_DEFAULT_REGION = data.aws_region.this.region
+    AWS_EXECUTION_ENV  = "AWS_ECS_FARGATE"
+  })
 }
 
 // ns_env_layout classifies secrets using keys only, so the set of secrets to add to aws secrets manager is known at plan time
 data "ns_env_layout" "this" {
   platform               = "aws_ecs"
   standard_keys          = keys(local.standard_env_vars)
+  cloud_keys             = keys(local.cloud_env_vars)
   capability_env_keys    = [for e in local.capabilities.env : { capability = e.capability, name = e.name }]
   capability_secret_keys = [for s in local.capabilities.secrets : { capability = s.capability, name = s.name }]
   capability_prefixes    = local.cap_prefixes
@@ -44,6 +52,7 @@ data "ns_env_layout" "this" {
 data "ns_env_values" "this" {
   platform            = "aws_ecs"
   standard            = local.standard_env_vars
+  cloud               = local.cloud_env_vars
   capability_env      = local.capabilities.env
   capability_secrets  = local.capabilities.secrets
   capability_prefixes = local.cap_prefixes
@@ -55,4 +64,9 @@ data "ns_env_values" "this" {
 data "ns_env_platform_data" "this" {
   values     = data.ns_env_values.this.platform_data
   secret_ids = { for key, secret in aws_secretsmanager_secret.app_secret : key => secret.arn }
+}
+
+locals {
+  // A cloud variable reaches the task definition only when a capability or the user overrides it
+  task_env_vars = { for k, v in data.ns_env_values.this.env_variables : k => v if data.ns_env_values.this.sources[k] != "cloud" }
 }
