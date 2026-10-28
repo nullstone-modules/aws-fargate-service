@@ -19,9 +19,11 @@ output "log_group_name" {
 }
 
 output "log_reader" {
-  value       = merge(module.logs.reader, { session_duration : 3600 })
+  value = {
+    role_arn         = module.logs.reader_role_arn
+    session_duration = 3600
+  }
   description = "object({ role_arn: string, session_duration: number }) ||| An AWS Role with explicit privilege to read logs from Cloudwatch."
-  sensitive   = true
 }
 
 output "metrics_provider" {
@@ -30,9 +32,11 @@ output "metrics_provider" {
 }
 
 output "metrics_reader" {
-  value       = merge(module.logs.reader, { session_duration : 3600 })
+  value = {
+    role_arn         = module.logs.reader_role_arn
+    session_duration = 3600
+  }
   description = "object({ role_arn: string, session_duration: number }) ||| An AWS Role with explicit privilege to read metrics from Cloudwatch."
-  sensitive   = true
 }
 
 output "metrics_mappings" {
